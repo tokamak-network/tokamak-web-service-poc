@@ -23,10 +23,6 @@ instance_type = config['INSTANCE']['INSTANCE_TYPE']
 security_group_id = config['INSTANCE']['SECURITY_GROUP_ID']
 key_name = config['INSTANCE']['KEY_NAME']
 
-rootchain_nametag = config['INSTANCE']['ROOTCHAIN_NAMETAG']
-operator_nametag = config['INSTANCE']['OPERATOR_NAMETAG']
-usernode_nametag = config['INSTANCE']['USERNODE_NAMETAG']
-
 region_name = config['INSTANCE']['REGION_NAME']
 
 ### env:paramiko
