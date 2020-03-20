@@ -1,0 +1,6 @@
+test_kevin1.pem
+config.ini
+test/*
+__pycache__
+tokamak.db.json
+venv/*

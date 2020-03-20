@@ -1,0 +1,30 @@
+{% extends 'usernode_layout.html' %}
+
+{% block article %}
+<article class="">
+
+  <form action = "{{ url_for('usernode_create') }}" method = "POST">
+    <p>Name <input type = "text" name = "Name" /></p>
+    <p>
+      Rootchain
+      <select id="rootchains" name="RootchainID">
+        {% for data in data %}
+        <option value="{{ data.InstanceId | safe}}">{{ data.Name }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    <p>
+      Operator
+      <select id="operators" name="OperatorID">
+        {% for data2 in data2 %}
+        <option value="{{ data2.InstanceId | safe}}">{{ data2.Name }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    <p>enode hex <input type = "text" name = "enodehex" value="4966a7e4621c2c0b1b1b3295b4a35ccc4224ba1d529bf5aa2323e4650f6075bd5eb6618372b2579965819347307f1f97315ce91b09ca342d60c2e98ad88db9f3"/></p>
+    <p><input type = "submit" value = "Create Instance" /></p>
+  </form>
+
+</article>
+
+{% endblock %}

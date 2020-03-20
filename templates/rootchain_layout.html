@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<section>
+  <p>Rootchain Node Controller</p>
+  <div id="rootchain-header-wrapper">
+    <ul>
+      <li class="rootchain-controller"><a href="{{ url_for('rootchain') }}">List</a></li>
+      <li class="rootchain-controller"><a href="{{ url_for('rootchain_form') }}">Create</a></li>
+      <li class="rootchain-controller"><a href="#">Register</a></li>
+    </ul>
+  </div>
+  {% block article %}
+  {% endblock %}
+
+</section>
+{% endblock %}

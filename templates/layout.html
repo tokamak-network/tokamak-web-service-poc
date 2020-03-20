@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="test/html">
+    <title>Tokamak Network Web Service(Beta)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+      crossorigin="anonymous">
+    </script>
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <header>
+        Tokamak Network Web Service(Beta)
+      </header>
+      <nav>
+        <p> Navigation </p>
+        <ul>
+          <li><a href="{{ url_for('rootchain') }}">Rootchain Node</a></li>
+          <li><a href="{{ url_for('operator') }}">Operator Node</a></li>
+          <li><a href="{{ url_for('usernode') }}">User Node</a></li>
+        </ul>
+      </nav>
+      {% block content %}{% endblock %}
+      <footer>
+        <p>Footer</p>
+      </footer>
+    </div>
+  </body>
+</html>

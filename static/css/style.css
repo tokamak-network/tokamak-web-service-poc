@@ -1,0 +1,56 @@
+body {
+  text-align: left;
+  width: 99%;
+}
+body#wrapper {
+  width: 100%;
+  /* text-align: left; */
+  min-height: 300px;
+  margin: 0 auto;
+}
+header, footer, nav, section {
+  border: 1px solid #999;
+  margin: 5px;
+  padding: 10px;
+}
+header {
+  height: 50px;
+}
+nav, section {
+  float: left;
+  height: 600px;
+}
+nav {
+  width : 15%;
+}
+section {
+  width: 79%;
+}
+
+div#rootchain-header-wrapper,
+div#operator-header-wrapper,
+div#usernode-header-wrapper {
+  height: 3%;
+}
+
+li.rootchain-controller, li.operator-controller{
+  float: left;
+  width: 15%;
+}
+footer {
+  height: 50px;
+  position : relative;
+  clear: both;
+}
+article {
+  width : 90%;
+  margin : 20px;
+}
+table {
+  width : 100%;
+  border : 1px solid #999;
+  border-spacing: 1px;
+}
+th, td {
+  border : 1px solid black;
+}

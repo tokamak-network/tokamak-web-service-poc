@@ -1,0 +1,98 @@
+{% extends 'usernode_layout.html' %}
+
+{% block article %}
+
+<article class="">
+
+  <table id="width:100%">
+    <tr>
+      <th>Name</th>
+      <th>Log</th>
+      <th>Status</th>
+      <th>Status*</th>
+      <th>IP</th>
+      <th>IP</th>
+      <th>Initialize**</th>
+      <th>Is Init?</th>
+      <th>Start Node</th>
+      <th>Created At</th>
+      <th>Restart</th>
+      <th>Shutdown</th>
+      <th>Drop</th>
+    </tr>
+    {% for data in data %}
+    <tr class="{{ data.InstanceId }}">
+      <td class="name">
+        <a href="{{ url_for('instance', instanceid=data.InstanceId) }}">{{ data.Name }}</a>
+      </td>
+      <td class="log">
+        <a href="{{ url_for('log', instanceid=data.InstanceId, filename='user.log') }}">
+          <button type="button" name="button">Log</button>
+        </a>
+      </td>
+      <td>
+        <form id="checkStatus" action="{{ url_for('check_status') }}" method="post">
+          <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+          <input type="submit" name="check" value="1.Check">
+        </form>
+      </td>
+      <td>{{ data.Status }}</td>
+      <td class="ip">
+        <form id="checkIP" action="{{ url_for('check_ip') }}" method="post">
+          <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+          <input type="submit" name="check" value="2.Check">
+        </form>
+      </td>
+      <td>
+        {{ data.IpAddress }}
+      </td>
+      <td>
+        <form id="usernode_initialize" action="{{ url_for('usernode_initialize') }}" method="post">
+          <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+          <input type="submit" name="check" value="3.Init">
+        </form>
+      </td>
+      <td>{{data.IsInitialized}}</td>
+      <td>
+        <form id="start_usernode" action="{{ url_for('usernode_runnode') }}" method="post">
+          <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+          <input type="submit" name="check" value="4.Start Usernode">
+        </form>
+      </td>
+      <td class="date">
+        {{ data.Date }}
+      </td>
+      <td>
+        <form id="restart_usernode" action="{{ url_for('rootchain_restart') }}" method="post">
+          <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+          <input type="submit" name="check" value="Restart">
+        </form>
+      </td>
+      <td>
+        <form id="terminate_rootchain" action="{{ url_for('instance_terminate') }}" method="post">
+          <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+          <input type="submit" name="check" value="Terminate">
+        </form>
+      </td>
+      <td>
+        <form id="drop_rootchain" action="{{ url_for('drop_data') }}" method="post">
+          <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+          <input type="submit" name="check" value="Drop">
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+
+  </table>
+
+  <small>*Status : pending | enable | mining | shutdown</small> <br>
+  <small>** Internal Process : set variable --> import genesis.json --> initialize blockchain </small>
+
+  {% with messages = get_flashed_messages()[0] %}
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+  {% endwith %}
+</article>
+
+{% endblock %}
