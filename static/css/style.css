@@ -33,7 +33,9 @@ div#usernode-header-wrapper {
   height: 3%;
 }
 
-li.rootchain-controller, li.operator-controller{
+li.rootchain-controller,
+li.operator-controller,
+li.usernode-controller {
   float: left;
   width: 15%;
 }
