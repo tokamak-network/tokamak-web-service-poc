@@ -1,5 +1,9 @@
 # Tokamak Web Service PoC
 
+## Planning
+[Planning Document](https://docs.google.com/presentation/d/18nSOzgvrDsUZb36V0VLtWatB8jJCmhgX5dUBctVnkXo/edit?usp=sharing)
+\*@onther.io required
+
 ## Installation
 
 ```
