@@ -127,6 +127,19 @@ def initialize_operator_blockchain(ip_address):
     output = ssh_execute(host=ip_address, command="/home/ubuntu/2_init.oper.sh")
     return output
 
+def managers_import(ip_address, managers):
+    man = json.dumps(managers, indent=4)
+    output = ssh_execute(host=ip_address, command="echo '" + man + "' | python3 -mjson.tool > /home/ubuntu/stake/manager.json")
+    return output
+
+def managers_set(ip_address):
+    out = ssh_execute(host=ip_address, command="bash /home/ubuntu/stake/1_staking.set.manager.sh")
+    return out
+
+def managers_register(ip_address):
+    out = ssh_execute(host=ip_address, command="bash /home/ubuntu/stake/2_register.manager.sh")
+    return out
+
 def run_operator(ip_address):
     return ssh_execute(host=ip_address, command="/home/ubuntu/4_run.operator.sh")
 
@@ -182,10 +195,9 @@ def export_manager_command(ip_address):
 
 def export_manager_contract(ip_address):
     a = ssh_execute(host=ip_address, command="cat /home/ubuntu/manager.json")
-    b = [i.strip(" ").strip(",\r\n").strip('":').split(" ") for i in a[1:6]]
-    c = [k[1:]  for j,k in b]
-    d = ['TON', 'WTON', 'DepositManager', 'RootChainRegistry', 'SeigManager']
-    return {k:v for k in d for v in c}
+    out1 = json.loads(''.join(a))
+    # out2 = json.dumps(out1, indent=4)
+    return [out1]
 
 def initialize_rootchain(ip_address):
     out = ssh_execute(host=ip_address, command="bash /home/ubuntu/reset.rootchain.sh")

@@ -29,6 +29,9 @@ from tokamak_aws import create_rootchain_instance, \
     initialize_operator_blockchain, \
     run_operator, \
     restart_operator,\
+    managers_import, \
+    managers_set, \
+    managers_register, \
     get_log_tail, \
     create_usernode_instance, \
     set_usernode_variable, \
@@ -153,7 +156,8 @@ def rootchain_create():
             'IsPowerTONDeployed' : 'false',
             'IsPowerTONStarted' : 'false',
             'IsManagerExported': 'false',
-            'Managers' : ""
+            'Managers' : "",
+            'Managers2' : ""
         }
         t_db.insert(inst_obj)
         q_res = t_db.search(Query().Name == name)
@@ -209,11 +213,11 @@ def export_manager(instanceid):
     inst_id = inst[0]["InstanceId"]
     inst_type = inst[0]["Type"]
 
-    out = export_manager_command(inst_ip)
-    out2 = export_manager_contract(inst_ip)
-    t_db.update(set('Managers', out2), Query().InstanceId == inst_id)
+    export_manager_command(inst_ip)
+    out = export_manager_contract(inst_ip)
+    t_db.update(set('Managers', out[0]), Query().InstanceId == inst_id)
     t_db.update(set('IsManagerExported', 'true'), Query().InstanceId == inst_id)
-    flash([out2])
+    flash(out)
 
     return redirect(url_for('rootchain'))
 
@@ -282,7 +286,10 @@ def operator_create():
             'NodeKey' : node_key,
             'OperatorAccount' : operator_account,
             'OperatorAccountKey' : operator_account_key,
-            'OperatorPassword' : operator_password
+            'OperatorPassword' : operator_password,
+            'IsManagersImported' : '',
+            'IsManagersSet' : '',
+            'IsMansgersRegistered' : ''
         }
         t_db.insert(inst_obj)
         q_res = t_db.search(Query().Name == name)
@@ -382,6 +389,48 @@ def operator_restart(instanceid):
     restart_operator(inst_ip)
 
     flash([time.ctime()[11:19] + " Operator Restarted!"])
+    return redirect(url_for('operator'))
+
+@app.route("/operator/import/managers/<instanceid>")
+def operator_import_managers(instanceid):
+    inst = t_db.search(Query().InstanceId == instanceid)
+    inst_ip = inst[0]["IpAddress"]
+
+    #get managers json data
+    root_id = inst[0]['RootChain']['InstanceId']
+    root_inst = t_db.search(Query().InstanceId == root_id)
+    managers = root_inst[0]["Managers"]
+
+    #import managers.json to operator node
+    out = managers_import(inst_ip, managers)
+    t_db.update(set('IsManagersImported', "true"), Query().InstanceId == instanceid)
+    flash([time.ctime()[11:19] + " managers.json imported!"])
+    return redirect(url_for('operator'))
+
+
+@app.route("/operator/set/managers/<instanceid>")
+def operator_set_managers(instanceid):
+    inst = t_db.search(Query().InstanceId == instanceid)
+    inst_ip = inst[0]["IpAddress"]
+
+    # set managers
+    out = managers_set(inst_ip)
+
+    # update db
+    t_db.update(set('IsManagersSet', "true"), Query().InstanceId == instanceid)
+
+    flash(out)
+    return redirect(url_for('operator'))
+
+@app.route("/operator/register/managers/<instanceid>")
+def operator_register_managers(instanceid):
+    inst = t_db.search(Query().InstanceId == instanceid)
+    inst_ip = inst[0]["IpAddress"]
+
+    out = managers_register(inst_ip)
+    t_db.update(set('IsManagersRegistered', "true"), Query().InstanceId == instanceid)
+
+    flash(out)
     return redirect(url_for('operator'))
 
 #######################

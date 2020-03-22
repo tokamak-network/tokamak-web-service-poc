@@ -20,6 +20,12 @@
       <th>Exported?</th>
       <th>Init Genesis</th>
       <th>Initialized?</th>
+      <th>Import managers</th>
+      <th>Is Imported?</th>
+      <th>Set Managers</th>
+      <th>Is Set?</th>
+      <th>Register Managers</th>
+      <th>Is Registered?</th>
       <th>Run Operator</th>
       <!-- <th>Restart</th> -->
       <th>Shutdown</th>
@@ -87,9 +93,27 @@
         {{data.IsInitialized}}
       </td>
       <td>
+        <a href="{{ url_for('operator_import_managers', instanceid=data.InstanceId) }}">
+          <button type="button" name="button">7.Import</button>
+        </a>
+      </td>
+      <td>{{data.IsManagersImported}}</td>
+      <td>
+        <a href="{{ url_for('operator_set_managers', instanceid=data.InstanceId) }}">
+          <button type="button" name="button">8.Set</button>
+        </a>
+      </td>
+      <td>{{data.IsManagersSet}}</td>
+      <td>
+        <a href="{{ url_for('operator_register_managers', instanceid=data.InstanceId) }}">
+          <button type="button" name="button">9.Register</button>
+        </a>
+      </td>
+      <td>{{data.IsManagersRegistered}}</td>
+      <td>
         <form id="start_rootchain" action="{{ url_for('operator_runnode') }}" method="post">
           <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-          <input type="submit" name="check" value="7.Run">
+          <input type="submit" name="check" value="10.Run">
         </form>
       </td>
       <!-- <td>

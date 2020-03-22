@@ -63,9 +63,9 @@
         {{ data.Date }}
       </td>
       <td>
-        <form id="restart_usernode" action="{{ url_for('rootchain_restart') }}" method="post">
+        <form id="restart_usernode" action="{{ url_for('rootchain_reset') }}" method="post">
           <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-          <input type="submit" name="check" value="Restart">
+          <input type="submit" name="check" value="Reset(Not Working)">
         </form>
       </td>
       <td>
