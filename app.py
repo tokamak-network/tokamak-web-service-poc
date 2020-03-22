@@ -13,6 +13,11 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from tokamak_aws import create_rootchain_instance, \
     get_instance_ip, \
     run_rootchain, \
+    deploy_manager_contract, \
+    deploy_powerton_contract, \
+    start_powerton_contract, \
+    export_manager_command, \
+    export_manager_contract, \
     get_instance_resource, \
     ssh_execute, \
     change_rootchain_account, \
@@ -49,6 +54,8 @@ app.config.from_object(__name__)
 @app.route("/rootchain")
 def rootchain():
     data = t_db.search(Query().Type == "rootchain")
+    if data == "":
+        data = []
     # print(data)
     return render_template(
             "rootchain_list.html",
@@ -88,8 +95,8 @@ def rootchain_start():
     else:
         return redirect(url_for('rootchain'))
 
-@app.route("/rootchain/restart", methods=["POST"])
-def rootchain_restart():
+@app.route("/rootchain/reset", methods=["POST"])
+def rootchain_reset():
     error = None
     if request.method == "POST":
         inst_id = request.form['instance_id']
@@ -97,7 +104,7 @@ def rootchain_restart():
         inst_ip = inst['IpAddress']
         initialize_rootchain(inst_ip)
         #flash
-        flash([time.ctime()[11:19] + " Rootchain Mining Restarted!"])
+        flash([time.ctime()[11:19] + " Rootchain Reset!"])
         return redirect(url_for('rootchain'))
     else:
         return redirect(url_for('rootchain'))
@@ -141,7 +148,12 @@ def rootchain_create():
                 'WithdrawalDelay' : withdrawal_delay,
                 'SeigPerBlock' : seig_per_block,
                 'PwertTONRoundTime' : power_ton_round_time
-                }
+                },
+            'IsMansgerDeployed' : 'false',
+            'IsPowerTONDeployed' : 'false',
+            'IsPowerTONStarted' : 'false',
+            'IsManagerExported': 'false',
+            'Managers' : ""
         }
         t_db.insert(inst_obj)
         q_res = t_db.search(Query().Name == name)
@@ -150,6 +162,60 @@ def rootchain_create():
     else:
         return url_for('rootchain')
 
+@app.route("/rootchain/deploy/manager/<instanceid>")
+def deploy_manager(instanceid):
+    inst = t_db.search(Query().InstanceId == instanceid)
+
+    inst_ip = inst[0]["IpAddress"]
+    inst_id = inst[0]["InstanceId"]
+    inst_type = inst[0]["Type"]
+
+    out = deploy_manager_contract(inst_ip)
+    t_db.update(set('IsMansgerDeployed', "true"), Query().InstanceId == inst_id)
+    flash(out)
+
+    return redirect(url_for('rootchain'))
+
+@app.route("/rootchain/deploy/powerton/<instanceid>")
+def deploy_powerton(instanceid):
+    inst = t_db.search(Query().InstanceId == instanceid)
+    inst_ip = inst[0]["IpAddress"]
+    inst_id = inst[0]["InstanceId"]
+    inst_type = inst[0]["Type"]
+
+    out = deploy_powerton_contract(inst_ip)
+    t_db.update(set('IsPowerTONDeployed', "true"), Query().InstanceId == inst_id)
+    flash(out)
+
+    return redirect(url_for('rootchain'))
+
+@app.route("/rootchain/start/powerton/<instanceid>")
+def start_powerton(instanceid):
+    inst = t_db.search(Query().InstanceId == instanceid)
+    inst_ip = inst[0]["IpAddress"]
+    inst_id = inst[0]["InstanceId"]
+    inst_type = inst[0]["Type"]
+
+    out = start_powerton_contract(inst_ip)
+    t_db.update(set('IsPowerTONStarted', "true"), Query().InstanceId == inst_id)
+    flash(out)
+
+    return redirect(url_for('rootchain'))
+
+@app.route("/rootchain/export/manager/<instanceid>")
+def export_manager(instanceid):
+    inst = t_db.search(Query().InstanceId == instanceid)
+    inst_ip = inst[0]["IpAddress"]
+    inst_id = inst[0]["InstanceId"]
+    inst_type = inst[0]["Type"]
+
+    out = export_manager_command(inst_ip)
+    out2 = export_manager_contract(inst_ip)
+    t_db.update(set('Managers', out2), Query().InstanceId == inst_id)
+    t_db.update(set('IsManagerExported', 'true'), Query().InstanceId == inst_id)
+    flash([out2])
+
+    return redirect(url_for('rootchain'))
 
 #####################
 ## OPERATOR ROUTE ##

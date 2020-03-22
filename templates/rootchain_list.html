@@ -13,8 +13,16 @@
       <th>IP</th>
       <th>IP</th>
       <th>Start Node</th>
+      <th>Deploy Manager</th>
+      <th>Deployed?</th>
+      <th>Deploy PowerTON</th>
+      <th>Deployed?</th>
+      <th>Start PowerTON</th>
+      <th>Started?</th>
+      <th>Export Manager</th>
+      <th>Exported?</th>
       <th>Created At</th>
-      <th>Restart</th>
+      <th>Reset</th>
       <th>Shutdown</th>
       <th>Drop</th>
     </tr>
@@ -50,13 +58,46 @@
           <input type="submit" name="check" value="3.Start Rootchain">
         </form>
       </td>
+      <td>
+        <a href="{{ url_for('deploy_manager', instanceid=data.InstanceId) }}">
+          <button type="button" name="button">
+            4.Deploy Managers
+          </button>
+        </a>
+      </td>
+      <td> {{ data.IsMansgerDeployed }} </td>
+      <td>
+        <a href="{{ url_for('deploy_powerton', instanceid=data.InstanceId) }}">
+          <button type="button" name="button">
+            5.Deploy PowerTON
+          </button>
+        </a>
+      </td>
+      <td> {{ data.IsPowerTONDeployed }} </td>
+
+      <td>
+        <a href="{{ url_for('start_powerton', instanceid=data.InstanceId) }}">
+          <button type="button" name="button">
+            6.Start PowerTON
+          </button>
+        </a>
+      </td>
+      <td> {{ data.IsPowerTONStarted }} </td>
+      <td>
+        <a href="{{ url_for('export_manager', instanceid=data.InstanceId) }}">
+          <button type="button" name="button">
+            7.Export Manager
+          </button>
+        </a>
+      </td>
+      <td> {{ data.IsManagerExported }} </td>
       <td class="date">
         {{ data.Date }}
       </td>
       <td>
-        <form id="start_rootchain" action="{{ url_for('rootchain_restart') }}" method="post">
+        <form id="reset_rootchain" action="{{ url_for('rootchain_reset') }}" method="post">
           <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-          <input type="submit" name="check" value="Restart">
+          <input type="submit" name="check" value="Reset">
         </form>
       </td>
       <td>

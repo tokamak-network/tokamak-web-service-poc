@@ -164,8 +164,31 @@ def run_rootchain(ip_address):
     out = ssh_execute(host=ip_address, command="bash /home/ubuntu/run.rootchain.sh")
     return out[1]
 
+def deploy_manager_contract(ip_address):
+    out = ssh_execute(host=ip_address, command="bash /home/ubuntu/stake/1_deploy.manager.sh")
+    return out
+
+def deploy_powerton_contract(ip_address):
+    out = ssh_execute(host=ip_address, command="bash /home/ubuntu/stake/2_deploy.powerton.sh")
+    return out
+
+def start_powerton_contract(ip_address):
+    out = ssh_execute(host=ip_address, command="bash /home/ubuntu/stake/4_start.powerton.sh")
+    return out
+
+def export_manager_command(ip_address):
+    out = ssh_execute(host=ip_address, command="bash /home/ubuntu/stake/3_export.manager.sh")
+    return out
+
+def export_manager_contract(ip_address):
+    a = ssh_execute(host=ip_address, command="cat /home/ubuntu/manager.json")
+    b = [i.strip(" ").strip(",\r\n").strip('":').split(" ") for i in a[1:6]]
+    c = [k[1:]  for j,k in b]
+    d = ['TON', 'WTON', 'DepositManager', 'RootChainRegistry', 'SeigManager']
+    return {k:v for k in d for v in c}
+
 def initialize_rootchain(ip_address):
-    out = ssh_execute(host=ip_address, command="bash /home/ubuntu/restart.rootchain.sh")
+    out = ssh_execute(host=ip_address, command="bash /home/ubuntu/reset.rootchain.sh")
     return out[0]
 
 def change_rootchain_account(ip_address, key0, key1, key2, key3, key4, key5, operator, delay, seigniorage, p_round):
