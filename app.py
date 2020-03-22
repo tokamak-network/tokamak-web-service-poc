@@ -73,6 +73,10 @@ def rootchain_start():
             inst_faucet[3],
             inst_faucet[4],
             inst_faucet[5],
+            inst['Operator'],
+            inst['Staking']['WithdrawalDelay'],
+            inst['Staking']['SeigPerBlock'],
+            inst['Staking']['PwertTONRoundTime']
         )
         #run rootchain node
         run_rootchain(inst_ip)
@@ -118,6 +122,11 @@ def rootchain_create():
         key4 = request.form['Key5']
         key5 = request.form['Key6']
 
+        key1address = request.form['Key1Address']
+        withdrawal_delay = request.form['WithdrawalDelay']
+        seig_per_block = request.form['Seigniorage']
+        power_ton_round_time = request.form['PowerTONRound']
+
         root_ins = create_rootchain_instance(name)
         root_ins_monitor = root_ins.monitor()
         inst_obj = {
@@ -126,7 +135,13 @@ def rootchain_create():
             'InstanceId' : root_ins_monitor['InstanceMonitorings'][0]['InstanceId'],
             'Status' : root_ins_monitor['InstanceMonitorings'][0]['Monitoring']['State'],
             'Date' : root_ins_monitor['ResponseMetadata']['HTTPHeaders']['date'],
-            'Faucet' : [key0, key1, key2, key3, key4, key5]
+            'Faucet' : [key0, key1, key2, key3, key4, key5],
+            'Operator' : key1address,
+            'Staking' : {
+                'WithdrawalDelay' : withdrawal_delay,
+                'SeigPerBlock' : seig_per_block,
+                'PwertTONRoundTime' : power_ton_round_time
+                }
         }
         t_db.insert(inst_obj)
         q_res = t_db.search(Query().Name == name)
