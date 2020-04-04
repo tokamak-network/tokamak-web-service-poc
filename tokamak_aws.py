@@ -203,7 +203,7 @@ def initialize_rootchain(ip_address):
     out = ssh_execute(host=ip_address, command="bash /home/ubuntu/reset.rootchain.sh")
     return out[0]
 
-def change_rootchain_account(ip_address, key0, key1, key2, key3, key4, key5, operator, delay, seigniorage, p_round):
+def change_rootchain_account(ip_address, key0, key1, key2, key3, key4, key5, operator, delay, seigniorage, p_round, password):
     priv0 = "key1"
     priv1 = "key2"
     priv2 = "key3"
@@ -215,6 +215,7 @@ def change_rootchain_account(ip_address, key0, key1, key2, key3, key4, key5, ope
     w_delay = "<withdrawal delay>"
     seig = "<seigniorage per block>"
     round = "<round time second>"
+    op_password="<password>"
 
     cmdg = "sed -i "
     cmd0 = "-e 's/" + priv0 + "/" + key0 + "/g' "
@@ -227,9 +228,10 @@ def change_rootchain_account(ip_address, key0, key1, key2, key3, key4, key5, ope
     cmd7 = "-e 's/" + w_delay + "/" + delay + "/g' "
     cmd8 = "-e 's/" + seig + "/" + seigniorage + "/g' "
     cmd9 = "-e 's/" + round + "/" + p_round + "/g' "
-    cmd10 = "/home/ubuntu/account.variable"
+    cmd10 = "-e 's/" + op_password + "/" + password + "/g' "
+    cmd11 = "/home/ubuntu/account.variable"
 
-    cmd = cmdg + cmd0 + cmd1 + cmd2 + cmd3 + cmd4 + cmd5 + cmd6 + cmd7 + cmd8 + cmd9 + cmd10
+    cmd = cmdg + cmd0 + cmd1 + cmd2 + cmd3 + cmd4 + cmd5 + cmd6 + cmd7 + cmd8 + cmd9 + cmd10 + cmd11
     ssh_execute(ip_address, cmd)
 
 ##############################

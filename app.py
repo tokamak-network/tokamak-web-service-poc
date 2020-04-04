@@ -86,8 +86,10 @@ def rootchain_start():
             inst['Operator'],
             inst['Staking']['WithdrawalDelay'],
             inst['Staking']['SeigPerBlock'],
-            inst['Staking']['PwertTONRoundTime']
+            inst['Staking']['PwertTONRoundTime'],
+            inst['OperatorPassword']
         )
+
         #run rootchain node
         run_rootchain(inst_ip)
         #update database
@@ -133,6 +135,7 @@ def rootchain_create():
         key5 = request.form['Key6']
 
         key1address = request.form['Key1Address']
+        key1password = request.form['Password']
         withdrawal_delay = request.form['WithdrawalDelay']
         seig_per_block = request.form['Seigniorage']
         power_ton_round_time = request.form['PowerTONRound']
@@ -147,6 +150,7 @@ def rootchain_create():
             'Date' : root_ins_monitor['ResponseMetadata']['HTTPHeaders']['date'],
             'Faucet' : [key0, key1, key2, key3, key4, key5],
             'Operator' : key1address,
+            'OperatorPassword' : key1password,
             'Staking' : {
                 'WithdrawalDelay' : withdrawal_delay,
                 'SeigPerBlock' : seig_per_block,
