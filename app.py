@@ -321,7 +321,7 @@ def operator_set_variable():
         rootchain_ip = inst['RootChain']["IpAddress"]
         res = change_account_operator(op_ip, op_key, op_addrs, op_pass, chain_id, is_pre, epoch, nodekey, rootchain_ip)
         t_db.update(set('IsSet', "true"), Query().InstanceId == inst_id)
-        flash([time.ctime()[11:19] + " Operator Variable Set and signer.pass created"])
+        flash([time.ctime()[11:19] + " Operator Variable Set!"])
         return redirect(url_for('operator'))
     else:
         return redirect(url_for('operator'))

@@ -1,0 +1,11 @@
+OPERATOR_KEY="<operator key>"
+OPERATOR="<operator address>"
+OPERATOR_PASSPHRASE="<password>"
+
+CHAIN_ID="<chain id>"
+PRE_ASSET="<pre asset true or false>"
+EPOCH="<epoch lenth of plasma>"
+
+NODE_KEY_HEX="<node key hex>"
+DATADIR=/home/ubuntu/chaindata-oper
+ROOTCHAIN_IP="<rootchain ip address>" # Rootchain Node IP.

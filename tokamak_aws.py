@@ -112,9 +112,8 @@ def change_account_operator(op_ip, op_key, op_addrs, op_pass, chain_id, is_pre, 
     cmd9 = "/home/ubuntu/variables.list"
 
     cmd = cmdg + cmd1 + cmd2 + cmd3 + cmd4 + cmd5 + cmd6 + cmd7 + cmd8 + cmd9
-    cmd2 = " && /home/ubuntu/3_make.signer.pass.sh"
     # print(cmd)
-    return ssh_execute(op_ip, cmd+cmd2)
+    return ssh_execute(op_ip, cmd)
 
 def deploy_rootchain_contract(ip_address):
     return ssh_execute(host=ip_address, command="/home/ubuntu/1_deploy.rootchain.sh")
@@ -141,7 +140,7 @@ def managers_register(ip_address):
     return out
 
 def run_operator(ip_address):
-    return ssh_execute(host=ip_address, command="/home/ubuntu/4_run.operator.sh")
+    return ssh_execute(host=ip_address, command="/home/ubuntu/3_run.operator.sh")
 
 def restart_operator(ip_address):
     out1 = ssh_execute(host=ip_address, command="/home/ubuntu/init.all.sh")
