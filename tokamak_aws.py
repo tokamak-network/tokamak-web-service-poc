@@ -16,7 +16,7 @@ aws_secret_access_key = config['AWS']['AWS_SECRET_KEY']
 ### env:instance
 basic_image_id = config['INSTANCE']['BASIC_IMAGE_ID']
 rootchain_image_id = config['INSTANCE']['ROOTCHAIN_IMAGE_ID']
-operator_image_id = config['INSTANCE']['OPERATOR_INAGE_ID']
+operator_image_id = config['INSTANCE']['OPERATOR_IMAGE_ID']
 user_image_id = config['INSTANCE']['USER_IMAGE_ID']
 
 instance_type = config['INSTANCE']['INSTANCE_TYPE']

@@ -15,7 +15,7 @@ usage:
 
 if __name__ == "__main__":
     ##### update before use it #####
-    hostname = "3.112.196.168"
+    hostname = "13.112.77.26"
     username = "ubuntu"
     pemfile = "../test_kevin1.pem"
 
