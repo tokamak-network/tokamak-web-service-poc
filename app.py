@@ -491,7 +491,8 @@ def usernode_create():
                 'Name': operator_inst["Name"],
                 "IpAddress": operator_inst["IpAddress"],
                 "InstanceId": operator_inst["InstanceId"],
-                "Genesis" : operator_inst["Genesis"]
+                "Genesis" : operator_inst["Genesis"],
+                "ChainID" : operator_inst["ChainID"]
             },
             'InstanceId' : usernode_ins_monitor['InstanceMonitorings'][0]['InstanceId'],
             'Status' : usernode_ins_monitor['InstanceMonitorings'][0]['Monitoring']['State'],
@@ -516,16 +517,17 @@ def usernode_initialize():
         #set variable
         user_ip = user_inst["IpAddress"]
         rootchain_ip = user_inst["RootChain"]["IpAddress"]
+        chain_id = user_inst["Operator"]["ChainID"]
         operator_ip = user_inst["Operator"]["IpAddress"]
         enode_value = user_inst["Enode"]
-        out1 = set_usernode_variable(user_ip, rootchain_ip, operator_ip, enode_value)
-        print("out1 : ", out1)
+        out1 = set_usernode_variable(user_ip, rootchain_ip, operator_ip, enode_value, chain_id)
+        # print("out1 : ", out1)
 
         # import genesis to usernode
         genesis = user_inst["Operator"]["Genesis"]
         out2 = import_genesis_usernode(user_ip, genesis)
         check_genesis(user_ip)
-        print("out1 : ", out2)
+        # print("out1 : ", out2)
 
         #initialize usernode
         initialize_usernode(user_ip)

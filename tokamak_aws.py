@@ -258,18 +258,20 @@ def create_usernode_instance(name):
 
     return usernode_instance[0]
 
-def set_usernode_variable(user_ip, root_ip, operator_ip, enode_value):
+def set_usernode_variable(user_ip, root_ip, operator_ip, enode_value, chain_id):
     key1 = "<rootchain ip>"
     key2 = "<operator ip>"
     key3 = "<enode value>"
+    key4 = "<network id>"
 
     cmdg = "sed -i "
     cmd0 = "-e 's/" + key1 + "/" + root_ip + "/g' "
     cmd1 = "-e 's/" + key2 + "/" + operator_ip + "/g' "
     cmd2 = "-e 's/" + key3 + "/" + enode_value + "/g' "
-    cmd3 = "/home/ubuntu/variables.list"
+    cmd3 = "-e 's/" + key4 + "/" + chain_id + "/g' "
+    cmd4 = "/home/ubuntu/variables.list"
 
-    cmd = cmdg + cmd0 + cmd1 + cmd2 + cmd3
+    cmd = cmdg + cmd0 + cmd1 + cmd2 + cmd3 + cmd4
     return ssh_execute(user_ip, cmd)
 
 def import_genesis_usernode(usernode_ip, genesis):
