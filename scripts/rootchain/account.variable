@@ -8,6 +8,10 @@ KEY3="key6";
 
 OPERATOR="<operator address>"
 
+# Rootchain Node
+GAS_TARGET="100000000"
+GAS_PRICE="10"
+
 # plasma-evm
 DATADIR="/home/ubuntu/datadir"
 DATADIR2="/home/ubuntu/datadir2"
