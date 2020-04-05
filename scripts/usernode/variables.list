@@ -1,0 +1,8 @@
+ROOTCHAIN_IP="<rootchain ip>" # Rootchain Geth Node IP.
+OPERATOR_IP="<operator ip>"
+BOOT_NODE="enode://<enode value>@$OPERATOR_IP:30306"
+NETWORK_ID="<network id>"
+
+DATADIR="/home/ubuntu/chaindata-user"
+
+HOST_IP=$(curl ifconfig.me)
