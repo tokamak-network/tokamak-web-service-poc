@@ -13,11 +13,12 @@
           <th>Status*</th>
           <th>IP</th>
           <th>IP</th>
+          <th>Reset</th>
+          <th>Is Set?</th>
           <th>Initialize**</th>
           <th>Is Init?</th>
           <th>Start Node</th>
           <th>Created At</th>
-          <th>Reset</th>
           <th>Shutdown</th>
           <th>Drop</th>
         </tr>
@@ -50,26 +51,30 @@
             {{ data.IpAddress }}
           </td>
           <td>
+            <a href="{{ url_for('reset_instance', instanceid=data.InstanceId) }}">
+              <button type="button" class="btn btn-secondary btn-sm" name="button">3.(re)set</button>
+            </a>
+          </td>
+          <td>
+            {{ data.IsScriptSet }}
+          </td>
+          <td>
             <form id="usernode_initialize" action="{{ url_for('usernode_initialize') }}" method="post">
               <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="3.Init">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="4.Init">
             </form>
           </td>
           <td>{{data.IsInitialized}}</td>
           <td>
             <form id="start_usernode" action="{{ url_for('usernode_runnode') }}" method="post">
               <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="4.Start Usernode">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="5.Run">
             </form>
           </td>
           <td class="date">
             {{ data.Date }}
           </td>
-          <td>
-            <a href="{{ url_for('reset_instance', instanceid=data.InstanceId) }}">
-              <button type="button" class="btn btn-secondary btn-sm" name="button">Reset</button>
-            </a>
-          </td>
+
           <td>
             <form id="terminate_rootchain" action="{{ url_for('instance_terminate') }}" method="post">
               <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">

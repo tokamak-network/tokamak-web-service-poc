@@ -10,7 +10,7 @@ config.read('config.ini')
 from tinydb import TinyDB, Query
 from tinydb.operations import delete, set
 from flask import Flask, render_template, request, redirect, url_for, flash
-from tokamak_aws import create_rootchain_instance, \
+from tokamak_aws import \
     get_instance_ip, \
     run_rootchain, \
     deploy_manager_contract, \
@@ -22,7 +22,7 @@ from tokamak_aws import create_rootchain_instance, \
     ssh_execute, \
     change_rootchain_account, \
     initialize_rootchain, \
-    create_operator_instance, \
+    create_instance, \
     change_account_operator, \
     deploy_rootchain_contract, \
     export_genesis, \
@@ -32,7 +32,6 @@ from tokamak_aws import create_rootchain_instance, \
     managers_set, \
     managers_register, \
     get_log_tail, \
-    create_usernode_instance, \
     set_usernode_variable, \
     import_genesis_usernode, \
     check_genesis, \
@@ -154,7 +153,7 @@ def rootchain_create():
         seig_per_block = request.form['Seigniorage']
         power_ton_round_time = request.form['PowerTONRound']
 
-        root_ins = create_rootchain_instance(name)
+        root_ins = create_instance(name)
         root_ins_monitor = root_ins.monitor()
         inst_obj = {
             'Type' : "rootchain",
@@ -170,6 +169,7 @@ def rootchain_create():
                 'SeigPerBlock' : seig_per_block,
                 'PwertTONRoundTime' : power_ton_round_time
                 },
+            'IsScriptSet' : '',
             'IsMansgerDeployed' : '',
             'IsPowerTONDeployed' : '',
             'IsPowerTONStarted' : '',
@@ -284,7 +284,7 @@ def operator_create():
 
         root_inst = t_db.search(Query().InstanceId == rootchain_id)[0]
 
-        operator_ins = create_operator_instance(name)
+        operator_ins = create_instance(name)
         operator_ins_monitor = operator_ins.monitor()
         inst_obj = {
             'Type' : "operator",
@@ -484,7 +484,7 @@ def usernode_create():
         root_inst = t_db.search(Query().InstanceId == rootchain_id)[0]
         operator_inst = t_db.search(Query().InstanceId == operator_id)[0]
 
-        usernode_ins = create_usernode_instance(name)
+        usernode_ins = create_instance(name)
         usernode_ins_monitor = usernode_ins.monitor()
 
         inst_obj = {
@@ -584,6 +584,7 @@ def reset_instance(instanceid):
     if inst_type == "rootchain":
         update_rootchain(inst_ip, SSH_USERNAME, PEMFILE)
         t_db.update(set('Status', "enabled"), Query().InstanceId == instanceid)
+        t_db.update(set('IsScriptSet', "true"), Query().InstanceId == instanceid)
         t_db.update(set('IsMansgerDeployed', ""), Query().InstanceId == instanceid)
         t_db.update(set('IsPowerTONDeployed', ""), Query().InstanceId == instanceid)
         t_db.update(set('IsPowerTONStarted', ""), Query().InstanceId == instanceid)
@@ -594,6 +595,7 @@ def reset_instance(instanceid):
     elif inst_type == "operator":
         update_operator(inst_ip, SSH_USERNAME, PEMFILE)
         t_db.update(set('Status', "enabled"), Query().InstanceId == instanceid)
+        t_db.update(set('IsScriptSet', "true"), Query().InstanceId == instanceid)
         t_db.update(set('IsSet', ""), Query().InstanceId == instanceid)
         t_db.update(set('IsDeployed', ""), Query().InstanceId == instanceid)
         t_db.update(set('Genesis', ""), Query().InstanceId == instanceid)
@@ -607,6 +609,7 @@ def reset_instance(instanceid):
     elif inst_type == "usernode":
         update_usernode(inst_ip, SSH_USERNAME, PEMFILE)
         t_db.update(set('Status', "enabled"), Query().InstanceId == instanceid)
+        t_db.update(set('IsScriptSet', "true"), Query().InstanceId == instanceid)
         t_db.update(set('IsInitialized', ""), Query().InstanceId == instanceid)
         flash([time.ctime()[11:19] + " " + inst_name + " reset"])
         return redirect(url_for('usernode'))

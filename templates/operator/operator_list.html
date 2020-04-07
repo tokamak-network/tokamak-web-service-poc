@@ -14,6 +14,8 @@
           <th>Status</th>
           <th>IP</th>
           <th>IP</th>
+          <th>(re)set scripts</th>
+          <th>Is Set?</th>
           <th>Set Variable</th>
           <th>Is Set?</th>
           <th>Deploy Rootchain</th>
@@ -29,7 +31,6 @@
           <th>Register Managers</th>
           <th>Is Registered?</th>
           <th>Run Operator</th>
-          <th>Reset</th>
           <th>Shutdown</th>
           <th>Drop</th>
         </tr>
@@ -65,9 +66,17 @@
               {{ data.IpAddress }}
             </td>
             <td>
+              <a href="{{ url_for('reset_instance', instanceid=data.InstanceId) }}">
+                <button type="button" class="btn btn-secondary btn-sm" name="button">3.(re)set</button>
+              </a>
+            </td>
+            <td>
+              {{data.IsScriptSet}}
+            </td>
+            <td>
               <form id="set_variable" action="{{ url_for('operator_set_variable') }}" method="post">
                 <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="3.Set Variable">
+                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="4.Set Variable">
               </form>
             </td>
             <td>
@@ -76,21 +85,21 @@
             <td>
               <form id="start_rootchain" action="{{ url_for('operator_deploy_rootchain') }}" method="post">
                 <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="4.Deploy">
+                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="5.Deploy">
               </form>
             </td>
             <td>{{data.IsDeployed}}</td>
             <td>
               <form id="start_rootchain" action="{{ url_for('operator_export_genesis') }}" method="post">
                 <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="5.Export">
+                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="6.Export">
               </form>
             </td>
             <td>{{data.IsExported}}</td>
             <td>
               <form id="start_rootchain" action="{{ url_for('operator_initialize') }}" method="post">
                 <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="6.Init">
+                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="7.Init">
               </form>
             </td>
             <td>
@@ -98,32 +107,27 @@
             </td>
             <td>
               <a href="{{ url_for('operator_import_managers', instanceid=data.InstanceId) }}">
-                <button type="button" class="btn btn-secondary btn-sm" name="button">7.Import</button>
+                <button type="button" class="btn btn-secondary btn-sm" name="button">8.Import</button>
               </a>
             </td>
             <td>{{data.IsManagersImported}}</td>
             <td>
               <a href="{{ url_for('operator_set_managers', instanceid=data.InstanceId) }}">
-                <button type="button" class="btn btn-secondary btn-sm" name="button">8.Set</button>
+                <button type="button" class="btn btn-secondary btn-sm" name="button">9.Set</button>
               </a>
             </td>
             <td>{{data.IsManagersSet}}</td>
             <td>
               <a href="{{ url_for('operator_register_managers', instanceid=data.InstanceId) }}">
-                <button type="button" class="btn btn-secondary btn-sm" name="button">9.Register</button>
+                <button type="button" class="btn btn-secondary btn-sm" name="button">10.Register</button>
               </a>
             </td>
             <td>{{data.IsManagersRegistered}}</td>
             <td>
               <form id="start_rootchain" action="{{ url_for('operator_runnode') }}" method="post">
                 <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="10.Run">
+                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="11.Run Node">
               </form>
-            </td>
-            <td>
-              <a href="{{ url_for('reset_instance', instanceid=data.InstanceId) }}">
-                <button type="button" class="btn btn-secondary btn-sm" name="button">Reset</button>
-              </a>
             </td>
             <td>
               <form id="terminate_rootchain" action="{{ url_for('instance_terminate') }}" method="post">

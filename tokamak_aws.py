@@ -64,30 +64,32 @@ ec2 = boto3.resource(
 )
 
 ##############################
-#### OPERATOR CONTROLLER  ####
+###### COMMON INSTANCE  ######
 ##############################
 
-def create_operator_instance(operator_name):
-    operator_instance = ec2.create_instances(
-        ImageId=operator_image_id,
+def create_instance(instance_name):
+    created_instance = ec2.create_instances(
+        ImageId=basic_image_id,
         InstanceType=instance_type,
         SecurityGroupIds=[security_group_id],
         KeyName=key_name,
         TagSpecifications=[
             {
                 'ResourceType':'instance',
-                'Tags':[{'Key' : 'Name', 'Value' : operator_name}]
+                'Tags':[{'Key' : 'Name', 'Value' : instance_name}]
             },
         ],
         MinCount=1,
         MaxCount=1,
     )
 
-    print("op id->>>>>", operator_image_id)
+    created_instance_id = created_instance[0].id
 
-    operator_id = operator_instance[0].id
+    return created_instance[0]
 
-    return operator_instance[0]
+##############################
+#### OPERATOR CONTROLLER  ####
+##############################
 
 ## And make signer.pass
 def change_account_operator(op_ip, op_key, op_addrs, op_pass, chain_id, is_pre, epoch, nodekey, rootchain_ip):
@@ -146,27 +148,6 @@ def run_operator(ip_address):
 ##############################
 #### ROOTCHAIN CONTROLLER ####
 ##############################
-
-def create_rootchain_instance(rootchain_name):
-    ### 1.1 initiate rootchain instance
-    rootchain_instance = ec2.create_instances(
-        ImageId=rootchain_image_id,
-        InstanceType=instance_type,
-        SecurityGroupIds=[security_group_id],
-        KeyName=key_name,
-        TagSpecifications=[
-            {
-                'ResourceType':'instance',
-                'Tags':[{'Key' : 'Name', 'Value' : rootchain_name}]
-            },
-        ],
-        MinCount=1,
-        MaxCount=1,
-    )
-
-    rootchian_id = rootchain_instance[0].id
-
-    return rootchain_instance[0]
 
 def run_rootchain(ip_address):
     out = ssh_execute(host=ip_address, command="bash /home/ubuntu/run.rootchain.sh")
@@ -232,27 +213,6 @@ def change_rootchain_account(ip_address, key0, key1, key2, key3, key4, key5, ope
 ##############################
 #### USERNODE CONTROLLER  ####
 ##############################
-
-def create_usernode_instance(name):
-
-    usernode_instance = ec2.create_instances(
-        ImageId=user_image_id,
-        InstanceType='t2.small',
-        SecurityGroupIds=[security_group_id],
-        KeyName=key_name,
-        TagSpecifications=[
-            {
-                'ResourceType':'instance',
-                'Tags':[{'Key' : 'Name', 'Value' : name}]
-            },
-        ],
-        MinCount=1,
-        MaxCount=1,
-    )
-
-    usernode_id = usernode_instance[0].id
-
-    return usernode_instance[0]
 
 def set_usernode_variable(user_ip, root_ip, operator_ip, enode_value, chain_id):
     key1 = "<rootchain ip>"

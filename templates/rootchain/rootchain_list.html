@@ -13,6 +13,8 @@
           <th>*Status</th>
           <th>IP</th>
           <th>IP</th>
+          <th>(re)set Scripts</th>
+          <th>Is set?</th>
           <th>Start Node</th>
           <th>Deploy Seig Manager</th>
           <th>Deployed?</th>
@@ -23,7 +25,6 @@
           <th>Export Manager</th>
           <th>Exported?</th>
           <th>Created At</th>
-          <th>Reset</th>
           <th>Shutdown</th>
           <th>Drop</th>
         </tr>
@@ -58,15 +59,23 @@
             {{ data.IpAddress }}
           </td>
           <td>
+            <a href="{{ url_for('reset_instance', instanceid=data.InstanceId) }}">
+              <button type="button" class="btn btn-secondary btn-sm" name="button">3.(re)set</button>
+            </a>
+          </td>
+          <td>
+            {{data.IsScriptSet}}
+          </td>
+          <td>
             <form id="start_rootchain" action="{{ url_for('rootchain_start') }}" method="post">
               <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="3.Start Rootchain">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="4.Run">
             </form>
           </td>
           <td>
             <a href="{{ url_for('deploy_manager', instanceid=data.InstanceId) }}">
               <button type="button" class="btn btn-secondary btn-sm" name="button">
-                4.Deploy Managers
+                5.Deploy
               </button>
             </a>
           </td>
@@ -74,7 +83,7 @@
           <td>
             <a href="{{ url_for('deploy_powerton', instanceid=data.InstanceId) }}">
               <button type="button" class="btn btn-secondary btn-sm" name="button">
-                5.Deploy PowerTON
+                6.Deploy
               </button>
             </a>
           </td>
@@ -83,7 +92,7 @@
           <td>
             <a href="{{ url_for('start_powerton', instanceid=data.InstanceId) }}">
               <button type="button" class="btn btn-secondary btn-sm" name="button">
-                6.Start PowerTON
+                7.Start
               </button>
             </a>
           </td>
@@ -91,7 +100,7 @@
           <td>
             <a href="{{ url_for('export_manager', instanceid=data.InstanceId) }}">
               <button type="button" class="btn btn-secondary btn-sm" name="button">
-                7.Export Manager
+                8.Export
               </button>
             </a>
           </td>
@@ -99,11 +108,7 @@
           <td class="date">
             {{ data.Date }}
           </td>
-          <td>
-            <a href="{{ url_for('reset_instance', instanceid=data.InstanceId) }}">
-              <button type="button" class="btn btn-secondary btn-sm" name="button">Reset</button>
-            </a>
-          </td>
+
           <td>
             <form id="terminate_rootchain" action="{{ url_for('instance_terminate') }}" method="post">
               <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">

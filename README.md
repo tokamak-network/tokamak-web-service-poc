@@ -22,9 +22,6 @@ AWS_SECRET_KEY = <aws secret key>
 
 [INSTANCE]
 BASIC_IMAGE_ID = <basic image>
-ROOTCHAIN_IMAGE_ID = <rootchain image>
-OPERATOR_IMAGE_ID = <operator image>
-USER_IMAGE_ID = <usernode image>
 
 INSTANCE_TYPE = <instance type --> e.q. t2.small>
 SECURITY_GROUP_ID = <security group id>
