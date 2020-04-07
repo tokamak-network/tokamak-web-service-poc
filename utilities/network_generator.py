@@ -1,5 +1,6 @@
 from tinydb import TinyDB, Query
 import json
+import configparser
 
 config = configparser.ConfigParser()
 config.read('config.ini')
