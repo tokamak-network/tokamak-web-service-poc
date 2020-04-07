@@ -1,8 +1,10 @@
 from tinydb import TinyDB, Query
 import json
-# from tinydb.operations import delete, set
 
-t_db = TinyDB("tokamak.db.json")
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+t_db = TinyDB(config["DATABASE"]["DATABASE"])
 
 operators = t_db.search(Query().Type == "operator")
 
@@ -64,8 +66,6 @@ def make_network_json(filename):
 
     for i in links:
         target["links"].append(i)
-
-    print(target)
 
     with open(filename,"w+") as f:
         f.write(json.dumps(target, indent=4))
