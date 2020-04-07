@@ -624,10 +624,15 @@ def check_status():
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         # TODO : CHECK STATUS - Pending | enable | mining | dead
         prior_status = t_db.search(Query().InstanceId == inst_id)[0]['Status']
+
         inst_resource = get_instance_resource(inst_id)
         inst_monitor = inst_resource.monitor()
         status = inst_monitor['InstanceMonitorings'][0]['Monitoring']['State']
-        t_db.update(set('Status', status), Query().InstanceId == inst_id)
+        #Check if prior status is mining, let it be
+        if prior_status == "mining":
+            status = prior_status
+        else:
+            t_db.update(set('Status', status), Query().InstanceId == inst_id)
         # return by Type of data : rootchain | operator | usernode
         flash([time.ctime()[11:19] + " Status Checked(" + prior_status + " --> " + status+')!'])
         if inst['Type'] == "rootchain":
