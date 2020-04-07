@@ -40,6 +40,8 @@ from tokamak_aws import create_rootchain_instance, \
     initialize_usernode, \
     run_usernode
 
+from utilities.update_instance import update_operator, update_rootchain, update_usernode
+
 DEBUG = config["SERVER"]["DEBUG"]
 SECRET_KEY = config["SERVER"]["SECRET_KEY"]
 USERNAME = config["SERVER"]["USERNAME"]
@@ -573,6 +575,37 @@ def instance(instanceid):
             "instance/instance.html",
             data = res[0]
         );
+
+@app.route("/instance/reset/<instanceid>")
+def reset_instance(instanceid):
+    inst = t_db.search(Query().InstanceId == instanceid)
+    inst_ip = inst[0]["IpAddress"]
+    inst_name = inst[0]["Name"]
+    inst_type = inst[0]["Type"]
+    hostname = "ubuntu"
+    pemfile_path = "test_kevin1.pem"
+
+
+    #TODO : initialize status
+    #TODO :
+    if inst_type == "rootchain":
+        update_rootchain(inst_ip, hostname, pemfile_path)
+        t_db.update(set('Status', "enabled"), Query().InstanceId == instanceid)
+        t_db.update(set('IsMansgerDeployed', ""), Query().InstanceId == instanceid)
+        t_db.update(set('IsPowerTONDeployed', ""), Query().InstanceId == instanceid)
+        t_db.update(set('IsPowerTONStarted', ""), Query().InstanceId == instanceid)
+        t_db.update(set('IsManagerExported', ""), Query().InstanceId == instanceid)
+        flash([time.ctime()[11:19] + " " + inst_name + " reset"])
+        return redirect(url_for('rootchain'))
+    elif inst_type == "operator":
+        #TODO : reset instance
+        #TODO : flash log
+        return redirect(url_for('operator'))
+    elif inst_type == "usernode":
+        #TODO : reset instance
+        #TODO : flash log
+        return redirect(url_for('usernode'))
+
 
 @app.route("/instance/<instanceid>/<filename>")
 def log(instanceid, filename):

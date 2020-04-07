@@ -100,10 +100,9 @@
             {{ data.Date }}
           </td>
           <td>
-            <form id="reset_rootchain" action="{{ url_for('rootchain_reset') }}" method="post">
-              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="Reset">
-            </form>
+            <a href="{{ url_for('reset_instance', instanceid=data.InstanceId) }}">
+              <button type="button" class="btn btn-secondary btn-sm" name="button">Reset</button>
+            </a>
           </td>
           <td>
             <form id="terminate_rootchain" action="{{ url_for('instance_terminate') }}" method="post">
