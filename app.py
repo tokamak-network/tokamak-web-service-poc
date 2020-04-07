@@ -50,6 +50,17 @@ t_db = TinyDB(config["DATABASE"]["DATABASE"])
 app = Flask(__name__)
 app.config.from_object(__name__)
 
+@app.route("/test")
+def test():
+    # data = t_db.search(Query().Type == "rootchain")
+    data = t_db.search(Query().Type == "operator")
+    if data == "":
+        data = []
+    return render_template(
+            "operator/operator_create.html",
+            data = data
+        );
+
 #####################
 ## ROOTCHAIN ROUTE ##
 #####################
@@ -61,7 +72,7 @@ def rootchain():
         data = []
     # print(data)
     return render_template(
-            "rootchain_list.html",
+            "rootchain/rootchain_list.html",
             data = data
         );
 
@@ -118,7 +129,7 @@ def rootchain_reset():
 @app.route("/rootchain/form")
 def rootchain_form():
     return render_template(
-            "rootchain_create_form.html"
+            "rootchain/rootchain_create.html"
         );
 
 @app.route("/rootchain/form/create", methods=["POST"])
@@ -234,7 +245,7 @@ def operator():
     data = t_db.search(Query().Type == "operator")
     # print(data)
     return render_template(
-            "operator_list.html",
+            "operator/operator_list.html",
             data = data
         );
 
@@ -242,7 +253,7 @@ def operator():
 def operator_form():
     data = t_db.search(Query().Type == "rootchain")
     return render_template(
-            "operator_create_form.html",
+            "operator/operator_create.html",
             data = data
         );
 
@@ -348,6 +359,7 @@ def operator_export_genesis():
     if request.method == 'POST':
         inst_id = request.form["instance_id"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
+        # print(inst)
         genesis = export_genesis(inst["IpAddress"])
         t_db.update(set('Genesis', genesis), Query().InstanceId == inst_id)
         t_db.update(set('IsExported', "true"), Query().InstanceId == inst_id)
@@ -446,7 +458,7 @@ def usernode():
     data = t_db.search(Query().Type == "usernode")
     # print(data)
     return render_template(
-            "usernode_list.html",
+            "usernode/usernode_list.html",
             data = data
         );
 
@@ -455,7 +467,7 @@ def usernode_form():
     data = t_db.search(Query().Type == "rootchain")
     data2 = t_db.search(Query().Type == "operator")
     return render_template(
-            "usernode_create_form.html",
+            "usernode/usernode_create.html",
             data = data,
             data2 = data2
         );
@@ -472,9 +484,6 @@ def usernode_create():
 
         root_inst = t_db.search(Query().InstanceId == rootchain_id)[0]
         operator_inst = t_db.search(Query().InstanceId == operator_id)[0]
-
-        # TODO : Create usernode
-        # TODO : Create usernode monitor
 
         usernode_ins = create_usernode_instance(name)
         usernode_ins_monitor = usernode_ins.monitor()
@@ -547,7 +556,7 @@ def usernode_runnode():
         out = run_usernode(inst["IpAddress"])
         print(out)
         t_db.update(set('Status', "mining"), Query().InstanceId == inst_id)
-        flash([time.ctime()[11:19] + " Usern Node Running!"])
+        flash([time.ctime()[11:19] + " User Node Running!"])
         return redirect(url_for('usernode'))
     else:
         return redirect(url_for('usernode'))

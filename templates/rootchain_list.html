@@ -27,6 +27,7 @@
       <th>Drop</th>
     </tr>
     {% for data in data %}
+
     <tr class="{{ data.InstanceId }}">
       <td class="name">
         <a href="{{ url_for('instance', instanceid=data.InstanceId) }}">{{ data.Name }}</a>

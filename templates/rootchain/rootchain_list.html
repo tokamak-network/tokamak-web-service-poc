@@ -1,0 +1,140 @@
+{% extends 'rootchain/rootchain_layout.html' %}
+
+{% block article %}
+
+  <div class="table-responsive">
+    <small>*Status : pending | enable | mining | shutdown</small>
+    <table class="table table-striped table-bordered table-hover table-sm" id="rootchain-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Log</th>
+          <th>Status</th>
+          <th>*Status</th>
+          <th>IP</th>
+          <th>IP</th>
+          <th>Start Node</th>
+          <th>Deploy Seig Manager</th>
+          <th>Deployed?</th>
+          <th>Deploy PowerTON</th>
+          <th>Deployed?</th>
+          <th>Start PowerTON</th>
+          <th>Started?</th>
+          <th>Export Manager</th>
+          <th>Exported?</th>
+          <th>Created At</th>
+          <th>Reset</th>
+          <th>Shutdown</th>
+          <th>Drop</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in data %}
+        <tr>
+          <td>
+            <a href="{{ url_for('instance', instanceid=data.InstanceId) }}">{{ data.Name }}</a>
+          </td>
+          <td>
+            <a href="{{ url_for('log', instanceid=data.InstanceId, filename='rootnode.log') }}">
+              <button type="button" class="btn btn-secondary btn-sm" name="button">Log</button>
+            </a>
+          </td>
+          <td>
+            <form id="checkStatus" action="{{ url_for('check_status') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="1.Check">
+            </form>
+          </td>
+          <td>
+            {{ data.Status }}
+          </td>
+          <td>
+            <form id="checkIP" action="{{ url_for('check_ip') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="2.Check">
+            </form>
+          </td>
+          <td>
+            {{ data.IpAddress }}
+          </td>
+          <td>
+            <form id="start_rootchain" action="{{ url_for('rootchain_start') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="3.Start Rootchain">
+            </form>
+          </td>
+          <td>
+            <a href="{{ url_for('deploy_manager', instanceid=data.InstanceId) }}">
+              <button type="button" class="btn btn-secondary btn-sm" name="button">
+                4.Deploy Managers
+              </button>
+            </a>
+          </td>
+          <td> {{ data.IsMansgerDeployed }} </td>
+          <td>
+            <a href="{{ url_for('deploy_powerton', instanceid=data.InstanceId) }}">
+              <button type="button" class="btn btn-secondary btn-sm" name="button">
+                5.Deploy PowerTON
+              </button>
+            </a>
+          </td>
+          <td> {{ data.IsPowerTONDeployed }} </td>
+
+          <td>
+            <a href="{{ url_for('start_powerton', instanceid=data.InstanceId) }}">
+              <button type="button" class="btn btn-secondary btn-sm" name="button">
+                6.Start PowerTON
+              </button>
+            </a>
+          </td>
+          <td> {{ data.IsPowerTONStarted }} </td>
+          <td>
+            <a href="{{ url_for('export_manager', instanceid=data.InstanceId) }}">
+              <button type="button" class="btn btn-secondary btn-sm" name="button">
+                7.Export Manager
+              </button>
+            </a>
+          </td>
+          <td> {{ data.IsManagerExported }} </td>
+          <td class="date">
+            {{ data.Date }}
+          </td>
+          <td>
+            <form id="reset_rootchain" action="{{ url_for('rootchain_reset') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="Reset">
+            </form>
+          </td>
+          <td>
+            <form id="terminate_rootchain" action="{{ url_for('instance_terminate') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="Terminate">
+            </form>
+          </td>
+          <td>
+            <form id="drop_rootchain" action="{{ url_for('drop_data') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="Drop">
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+
+
+  {% with messages = get_flashed_messages()[0] %}
+    {% if messages %}
+    <div class="card">
+      <div class="card-body">
+        {% for message in messages %}
+          {{ message }} <br>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  {% endwith %}
+
+{% endblock %}

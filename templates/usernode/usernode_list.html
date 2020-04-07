@@ -1,0 +1,106 @@
+{% extends 'usernode/usernode_layout.html' %}
+
+{% block article %}
+
+  <div class="table-responsive">
+    <small>*Status : pending | enable | mining | shutdown</small>
+    <table class="table table-striped table-bordered table-hover table-sm" id="rootchain-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Log</th>
+          <th>Status</th>
+          <th>Status*</th>
+          <th>IP</th>
+          <th>IP</th>
+          <th>Initialize**</th>
+          <th>Is Init?</th>
+          <th>Start Node</th>
+          <th>Created At</th>
+          <th>Restart</th>
+          <th>Shutdown</th>
+          <th>Drop</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in data %}
+        <tr class="{{ data.InstanceId }}">
+          <td class="name">
+            <a href="{{ url_for('instance', instanceid=data.InstanceId) }}">{{ data.Name }}</a>
+          </td>
+          <td class="log">
+            <a href="{{ url_for('log', instanceid=data.InstanceId, filename='user.log') }}">
+              <button type="button" class="btn btn-secondary btn-sm" name="button">Log</button>
+            </a>
+          </td>
+          <td>
+            <form id="checkStatus" action="{{ url_for('check_status') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="1.Check">
+            </form>
+          </td>
+          <td>{{ data.Status }}</td>
+          <td class="ip">
+            <form id="checkIP" action="{{ url_for('check_ip') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="2.Check">
+            </form>
+          </td>
+          <td>
+            {{ data.IpAddress }}
+          </td>
+          <td>
+            <form id="usernode_initialize" action="{{ url_for('usernode_initialize') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="3.Init">
+            </form>
+          </td>
+          <td>{{data.IsInitialized}}</td>
+          <td>
+            <form id="start_usernode" action="{{ url_for('usernode_runnode') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="4.Start Usernode">
+            </form>
+          </td>
+          <td class="date">
+            {{ data.Date }}
+          </td>
+          <td>
+            <form id="restart_usernode" action="{{ url_for('rootchain_reset') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="Reset(Not Working)">
+            </form>
+          </td>
+          <td>
+            <form id="terminate_rootchain" action="{{ url_for('instance_terminate') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="Terminate">
+            </form>
+          </td>
+          <td>
+            <form id="drop_rootchain" action="{{ url_for('drop_data') }}" method="post">
+              <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
+              <input type="submit" class="btn btn-secondary btn-sm" name="check" value="Drop">
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+
+
+  {% with messages = get_flashed_messages()[0] %}
+    {% if messages %}
+    <div class="card">
+      <div class="card-body">
+        {% for message in messages %}
+          {{ message }} <br>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  {% endwith %}
+
+{% endblock %}

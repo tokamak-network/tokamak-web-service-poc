@@ -120,6 +120,7 @@ def deploy_rootchain_contract(ip_address):
 
 def export_genesis(ip_address):
     output = ssh_execute(host=ip_address, command="cat /home/ubuntu/genesis.json")
+    print(output)
     return json.loads(output[0])
 
 def initialize_operator_blockchain(ip_address):

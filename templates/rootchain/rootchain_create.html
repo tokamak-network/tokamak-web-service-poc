@@ -1,0 +1,107 @@
+{% extends 'rootchain/rootchain_layout.html' %}
+
+{% block article %}
+
+<form action = "{{ url_for('rootchain_create') }}" method = "POST">
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">## Name ##</label>
+    <div class="col-sm-10">
+      <input type="text" name="Name" class="form-control" placeholder="Instance Name">
+    </div>
+  </div>
+
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">## Key Setting ##</legend>
+      <div class="col-sm-10">
+
+        <div class="form-group row">
+          <label for="faucet1" class="col-sm-2 col-form-label">Faucet1(operator) address</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="faucet1" name="Key1Address" value="0x71562b71999873DB5b286dF957af199Ec94617F7">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="faucet1key" class="col-sm-2 col-form-label">Faucet1 key</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="faucet1key" name="Key1" value="b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="faucet1password" class="col-sm-2 col-form-label">Faucet1 password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" id="faucet1password" name="Password" value="" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="faucet2key" class="col-sm-2 col-form-label">Faucet2 key</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="faucet2key" name="Key2" value="78ae75d1cd5960d87e76a69760cb451a58928eee7890780c352186d23094a115">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="faucet3key" class="col-sm-2 col-form-label">Faucet3 key</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="faucet3key" name="Key3" value="067394195895a82e685b000e592f771f7899d77e87cc8c79110e53a2f0b0b8fc">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="faucet4key" class="col-sm-2 col-form-label">Faucet4 key</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="faucet4key" name="Key4" value="ae03e057a5b117295db86079ba4c8505df6074cdc54eec62f2050e677e5d4e66">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="faucet5key" class="col-sm-2 col-form-label">Faucet5 key</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="faucet5key" name="Key5" value="eda4515e1bc6c08e8606b51ffb6ffe70b3fe76781ed49872285e484064e3b634">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="faucet6key" class="col-sm-2 col-form-label">Faucet6 key</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="faucet6key" name="Key6" value="bfaa65473b85b3c33b2f5ddb511f0f4ef8459213ada2920765aaac25b4fe38c5">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">## Stake Setting ##</legend>
+      <div class="col-sm-10">
+
+        <div class="form-group row">
+          <label for="wDelay" class="col-sm-2 col-form-label">Withdrawal Delay(block)</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="wDelay" name="WithdrawalDelay" value="10">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="sPerBlock" class="col-sm-2 col-form-label">Seigniorage Per Block(TON)</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="sPerBlock" name="Seigniorage" value="1.5">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="PPerRound" class="col-sm-2 col-form-label">PowerTON Round Time(Second)</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="PPerRound" name="PowerTONRound" value="60">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <button type="submit" class="btn btn-primary">CREATE</button>
+    </div>
+  </div>
+
+</form>
+
+{% endblock %}
