@@ -570,7 +570,7 @@ def instance(instanceid):
     res = t_db.search(Query().InstanceId == instanceid)
     # print(instanceid)
     return render_template(
-            "instance.html",
+            "instance/instance.html",
             data = res[0]
         );
 
