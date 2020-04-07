@@ -503,7 +503,8 @@ def usernode_create():
             'InstanceId' : usernode_ins_monitor['InstanceMonitorings'][0]['InstanceId'],
             'Status' : usernode_ins_monitor['InstanceMonitorings'][0]['Monitoring']['State'],
             'Date' : usernode_ins_monitor['ResponseMetadata']['HTTPHeaders']['date'],
-            'Enode' : enode_hex
+            'Enode' : enode_hex,
+            'IsInitialized' : ''
         }
         t_db.insert(inst_obj)
         q_res = t_db.search(Query().Name == name)
@@ -607,8 +608,10 @@ def reset_instance(instanceid):
         flash([time.ctime()[11:19] + " " + inst_name + " reset"])
         return redirect(url_for('operator'))
     elif inst_type == "usernode":
-        #TODO : reset instance
-        #TODO : flash log
+        update_usernode(inst_ip, hostname, pemfile_path)
+        t_db.update(set('Status', "enabled"), Query().InstanceId == instanceid)
+        t_db.update(set('IsInitialized', ""), Query().InstanceId == instanceid)
+        flash([time.ctime()[11:19] + " " + inst_name + " reset"])
         return redirect(url_for('usernode'))
 
 
