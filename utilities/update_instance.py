@@ -1,7 +1,7 @@
 from .utilities import SSHManager
 import subprocess
 
-def update_operator(hostname, username, pemfile_path):
+def update_operator(hostname, username, pemfile):
     ssh_manager = SSHManager()
     ssh_manager.create_ssh_client(hostname, username, pemfile)
 

@@ -28,7 +28,6 @@ from tokamak_aws import create_rootchain_instance, \
     export_genesis, \
     initialize_operator_blockchain, \
     run_operator, \
-    restart_operator,\
     managers_import, \
     managers_set, \
     managers_register, \
@@ -169,10 +168,10 @@ def rootchain_create():
                 'SeigPerBlock' : seig_per_block,
                 'PwertTONRoundTime' : power_ton_round_time
                 },
-            'IsMansgerDeployed' : 'false',
-            'IsPowerTONDeployed' : 'false',
-            'IsPowerTONStarted' : 'false',
-            'IsManagerExported': 'false',
+            'IsMansgerDeployed' : '',
+            'IsPowerTONDeployed' : '',
+            'IsPowerTONStarted' : '',
+            'IsManagerExported': '',
             'Managers' : "",
             'Managers2' : ""
         }
@@ -304,6 +303,11 @@ def operator_create():
             'OperatorAccount' : operator_account,
             'OperatorAccountKey' : operator_account_key,
             'OperatorPassword' : operator_password,
+            'IsSet' : '',
+            'IsDeployed' : '',
+            'Genesis' : '',
+            'IsExported' : '',
+            'IsInitialized' : '',
             'IsManagersImported' : '',
             'IsManagersSet' : '',
             'IsMansgersRegistered' : ''
@@ -349,7 +353,8 @@ def operator_deploy_rootchain():
         inst_ip = inst['IpAddress']
         out1 = deploy_rootchain_contract(inst_ip)
         t_db.update(set('IsDeployed', "true"), Query().InstanceId == inst_id)
-        flash([time.ctime()[11:19] + " rootchain contract deployed!"])
+        # flash([time.ctime()[11:19] + " rootchain contract deployed!"])
+        flash(out1)
         return redirect(url_for('operator'))
     else:
         return redirect(url_for('operator'))
@@ -384,30 +389,6 @@ def operator_initialize():
         return redirect(url_for('operator'))
     else:
         return redirect(url_for('operator'))
-
-@app.route("/operator/runnode", methods=["POST"])
-def operator_runnode():
-    error = None
-    res = []
-    if request.method == 'POST':
-        inst_id = request.form["instance_id"]
-        inst = t_db.search(Query().InstanceId == inst_id)[0]
-        out = run_operator(inst["IpAddress"])
-        t_db.update(set('Status', "mining"), Query().InstanceId == inst_id)
-        flash([time.ctime()[11:19] + " Operator Running!"])
-        return redirect(url_for('operator'))
-    else:
-        return redirect(url_for('operator'))
-
-@app.route("/operator/restart/<instanceid>")
-def operator_restart(instanceid):
-    inst = t_db.search(Query().InstanceId == instanceid)
-    inst_ip = inst[0]["IpAddress"]
-
-    restart_operator(inst_ip)
-
-    flash([time.ctime()[11:19] + " Operator Restarted!"])
-    return redirect(url_for('operator'))
 
 @app.route("/operator/import/managers/<instanceid>")
 def operator_import_managers(instanceid):
@@ -450,6 +431,20 @@ def operator_register_managers(instanceid):
 
     flash(out)
     return redirect(url_for('operator'))
+
+@app.route("/operator/runnode", methods=["POST"])
+def operator_runnode():
+    error = None
+    res = []
+    if request.method == 'POST':
+        inst_id = request.form["instance_id"]
+        inst = t_db.search(Query().InstanceId == inst_id)[0]
+        out = run_operator(inst["IpAddress"])
+        t_db.update(set('Status', "mining"), Query().InstanceId == inst_id)
+        flash([time.ctime()[11:19] + " Operator Running!"])
+        return redirect(url_for('operator'))
+    else:
+        return redirect(url_for('operator'))
 
 #######################
 ## USERNODE SETTING ###
@@ -594,12 +589,22 @@ def reset_instance(instanceid):
         t_db.update(set('IsMansgerDeployed', ""), Query().InstanceId == instanceid)
         t_db.update(set('IsPowerTONDeployed', ""), Query().InstanceId == instanceid)
         t_db.update(set('IsPowerTONStarted', ""), Query().InstanceId == instanceid)
+        t_db.update(set('Managers', ""), Query().InstanceId == instanceid)
         t_db.update(set('IsManagerExported', ""), Query().InstanceId == instanceid)
         flash([time.ctime()[11:19] + " " + inst_name + " reset"])
         return redirect(url_for('rootchain'))
     elif inst_type == "operator":
-        #TODO : reset instance
-        #TODO : flash log
+        update_operator(inst_ip, hostname, pemfile_path)
+        t_db.update(set('Status', "enabled"), Query().InstanceId == instanceid)
+        t_db.update(set('IsSet', ""), Query().InstanceId == instanceid)
+        t_db.update(set('IsDeployed', ""), Query().InstanceId == instanceid)
+        t_db.update(set('Genesis', ""), Query().InstanceId == instanceid)
+        t_db.update(set('IsExported', ""), Query().InstanceId == instanceid)
+        t_db.update(set('IsInitialized', ""), Query().InstanceId == instanceid)
+        t_db.update(set('IsManagersImported', ""), Query().InstanceId == instanceid)
+        t_db.update(set('IsManagersSet', ""), Query().InstanceId == instanceid)
+        t_db.update(set('IsManagersRegistered', ""), Query().InstanceId == instanceid)
+        flash([time.ctime()[11:19] + " " + inst_name + " reset"])
         return redirect(url_for('operator'))
     elif inst_type == "usernode":
         #TODO : reset instance

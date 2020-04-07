@@ -143,11 +143,6 @@ def managers_register(ip_address):
 def run_operator(ip_address):
     return ssh_execute(host=ip_address, command="/home/ubuntu/3_run.operator.sh")
 
-def restart_operator(ip_address):
-    out1 = ssh_execute(host=ip_address, command="/home/ubuntu/init.all.sh")
-    out2 = ssh_execute(host=ip_address, command="/home/ubuntu/4_run.operator.sh")
-    return [out1, out2]
-
 ##############################
 #### ROOTCHAIN CONTROLLER ####
 ##############################

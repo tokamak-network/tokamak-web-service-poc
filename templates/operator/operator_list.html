@@ -29,7 +29,7 @@
           <th>Register Managers</th>
           <th>Is Registered?</th>
           <th>Run Operator</th>
-          <!-- <th>Restart</th> -->
+          <th>Reset</th>
           <th>Shutdown</th>
           <th>Drop</th>
         </tr>
@@ -120,11 +120,11 @@
                 <input type="submit" class="btn btn-secondary btn-sm" name="check" value="10.Run">
               </form>
             </td>
-            <!-- <td>
-              <a href="{{ url_for('operator_restart', instanceid=data.InstanceId) }}">
-                <button type="button" name="button">Restart</button>
+            <td>
+              <a href="{{ url_for('reset_instance', instanceid=data.InstanceId) }}">
+                <button type="button" class="btn btn-secondary btn-sm" name="button">Reset</button>
               </a>
-            </td> -->
+            </td>
             <td>
               <form id="terminate_rootchain" action="{{ url_for('instance_terminate') }}" method="post">
                 <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
