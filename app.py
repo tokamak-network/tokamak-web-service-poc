@@ -45,6 +45,8 @@ DEBUG = config["SERVER"]["DEBUG"]
 SECRET_KEY = config["SERVER"]["SECRET_KEY"]
 USERNAME = config["SERVER"]["USERNAME"]
 PASSWORD = config["SERVER"]["PASSWORD"]
+PEMFILE = config["SSH"]["SSH_PEMFILE"]
+SSH_USERNAME = config["SSH"]["SSH_USERNAME"]
 
 t_db = TinyDB(config["DATABASE"]["DATABASE"])
 
@@ -578,14 +580,9 @@ def reset_instance(instanceid):
     inst_ip = inst[0]["IpAddress"]
     inst_name = inst[0]["Name"]
     inst_type = inst[0]["Type"]
-    hostname = "ubuntu"
-    pemfile_path = "test_kevin1.pem"
 
-
-    #TODO : initialize status
-    #TODO :
     if inst_type == "rootchain":
-        update_rootchain(inst_ip, hostname, pemfile_path)
+        update_rootchain(inst_ip, SSH_USERNAME, PEMFILE)
         t_db.update(set('Status', "enabled"), Query().InstanceId == instanceid)
         t_db.update(set('IsMansgerDeployed', ""), Query().InstanceId == instanceid)
         t_db.update(set('IsPowerTONDeployed', ""), Query().InstanceId == instanceid)
@@ -595,7 +592,7 @@ def reset_instance(instanceid):
         flash([time.ctime()[11:19] + " " + inst_name + " reset"])
         return redirect(url_for('rootchain'))
     elif inst_type == "operator":
-        update_operator(inst_ip, hostname, pemfile_path)
+        update_operator(inst_ip, SSH_USERNAME, PEMFILE)
         t_db.update(set('Status', "enabled"), Query().InstanceId == instanceid)
         t_db.update(set('IsSet', ""), Query().InstanceId == instanceid)
         t_db.update(set('IsDeployed', ""), Query().InstanceId == instanceid)
@@ -608,7 +605,7 @@ def reset_instance(instanceid):
         flash([time.ctime()[11:19] + " " + inst_name + " reset"])
         return redirect(url_for('operator'))
     elif inst_type == "usernode":
-        update_usernode(inst_ip, hostname, pemfile_path)
+        update_usernode(inst_ip, SSH_USERNAME, PEMFILE)
         t_db.update(set('Status', "enabled"), Query().InstanceId == instanceid)
         t_db.update(set('IsInitialized', ""), Query().InstanceId == instanceid)
         flash([time.ctime()[11:19] + " " + inst_name + " reset"])
