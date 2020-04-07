@@ -38,9 +38,14 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('home') }}">
+                  <span data-feather="home"></span>
+                  Home
+                </a>
+              </li>
                 <a class="nav-link" href="{{ url_for('rootchain') }}">
                   <span data-feather="home"></span>
-                  Rootchain Setup <span class="sr-only">(current)</span>
+                  Rootchain Setup
                 </a>
               </li>
               <li class="nav-item">
@@ -111,44 +116,69 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <!-- <script src="../../assets/js/vendor/popper.min.js"></script> -->
     <!-- <script src="../../dist/js/bootstrap.min.js"></script> -->
-    <script src="{{ url_for('static', filename='script/popper.min.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='script/popper.min.js') }}"></script> -->
     <script src="{{ url_for('static', filename='script/bootstrap.min.js') }}"></script>
+
+    <!-- d3js -->
+    <script src="https://d3js.org/d3.v2.min.js?2.9.3"></script>
+    <script src="{{ url_for('static', filename='script/script.js') }}">
+
+    </script>
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
       feather.replace()
     </script>
+    <script type="text/javascript">
 
-    <!-- Graphs -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script>
-      var ctx = document.getElementById("myChart");
-      var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          datasets: [{
-            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-            lineTension: 0,
-            backgroundColor: 'transparent',
-            borderColor: '#007bff',
-            borderWidth: 4,
-            pointBackgroundColor: '#007bff'
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: false
-              }
-            }]
-          },
-          legend: {
-            display: false,
-          }
-        }
-      });
-    </script> -->
+    var datass = JSON.parse({{ data|tojson }});
+
+    var width = 960,
+        height = 500
+
+    var svg = d3.select("#home-main-dom").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var force = d3.layout.force()
+        .gravity(.02)
+        .distance(100)
+        .charge(-120)
+        .size([width, height]);
+
+    force
+        .nodes(datass.nodes)
+        .links(datass.links)
+        .start();
+
+    var link = svg.selectAll(".link")
+        .data(datass.links)
+      .enter().append("line")
+        .attr("class", "link")
+      .style("stroke-width", function(d) { return Math.sqrt(d.weight); });
+
+    var node = svg.selectAll(".node")
+        .data(datass.nodes)
+      .enter().append("g")
+        .attr("class", "node")
+        .call(force.drag);
+
+    node.append("circle")
+        .attr("r","5");
+
+    node.append("text")
+        .attr("dx", 12)
+        .attr("dy", ".35em")
+        .text(function(d) { return d.name });
+
+    force.on("tick", function() {
+      link.attr("x1", function(d) { return d.source.x; })
+          .attr("y1", function(d) { return d.source.y; })
+          .attr("x2", function(d) { return d.target.x; })
+          .attr("y2", function(d) { return d.target.y; });
+
+      node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    });
+    </script>
   </body>
 </html>

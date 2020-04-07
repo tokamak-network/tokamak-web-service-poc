@@ -3,5 +3,6 @@ config.ini
 test/*
 __pycache__
 tokamak.db.json
+*.json
 venv/*
 *.tar

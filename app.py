@@ -39,6 +39,7 @@ from tokamak_aws import \
     run_usernode
 
 from utilities.update_instance import update_operator, update_rootchain, update_usernode
+from utilities.network_generator import make_network_json
 
 DEBUG = config["SERVER"]["DEBUG"]
 SECRET_KEY = config["SERVER"]["SECRET_KEY"]
@@ -52,16 +53,18 @@ t_db = TinyDB(config["DATABASE"]["DATABASE"])
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-@app.route("/test")
-def test():
-    # data = t_db.search(Query().Type == "rootchain")
-    data = t_db.search(Query().Type == "operator")
-    if data == "":
-        data = []
+
+@app.route("/")
+def home():
+    #TODO: make json
+    make_network_json("test.json")
+    with open('test.json','r') as f:
+        s = f.read()
     return render_template(
-            "operator/operator_create.html",
-            data = data
+            "home/home.html",
+            data=s
         );
+
 
 #####################
 ## ROOTCHAIN ROUTE ##
