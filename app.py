@@ -62,7 +62,7 @@ def home():
         s = f.read()
     return render_template(
             "home/home.html",
-            data=s
+            network_data=s
         );
 
 

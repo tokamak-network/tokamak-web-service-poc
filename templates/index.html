@@ -129,9 +129,11 @@
     <script>
       feather.replace()
     </script>
+
+    {% if network_data %}
     <script type="text/javascript">
 
-    var datass = JSON.parse({{ data|tojson }});
+    var datass = JSON.parse({{ network_data|tojson }});
 
     var width = 960,
         height = 500
@@ -180,5 +182,6 @@
       node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     });
     </script>
+    {% endif %}
   </body>
 </html>

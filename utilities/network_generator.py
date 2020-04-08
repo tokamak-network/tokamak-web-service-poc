@@ -36,6 +36,7 @@ def make_network_json(filename):
 
     #### USERNODE - OPERATORS
     usernodes = t_db.search(Query().Type == "usernode")
+    print(len(usernodes))
 
     u_nodes = []
     pairs2 = []
@@ -67,6 +68,8 @@ def make_network_json(filename):
 
     for i in links:
         target["links"].append(i)
+
+    print(target)
 
     with open(filename,"w+") as f:
         f.write(json.dumps(target, indent=4))
