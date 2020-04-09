@@ -39,7 +39,7 @@ from tokamak_aws import \
     run_usernode
 
 from utilities.update_instance import update_operator, update_rootchain, update_usernode
-from utilities.network_generator import make_network_json
+from utilities.network_generator import get_network_json
 
 DEBUG = config["SERVER"]["DEBUG"]
 SECRET_KEY = config["SERVER"]["SECRET_KEY"]
@@ -56,13 +56,10 @@ app.config.from_object(__name__)
 
 @app.route("/")
 def home():
-    #TODO: make json
-    make_network_json("test.json")
-    with open('test.json','r') as f:
-        s = f.read()
+    network = get_network_json()
     return render_template(
             "home/home.html",
-            network_data=s
+            network_data=network
         );
 
 

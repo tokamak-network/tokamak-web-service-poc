@@ -133,7 +133,8 @@
     {% if network_data %}
     <script type="text/javascript">
 
-    var datass = JSON.parse({{ network_data|tojson }});
+    console.log({{ network_data|tojson }});
+    var datass = {{ network_data|tojson }};
 
     var width = 960,
         height = 500
@@ -143,9 +144,9 @@
         .attr("height", height);
 
     var force = d3.layout.force()
-        .gravity(.02)
-        .distance(100)
-        .charge(-107)
+        .gravity(.05)
+        .distance(130)
+        .charge(-110)
         .size([width, height]);
 
     force
