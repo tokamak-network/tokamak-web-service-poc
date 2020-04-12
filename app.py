@@ -62,6 +62,69 @@ def home():
             network_data=network
         );
 
+#####################
+### CONFIG ROUTE ####
+#####################
+
+@app.route("/config")
+def config_router():
+    target = {}
+
+    for i in config.items():
+        for j in i[1].keys():
+            target[j] = config[i[0]][j]
+
+    return render_template(
+            "config/config_ini.html",
+            target=target
+        );
+
+@app.route("/config/ini/set", methods=["POST"])
+def config_ini_set():
+
+    if request.method == 'POST':
+        ac_key = request.form['AccessKey']
+        sec_key = request.form['SecretKey']
+        img_id = request.form['ImageID']
+        ins_type = request.form['InstanceType']
+        sec_group_id = request.form['SecurityGroupID']
+        key_name = request.form['KeyName']
+        region_name = request.form['RegionName']
+        ssh_user = request.form['SshUsername']
+        ssh_pem = request.form['SshPemfile']
+        debug = request.form['Debug']
+        username = request.form['Username']
+        password = request.form['Password']
+        database = request.form['Database']
+
+        #put into config.ini
+
+        config['AWS']['AWS_ACCESS_KEY'] = ac_key
+        config['AWS']['AWS_SECRET_KEY'] = sec_key
+
+        config['INSTANCE']['BASIC_IMAGE_ID'] = img_id
+        config['INSTANCE']['INSTANCE_TYPE'] = ins_type
+        config['INSTANCE']['SECURITY_GROUP_ID'] = sec_group_id
+        config['INSTANCE']['KEY_NAME'] = key_name
+        config['INSTANCE']['REGION_NAME'] = region_name
+
+        config['SSH']['SSH_USERNAME'] = ssh_user
+        config['SSH']['SSH_PEMFILE'] = ssh_pem
+
+        config['SERVER']['DEBUG'] = debug
+        config['SERVER']['SECRET_KEY'] = username
+        config['SERVER']['USERNAME'] = password
+        config['SERVER']['PASSWORD'] = database
+
+        config['DATABASE']['DATABASE'] = database
+
+        with open('config.ini', 'w+') as configfile:
+            config.write(configfile)
+
+    flash([time.ctime()[11:19] + " config.ini set!"])
+
+    return redirect(url_for('config_router'))
+
 
 #####################
 ## ROOTCHAIN ROUTE ##
