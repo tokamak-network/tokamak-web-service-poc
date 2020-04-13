@@ -1,4 +1,11 @@
-# Tokamak Web Service PoC ![Discord Shield](https://discordapp.com/api/guilds/696270789472682034/widget.png?style=shield)
+# Tokamak Web Service PoC
+
+<p>
+  <a href="https://discord.gg/HjJCwm5">
+      <img src="https://img.shields.io/discord/696270789472682034?logo=discord"
+          alt="chat on Discord">
+  </a>
+</p>
 
 ## Planning
 [Planning Document](https://docs.google.com/presentation/d/18nSOzgvrDsUZb36V0VLtWatB8jJCmhgX5dUBctVnkXo/edit?usp=sharing)
