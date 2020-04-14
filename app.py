@@ -7,6 +7,7 @@ import sys
 config = configparser.ConfigParser()
 config.read('config.ini')
 
+from io import StringIO
 from tinydb import TinyDB, Query
 from tinydb.operations import delete, set
 from flask import Flask, render_template, request, redirect, url_for, flash
@@ -36,7 +37,8 @@ from tokamak_aws import \
     import_genesis_usernode, \
     check_genesis, \
     initialize_usernode, \
-    run_usernode
+    run_usernode, \
+    create_pem
 
 from utilities.update_instance import update_operator, update_rootchain, update_usernode
 from utilities.network_generator import get_network_json
@@ -77,7 +79,48 @@ def config_router():
     return render_template(
             "config/config_ini.html",
             target=target
-        );
+        )
+
+@app.route("/config/pem/set", methods=["POST"])
+def config_pem_set():
+    return 0
+
+@app.route("/config/pem/form")
+def pem_router():
+    pems = t_db.search(Query().Type == "pem")
+    
+    return render_template(
+            "config/config_pem.html",
+            pems = pems
+        )
+
+@app.route("/config/pem/form/create", methods=["POST"])
+def pem_create():
+    error = None
+    res = []
+    output_stream = StringIO
+
+    if request.method == 'POST':
+        name = request.form['Name']
+        try:
+            keyPair, keyFP = create_pem(name)
+        except Exception as e:
+            flash([str(e)])
+            return redirect(url_for('pem_router'))
+
+        inst_obj = {
+            'Type' : "pem",
+            'Name' : name,
+            'FingerPrint': keyFP,
+        }
+
+        t_db.insert(inst_obj)
+        q_res = t_db.search(Query().Name == name)
+        flash([str(q_res), "Pem Created!"])
+
+        return redirect(url_for('pem_router'))
+    else:
+        return url_for('pem_router')
 
 @app.route("/config/ini/set", methods=["POST"])
 def config_ini_set():
@@ -302,9 +345,9 @@ def export_manager(instanceid):
 
     return redirect(url_for('rootchain'))
 
-#####################
+####################
 ## OPERATOR ROUTE ##
-#####################
+####################
 
 @app.route("/operator")
 def operator():
