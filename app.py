@@ -81,10 +81,6 @@ def config_router():
             target=target
         )
 
-@app.route("/config/pem/set", methods=["POST"])
-def config_pem_set():
-    return 0
-
 @app.route("/config/pem/form")
 def pem_router():
     pems = t_db.search(Query().Type == "pem")
