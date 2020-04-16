@@ -39,6 +39,8 @@ from tokamak_aws import \
     initialize_usernode, \
     run_usernode, \
     create_pem
+    # create_pem, \
+    # delete_pem
 
 from utilities.update_instance import update_operator, update_rootchain, update_usernode
 from utilities.network_generator import get_network_json
@@ -99,7 +101,7 @@ def pem_create():
     if request.method == 'POST':
         name = request.form['Name']
         try:
-            keyPair, keyFP = create_pem(name)
+            key_pair, key_finger_print = create_pem(name)
         except Exception as e:
             flash([str(e)])
             return redirect(url_for('pem_router'))
@@ -107,7 +109,7 @@ def pem_create():
         inst_obj = {
             'Type' : "pem",
             'Name' : name,
-            'FingerPrint': keyFP,
+            'FingerPrint': key_finger_print,
         }
 
         t_db.insert(inst_obj)
@@ -117,6 +119,22 @@ def pem_create():
         return redirect(url_for('pem_router'))
     else:
         return url_for('pem_router')
+
+# @app.route("/config/pem/form/delete", methods=["POST"])
+# def pem_delete():
+#     if request.method == 'POST':
+#         op = request.form.get('pem-check')
+#         print(op)
+#         flash([op])
+#         # name = request.form['Name']
+#         # try:
+#         #     delete_pem(name)
+#         #     t_db.remove(where('Name') == name)
+#         # except Exception as e:
+#         #     flash([str(e)])
+#         return redirect(url_for('pem_router'))
+        
+        
 
 @app.route("/config/ini/set", methods=["POST"])
 def config_ini_set():

@@ -67,10 +67,13 @@ ec2 = boto3.resource(
 def create_pem(pem_name):
     response = ec2.create_key_pair(KeyName=pem_name)
 
-    keyPair = str(response.key_material)
-    keyFP = str(response.key_fingerprint)
+    key_pair = str(response.key_material)
+    key_finger_print = str(response.key_fingerprint)
 
-    return keyPair, keyFP
+    return key_pair, key_finger_print
+
+# def delete_pem(pem_name):
+#     response = ec2.delete_key_pair(KeyName=pem_name)
     
 
 ##############################
