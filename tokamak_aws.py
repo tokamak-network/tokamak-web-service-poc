@@ -60,6 +60,22 @@ ec2 = boto3.resource(
     region_name=region_name
 )
 
+######################
+##### CREATE PEM #####
+######################
+
+def create_pem(pem_name):
+    response = ec2.create_key_pair(KeyName=pem_name)
+
+    key_pair = str(response.key_material)
+    key_finger_print = str(response.key_fingerprint)
+
+    return key_pair, key_finger_print
+
+# def delete_pem(pem_name):
+#     response = ec2.delete_key_pair(KeyName=pem_name)
+    
+
 ##############################
 ###### COMMON INSTANCE  ######
 ##############################
