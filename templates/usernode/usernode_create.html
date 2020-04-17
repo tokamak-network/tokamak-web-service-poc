@@ -6,7 +6,7 @@
   <div class="form-group row">
     <label for="Name" class="col-sm-2 col-form-label">Instance Name</label>
     <div class="col-sm-10">
-      <input type="text" id="Name" name="Name" class="form-control" placeholder="Instance Name">
+      <input type="text" id="usernode-instance-name" name="Name" class="form-control" placeholder="Instance Name">
     </div>
   </div>
 
@@ -22,9 +22,9 @@
   </div>
 
   <div class="form-group row">
-    <label for="Rootchain" class="col-sm-2 col-form-label">Operator</label>
+    <label for="rootchain" class="col-sm-2 col-form-label">Operator</label>
     <div class="col-sm-10">
-      <select class="custom-select" name="OperatorID" id="Rootchain">
+      <select class="custom-select" name="OperatorID" id="rootchain">
         {% for data2 in data2 %}
         <option value="{{ data2.InstanceId | safe}}">{{ data2.Name }}</option>
         {% endfor %}
