@@ -5,16 +5,15 @@
   <!-- <label for="Name" class="col-sm-2 col-form-label">Name</label> -->
   <form class="form-inline" action="{{ url_for('pem_create') }}" method="POST">
     <div class="col-sm-12">
-        <input type="text" id="pemName" name="Name" class="form-control" placeholder="Insert Key Pair Name"/>
+        <input type="text" id="pem-name" name="pem-name" class="form-control" placeholder="Insert Key Pair Name"/>
         <button type="submit" class="btn btn-primary">CREATE</button>
     </div>
   </form>
 </div>
 <div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover table-sm" id="pemTable">
+  <table class="table table-striped table-bordered table-hover table-sm" id="pem-table">
     <thead>
       <tr>
-        
         <th>Name</th>
         <th>Finger Print</th>
       </tr>
@@ -33,7 +32,6 @@
     </tbody>
   </table>
 </div>
-
 
 
   {% with messages = get_flashed_messages()[0] %}

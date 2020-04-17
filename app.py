@@ -99,7 +99,7 @@ def pem_create():
     output_stream = StringIO
 
     if request.method == 'POST':
-        name = request.form['Name']
+        name = request.form['pem-name']
         try:
             key_pair, key_finger_print = create_pem(name)
         except Exception as e:
@@ -120,19 +120,19 @@ def pem_create():
     else:
         return url_for('pem_router')
 
-# @app.route("/config/pem/form/delete", methods=["POST"])
-# def pem_delete():
-#     if request.method == 'POST':
-#         op = request.form.get('pem-check')
-#         print(op)
-#         flash([op])
-#         # name = request.form['Name']
-#         # try:
-#         #     delete_pem(name)
-#         #     t_db.remove(where('Name') == name)
-#         # except Exception as e:
-#         #     flash([str(e)])
-#         return redirect(url_for('pem_router'))
+@app.route("/config/pem/form/delete", methods=["POST"])
+def pem_delete():
+    if request.method == 'POST':
+        op = request.form.get('pem-check')
+        print(op)
+        flash([op])
+        # name = request.form['Name']
+        # try:
+        #     delete_pem(name)
+        #     t_db.remove(where('Name') == name)
+        # except Exception as e:
+        #     flash([str(e)])
+        return redirect(url_for('pem_router'))
         
         
 
