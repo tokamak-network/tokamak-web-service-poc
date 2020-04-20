@@ -396,6 +396,10 @@ def operator_create():
         operator_account = request.form['OperatorAccount']
         operator_account_key = request.form['OperatorAccountKey']
         operator_password = request.form['OperatorPassword']
+        stamina_operator_amount = request.form['StaminaOperatorAmount']
+        stamina_min_deposit = request.form['StaminaMinDeposit']
+        stamina_recover_epoch_length = request.form['StaminaRecoverEpochLength']
+        stamina_withdrawal_delay = request.form['StaminaWithdrawalDelay']
 
         print("##################", pre_asset)
 
@@ -427,6 +431,10 @@ def operator_create():
             'OperatorAccount' : operator_account,
             'OperatorAccountKey' : operator_account_key,
             'OperatorPassword' : operator_password,
+            'StaminaOperatorAmount': stamina_operator_amount,
+            'StaminaMinDeposit': stamina_min_deposit,
+            'StaminaRecoverEpochLength': stamina_recover_epoch_length,
+            'StaminaWithdrawalDelay': stamina_withdrawal_delay,
             'IsSet' : '',
             'IsDeployed' : '',
             'Genesis' : '',
@@ -455,12 +463,18 @@ def operator_set_variable():
         op_key = inst['OperatorAccountKey']
         op_addrs = inst['OperatorAccount']
         op_pass = inst['OperatorPassword']
+        stamina_op_amt = inst['StaminaOperatorAmount']
+        stamina_m_deposit = inst['StaminaMinDeposit']
+        stamina_re_len = inst['StaminaRecoverEpochLength']
+        stamina_w_delay = inst['StaminaWithdrawalDelay']
         chain_id = inst['ChainID']
         is_pre = inst['PreAsset']
         epoch = inst['Epoch']
         nodekey = inst['NodeKey']
         rootchain_ip = inst['RootChain']["IpAddress"]
-        res = change_account_operator(op_ip, op_key, op_addrs, op_pass, chain_id, is_pre, epoch, nodekey, rootchain_ip)
+
+        res = change_account_operator(
+            op_ip, op_key, op_addrs, op_pass, stamina_op_amt, stamina_m_deposit, stamina_re_len, stamina_w_delay, chain_id, is_pre, epoch, nodekey, rootchain_ip)
         t_db.update(set('IsSet', "true"), Query().InstanceId == inst_id)
         flash([time.ctime()[11:19] + " Operator Variable Set!"])
         return redirect(url_for('operator'))

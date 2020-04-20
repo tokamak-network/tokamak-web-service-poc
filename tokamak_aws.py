@@ -105,28 +105,36 @@ def create_instance(instance_name):
 ##############################
 
 ## And make signer.pass
-def change_account_operator(op_ip, op_key, op_addrs, op_pass, chain_id, is_pre, epoch, nodekey, rootchain_ip):
+def change_account_operator(op_ip, op_key, op_addrs, op_pass, stamina_op_amt, stamina_m_deposit, stamina_re_len, stamina_w_delay, chain_id, is_pre, epoch, nodekey, rootchain_ip):
     key1 = "<operator key>"
     key2 = "<operator address>"
     key3 = "<password>"
-    key4 = "<chain id>"
-    key5 = "<pre asset true or false>"
-    key6 = "<epoch lenth of plasma>"
-    key7 = "<node key hex>"
-    key8 = "<rootchain ip address>"
+    key4 = "<stamina amount>"
+    key5 = "<stamina minimum deposit>"
+    key6 = "<stamina epoch length>"
+    key7 = "<stamina withdrawal delay>"
+    key8 = "<chain id>"
+    key9 = "<pre asset true or false>"
+    key10 = "<epoch lenth of plasma>"
+    key11 = "<node key hex>"
+    key12 = "<rootchain ip address>"
 
     cmdg = "sed -i "
     cmd1 = "-e 's/" + key1 + "/" + op_key + "/g' "
     cmd2 = "-e 's/" + key2 + "/" + op_addrs + "/g' "
     cmd3 = "-e 's/" + key3 + "/" + op_pass + "/g' "
-    cmd4 = "-e 's/" + key4 + "/" + chain_id + "/g' "
-    cmd5 = "-e 's/" + key5 + "/" + is_pre + "/g' "
-    cmd6 = "-e 's/" + key6 + "/" + epoch + "/g' "
-    cmd7 = "-e 's/" + key7 + "/" + nodekey + "/g' "
-    cmd8 = "-e 's/" + key8 + "/" + rootchain_ip + "/g' "
-    cmd9 = "/home/ubuntu/variables.list"
+    cmd4 = "-e 's/" + key4 + "/" + stamina_op_amt + "/g' "
+    cmd5 = "-e 's/" + key5 + "/" + stamina_m_deposit + "/g' "
+    cmd6 = "-e 's/" + key6 + "/" + stamina_re_len + "/g' "
+    cmd7 = "-e 's/" + key7 + "/" + stamina_w_delay + "/g' "
+    cmd8 = "-e 's/" + key8 + "/" + chain_id + "/g' "
+    cmd9 = "-e 's/" + key9 + "/" + is_pre + "/g' "
+    cmd10 = "-e 's/" + key10 + "/" + epoch + "/g' "
+    cmd11 = "-e 's/" + key11 + "/" + nodekey + "/g' "
+    cmd12 = "-e 's/" + key12 + "/" + rootchain_ip + "/g' "
+    cmd13 = "/home/ubuntu/variables.list"
 
-    cmd = cmdg + cmd1 + cmd2 + cmd3 + cmd4 + cmd5 + cmd6 + cmd7 + cmd8 + cmd9
+    cmd = cmdg + cmd1 + cmd2 + cmd3 + cmd4 + cmd5 + cmd6 + cmd7 + cmd8 + cmd9 + cmd10 + cmd11 + cmd12 + cmd13
     # print(cmd)
     return ssh_execute(op_ip, cmd)
 
