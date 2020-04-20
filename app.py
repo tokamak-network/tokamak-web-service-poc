@@ -99,9 +99,11 @@ def pem_create():
     output_stream = StringIO
 
     if request.method == 'POST':
-        name = request.form['pem-name']
+        name = request.form['name']
         try:
             key_pair, key_finger_print = create_pem(name)
+            outfile = open('./.pem/' + name + '.pem','w')
+            outfile.write(key_pair)
         except Exception as e:
             flash([str(e)])
             return redirect(url_for('pem_router'))
