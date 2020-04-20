@@ -18,8 +18,9 @@ jobs:
       - run:
           name: Try to reach remote server
           command: |
-            echo "18.179.10.40 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOgNkvrEsELuPB7bcTTyVhvNWuFuehJFAhNr6yBFabTDT7EhjkzqzX9VRp3ldz/eIZWI6xhST7ocSdWk4eu1Rp0=" > ~/.ssh/known_host
-            ssh ubuntu@ec2-18-179-10-40.ap-northeast-1.compute.amazonaws.com
+            ssh ubuntu@ec2-18-179-10-40.ap-northeast-1.compute.amazonaws.com <<EOF
+            yes
+            EOF
             pwd
             ifconfig
 
