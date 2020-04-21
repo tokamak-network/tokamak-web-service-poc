@@ -40,11 +40,26 @@ jobs:
             echo "[DATABASE]" >> config.ini
             echo "DATABASE = ${DATABASE}" >> config.ini
 
+      - save_cache:
+          key: plasma-evm-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/
+
+  test:
+    docker:
+      - image: circleci/python:3.7.2-stretch
+
+    working_directory: ~/tokamak-web-service-poc
+    steps:
+      - restore_cache:
+          key: plasma-evm-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/
+
       - run:
           name: Run TWS server for test
           background: true
           command: |
-            cd tokamak-web-service-poc
             source venv/bin/activate
             python app.py
 
@@ -58,3 +73,6 @@ workflows:
   build-and-test:
     jobs:
       - build
+      - test:
+          requires:
+            - build
