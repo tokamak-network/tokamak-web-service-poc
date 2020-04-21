@@ -102,7 +102,7 @@ def pem_create():
         name = request.form['name']
         try:
             key_pair, key_finger_print = create_pem(name)
-            outfile = open('./.pem/' + name + '.pem','w')
+            outfile = open('./.pem/' + name + '.pem','w+')
             outfile.write(key_pair)
         except Exception as e:
             flash([str(e)])
