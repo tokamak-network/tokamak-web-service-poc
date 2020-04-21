@@ -7,7 +7,7 @@ jobs:
     working_directory: ~/
     steps:
       - run:
-          name: clone and install requirements
+          name: Clone repo and install requirements
           command: |
             set -x
             git clone https://github.com/Onther-Tech/tokamak-web-service-poc
@@ -16,13 +16,42 @@ jobs:
             pip install -r requirements.txt
 
       - run:
-          name: Try to reach remote server
+          name: Create key and config file
           command: |
-            ssh ubuntu@ec2-18-179-10-40.ap-northeast-1.compute.amazonaws.com <<EOF
-            yes
-            EOF
-            pwd
-            ifconfig
+            cd tokamak-web-service-poc
+            echo ${AWS_TWS_DEV} > tws_dev.pem
+            echo "[AWS]" >> config.ini
+            echo "AWS_ACCESS_KEY = ${AWS_ACCESS_KEY}" >> config.ini
+            echo "AWS_SECRET_KEY = ${AWS_SECRET_KEY}" >> config.ini
+            echo "[INSTANCE]" >> config.ini
+            echo "BASIC_IMAGE_ID = ${BASIC_IMAGE_ID}" >> config.ini
+            echo "INSTANCE_TYPE = ${INSTANCE_TYPE}" >> config.ini
+            echo "SECURITY_GROUP_ID = ${SECURITY_GROUP_ID}" >> config.ini
+            echo "KEY_NAME = ${KEY_NAME}" >> config.ini
+            echo "REGION_NAME = ${REGION_NAME}" >> config.ini
+            echo "[SSH]" >> config.ini
+            echo "SSH_USERNAME = ${SSH_USERNAME}" >> config.ini
+            echo "SSH_PEMFILE = ${SSH_PEMFILE}" >> config.ini
+            echo "[SERVER]" >> config.ini
+            echo "DEBUG = True" >> config.ini
+            echo "SECRET_KEY = ${SECRET_KEY}" >> config.ini
+            echo "USERNAME = ${USERNAME}" >> config.ini
+            echo "PASSWORD = ${PASSWORD}" >> config.ini
+            echo "[DATABASE]" >> config.ini
+            echo "DATABASE = ${DATABASE}" >> config.ini
+
+      - run:
+          name: Run TWS server for test
+          background: true
+          command: |
+            cd tokamak-web-service-poc
+            source venv/bin/activate
+            python app.py
+
+      - run:
+          name: Check running TWS server
+          command: |
+            curl --retry 10 --retry-delay 3 --retry-connrefused  http://127.0.0.1:8000
 
 workflows:
   version: 2
