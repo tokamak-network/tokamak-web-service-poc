@@ -1,5 +1,5 @@
-test_kevin1.pem
-config.ini
+*.pem
+utilities/config.ini
 test/*
 __pycache__
 tokamak.db.json
