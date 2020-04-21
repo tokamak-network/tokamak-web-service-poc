@@ -105,7 +105,7 @@ def create_instance(instance_name):
 ##############################
 
 ## And make signer.pass
-def change_account_operator(op_ip, op_key, op_addrs, op_pass, stamina_op_amt, stamina_m_deposit, stamina_re_len, stamina_w_delay, chain_id, is_pre, epoch, nodekey, rootchain_ip):
+def change_account_operator(parameter):
     key1 = "<operator key>"
     key2 = "<operator address>"
     key3 = "<password>"
@@ -119,24 +119,39 @@ def change_account_operator(op_ip, op_key, op_addrs, op_pass, stamina_op_amt, st
     key11 = "<node key hex>"
     key12 = "<rootchain ip address>"
 
+    # cmdg = "sed -i "
+    # cmd1 = "-e 's/" + key1 + "/" + op_key + "/g' "
+    # cmd2 = "-e 's/" + key2 + "/" + op_addrs + "/g' "
+    # cmd3 = "-e 's/" + key3 + "/" + op_pass + "/g' "
+    # cmd4 = "-e 's/" + key4 + "/" + stamina_op_amt + "/g' "
+    # cmd5 = "-e 's/" + key5 + "/" + stamina_m_deposit + "/g' "
+    # cmd6 = "-e 's/" + key6 + "/" + stamina_re_len + "/g' "
+    # cmd7 = "-e 's/" + key7 + "/" + stamina_w_delay + "/g' "
+    # cmd8 = "-e 's/" + key8 + "/" + chain_id + "/g' "
+    # cmd9 = "-e 's/" + key9 + "/" + is_pre + "/g' "
+    # cmd10 = "-e 's/" + key10 + "/" + epoch + "/g' "
+    # cmd11 = "-e 's/" + key11 + "/" + nodekey + "/g' "
+    # cmd12 = "-e 's/" + key12 + "/" + rootchain_ip + "/g' "
+    # cmd13 = "/home/ubuntu/variables.list"
+
     cmdg = "sed -i "
-    cmd1 = "-e 's/" + key1 + "/" + op_key + "/g' "
-    cmd2 = "-e 's/" + key2 + "/" + op_addrs + "/g' "
-    cmd3 = "-e 's/" + key3 + "/" + op_pass + "/g' "
-    cmd4 = "-e 's/" + key4 + "/" + stamina_op_amt + "/g' "
-    cmd5 = "-e 's/" + key5 + "/" + stamina_m_deposit + "/g' "
-    cmd6 = "-e 's/" + key6 + "/" + stamina_re_len + "/g' "
-    cmd7 = "-e 's/" + key7 + "/" + stamina_w_delay + "/g' "
-    cmd8 = "-e 's/" + key8 + "/" + chain_id + "/g' "
-    cmd9 = "-e 's/" + key9 + "/" + is_pre + "/g' "
-    cmd10 = "-e 's/" + key10 + "/" + epoch + "/g' "
-    cmd11 = "-e 's/" + key11 + "/" + nodekey + "/g' "
-    cmd12 = "-e 's/" + key12 + "/" + rootchain_ip + "/g' "
+    cmd1 = "-e 's/" + key1 + "/" + parameter["op_key"] + "/g' "
+    cmd2 = "-e 's/" + key2 + "/" + parameter["op_addrs"] + "/g' "
+    cmd3 = "-e 's/" + key3 + "/" + parameter["op_pass"] + "/g' "
+    cmd4 = "-e 's/" + key4 + "/" + parameter["stamina_op_amt"] + "/g' "
+    cmd5 = "-e 's/" + key5 + "/" + parameter["stamina_m_deposit"] + "/g' "
+    cmd6 = "-e 's/" + key6 + "/" + parameter["stamina_re_len"] + "/g' "
+    cmd7 = "-e 's/" + key7 + "/" + parameter["stamina_w_delay"] + "/g' "
+    cmd8 = "-e 's/" + key8 + "/" + parameter["chain_id"] + "/g' "
+    cmd9 = "-e 's/" + key9 + "/" + parameter["is_pre"] + "/g' "
+    cmd10 = "-e 's/" + key10 + "/" + parameter["epoch"] + "/g' "
+    cmd11 = "-e 's/" + key11 + "/" + parameter["nodekey"] + "/g' "
+    cmd12 = "-e 's/" + key12 + "/" + parameter["rootchain_ip"] + "/g' "
     cmd13 = "/home/ubuntu/variables.list"
 
     cmd = cmdg + cmd1 + cmd2 + cmd3 + cmd4 + cmd5 + cmd6 + cmd7 + cmd8 + cmd9 + cmd10 + cmd11 + cmd12 + cmd13
     # print(cmd)
-    return ssh_execute(op_ip, cmd)
+    return ssh_execute(parameter["op_ip"], cmd)
 
 def deploy_rootchain_contract(ip_address):
     return ssh_execute(host=ip_address, command="/home/ubuntu/1_deploy.rootchain.sh")

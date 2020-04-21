@@ -459,22 +459,24 @@ def operator_set_variable():
     if request.method == 'POST':
         inst_id = request.form["instance_id"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
-        op_ip = inst["IpAddress"]
-        op_key = inst['OperatorAccountKey']
-        op_addrs = inst['OperatorAccount']
-        op_pass = inst['OperatorPassword']
-        stamina_op_amt = inst['StaminaOperatorAmount']
-        stamina_m_deposit = inst['StaminaMinDeposit']
-        stamina_re_len = inst['StaminaRecoverEpochLength']
-        stamina_w_delay = inst['StaminaWithdrawalDelay']
-        chain_id = inst['ChainID']
-        is_pre = inst['PreAsset']
-        epoch = inst['Epoch']
-        nodekey = inst['NodeKey']
-        rootchain_ip = inst['RootChain']["IpAddress"]
 
-        res = change_account_operator(
-            op_ip, op_key, op_addrs, op_pass, stamina_op_amt, stamina_m_deposit, stamina_re_len, stamina_w_delay, chain_id, is_pre, epoch, nodekey, rootchain_ip)
+        parameter = {
+            "op_ip": inst["IpAddress"],
+            "op_key": inst['OperatorAccountKey'],
+            "op_addrs": inst['OperatorAccount'],
+            "op_pass": inst['OperatorPassword'],
+            "stamina_op_amt": inst['StaminaOperatorAmount'],
+            "stamina_m_deposit": inst['StaminaMinDeposit'],
+            "stamina_re_len": inst['StaminaRecoverEpochLength'],
+            "stamina_w_delay": inst['StaminaWithdrawalDelay'],
+            "chain_id": inst['ChainID'],
+            "is_pre": inst['PreAsset'],
+            "epoch": inst['Epoch'],
+            "nodekey": inst['NodeKey'],
+            "rootchain_ip": inst['RootChain']["IpAddress"],
+        }
+
+        res = change_account_operator(parameter)
         t_db.update(set('IsSet', "true"), Query().InstanceId == inst_id)
         flash([time.ctime()[11:19] + " Operator Variable Set!"])
         return redirect(url_for('operator'))
