@@ -52,6 +52,6 @@ DATABASE = <database file name>
 
 ### .pem file
 
-In order to run this server, you need .pem file on root directory.
+In order to run this server, you need .pem file. If you create .pem file by this server, it will be stored on .pem directory. 
 
 ## API
