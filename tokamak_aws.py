@@ -60,9 +60,9 @@ ec2 = boto3.resource(
     region_name=region_name
 )
 
-######################
-##### CREATE PEM #####
-######################
+#######################
+##### CONTROL PEM #####
+#######################
 
 def create_pem(pem_name):
     response = ec2.create_key_pair(KeyName=pem_name)
@@ -72,8 +72,10 @@ def create_pem(pem_name):
 
     return key_pair, key_finger_print
 
-# def delete_pem(pem_name):
-#     response = ec2.delete_key_pair(KeyName=pem_name)
+def delete_pem(pem_name):
+    response = client.delete_key_pair(KeyName=pem_name)
+
+    return response
     
 
 ##############################
@@ -118,21 +120,6 @@ def change_account_operator(parameter):
     key10 = "<epoch lenth of plasma>"
     key11 = "<node key hex>"
     key12 = "<rootchain ip address>"
-
-    # cmdg = "sed -i "
-    # cmd1 = "-e 's/" + key1 + "/" + op_key + "/g' "
-    # cmd2 = "-e 's/" + key2 + "/" + op_addrs + "/g' "
-    # cmd3 = "-e 's/" + key3 + "/" + op_pass + "/g' "
-    # cmd4 = "-e 's/" + key4 + "/" + stamina_op_amt + "/g' "
-    # cmd5 = "-e 's/" + key5 + "/" + stamina_m_deposit + "/g' "
-    # cmd6 = "-e 's/" + key6 + "/" + stamina_re_len + "/g' "
-    # cmd7 = "-e 's/" + key7 + "/" + stamina_w_delay + "/g' "
-    # cmd8 = "-e 's/" + key8 + "/" + chain_id + "/g' "
-    # cmd9 = "-e 's/" + key9 + "/" + is_pre + "/g' "
-    # cmd10 = "-e 's/" + key10 + "/" + epoch + "/g' "
-    # cmd11 = "-e 's/" + key11 + "/" + nodekey + "/g' "
-    # cmd12 = "-e 's/" + key12 + "/" + rootchain_ip + "/g' "
-    # cmd13 = "/home/ubuntu/variables.list"
 
     cmdg = "sed -i "
     cmd1 = "-e 's/" + key1 + "/" + parameter["op_key"] + "/g' "

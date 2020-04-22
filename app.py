@@ -38,9 +38,9 @@ from tokamak_aws import \
     check_genesis, \
     initialize_usernode, \
     run_usernode, \
-    create_pem
-    # create_pem, \
-    # delete_pem
+    create_pem, \
+    delete_pem
+    
 
 from utilities.update_instance import update_operator, update_rootchain, update_usernode
 from utilities.network_generator import get_network_json
@@ -99,6 +99,7 @@ def pem_create():
     output_stream = StringIO
 
     if request.method == 'POST':
+        # print(request.form)
         name = request.form['name']
         try:
             key_pair, key_finger_print = create_pem(name)
@@ -122,21 +123,31 @@ def pem_create():
     else:
         return url_for('pem_router')
 
-@app.route("/config/pem/form/delete", methods=["POST"])
+@app.route("/config/pem/form/delete", methods=["GET"])
 def pem_delete():
-    if request.method == 'POST':
-        op = request.form.get('pem-check')
-        print(op)
-        flash([op])
-        # name = request.form['Name']
-        # try:
-        #     delete_pem(name)
-        #     t_db.remove(where('Name') == name)
-        # except Exception as e:
-        #     flash([str(e)])
+    if request.method == 'GET':
+        pem_list = []        
+        name = request.args['name']        
+        pem_list = name.split(',')
+        
+        try:
+            for i in range(len(pem_list)):
+                response = delete_pem(pem_list[i])
+                flash(response)
+                t_db.remove(Query()['Name']==pem_list[i])
+            
+        except Exception as e:
+            flash([str(e)])
+            return redirect(url_for('pem_router'))
+
         return redirect(url_for('pem_router'))
+
+@app.route("/config/pem/form/del", methods=["POST"])
+def pem_del():
+    if request.method == 'POST':
+        print(request.form)
         
-        
+        return redirect(url_for('pem_router'))
 
 @app.route("/config/ini/set", methods=["POST"])
 def config_ini_set():
@@ -446,7 +457,7 @@ def operator_create():
         }
         t_db.insert(inst_obj)
         q_res = t_db.search(Query().Name == name)
-        flash([str(q_res), "Operator Instance Created!"]);
+        flash([str(q_res), "Operator Instance Created!"])
         return redirect(url_for('operator'))
     else:
         return url_for('operator')
