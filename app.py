@@ -99,7 +99,7 @@ def pem_create():
     output_stream = StringIO
 
     if request.method == 'POST':
-        # print(request.form)
+        
         name = request.form['name']
         try:
             key_pair, key_finger_print = create_pem(name)

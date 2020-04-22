@@ -51,7 +51,6 @@
     }
   };
 
-  
   function deleteList(){    
     var checkRow = "";
     $( "input[name='checkPem']:checked" ).each(function(){
@@ -59,17 +58,15 @@
     });
 
     checkRow = checkRow.substring(0,checkRow.lastIndexOf(","));
-    var names = {
-      'names': "checkRow"
-    }
 
     if(checkRow == ''){
       alert("Select an item to delete.");
       return false;
     } 
     var pemArray = checkRow.split(',')
-    
-    location.href='/config/pem/form/delete?name=' + checkRow
+    if (confirm('Do you want delete that pems? You may not be able to access an instance that uses that file.')){
+      location.href='/config/pem/form/delete?name=' + checkRow
+    }    
   }
   
 </script>
