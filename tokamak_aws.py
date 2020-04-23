@@ -55,8 +55,6 @@ def config_set(parameter):
 
 ## utility functions
 def ssh_execute(host="", command=""):
-    print(ssh_pemfile)
-    print(config['SSH']['SSH_PEMFILE'])
     pk = paramiko.RSAKey.from_private_key_file(ssh_pemfile)
     p_client = paramiko.SSHClient()
     p_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
