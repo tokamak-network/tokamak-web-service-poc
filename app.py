@@ -4,7 +4,7 @@ import boto3
 import time
 import sys
 
-config = configparser.ConfigParser()
+config = configparser.RawConfigParser()
 config.read('config.ini')
 
 from io import StringIO
@@ -39,7 +39,8 @@ from tokamak_aws import \
     initialize_usernode, \
     run_usernode, \
     create_pem, \
-    delete_pem
+    delete_pem, \
+    config_set
     
 
 from utilities.update_instance import update_operator, update_rootchain, update_usernode
@@ -123,9 +124,9 @@ def pem_create():
     else:
         return url_for('pem_router')
 
-@app.route("/config/pem/form/delete", methods=["GET"])
+@app.route("/config/pem/form/delete", methods=["DELETE"])
 def pem_delete():
-    if request.method == 'GET':
+    if request.method == 'DELETE':
         pem_list = []        
         name = request.args['name']        
         pem_list = name.split(',')
@@ -142,55 +143,63 @@ def pem_delete():
 
         return redirect(url_for('pem_router'))
 
-@app.route("/config/pem/form/del", methods=["POST"])
-def pem_del():
-    if request.method == 'POST':
-        print(request.form)
-        
-        return redirect(url_for('pem_router'))
-
 @app.route("/config/ini/set", methods=["POST"])
 def config_ini_set():
 
     if request.method == 'POST':
-        ac_key = request.form['AccessKey']
-        sec_key = request.form['SecretKey']
-        img_id = request.form['ImageID']
-        ins_type = request.form['InstanceType']
-        sec_group_id = request.form['SecurityGroupID']
-        key_name = request.form['KeyName']
-        region_name = request.form['RegionName']
-        ssh_user = request.form['SshUsername']
-        ssh_pem = request.form['SshPemfile']
-        debug = request.form['Debug']
-        username = request.form['Username']
-        password = request.form['Password']
-        database = request.form['Database']
+        parameter={
+            'ac_key' : request.form['AccessKey'],
+            'sec_key' : request.form['SecretKey'],
+
+            'img_id' : request.form['ImageID'],
+            'ins_type' : request.form['InstanceType'],
+            'sec_group_id' : request.form['SecurityGroupID'],
+            'key_name' : request.form['KeyName'],
+            'region_name' : request.form['RegionName'],
+
+            'ssh_user' : request.form['SshUsername'],
+            'ssh_pem' : request.form['SshPemfile'],
+
+            'debug' : request.form['Debug'],
+            'secret_key' : request.form['SecretKey'],
+            'username' : request.form['Username'],
+            'password' : request.form['Password'],
+            'database' : request.form['Database'],
+        }
 
         #put into config.ini
+        config.set('AWS','AWS_ACCESS_KEY', parameter['ac_key'])
+        config.set('AWS','AWS_SECRET_KEY', parameter['sec_key'])
 
-        config['AWS']['AWS_ACCESS_KEY'] = ac_key
-        config['AWS']['AWS_SECRET_KEY'] = sec_key
+        config.set('INSTANCE', 'BASIC_IMAGE_ID', parameter['img_id'])
+        config.set('INSTANCE', 'INSTANCE_TYPE', parameter['ins_type'])
+        config.set('INSTANCE', 'SECURITY_GROUP_ID', parameter['sec_group_id'])
+        config.set('INSTANCE','KEY_NAME', parameter['key_name'])
+        config.set('INSTANCE','REGION_NAME', parameter['region_name'])
 
-        config['INSTANCE']['BASIC_IMAGE_ID'] = img_id
-        config['INSTANCE']['INSTANCE_TYPE'] = ins_type
-        config['INSTANCE']['SECURITY_GROUP_ID'] = sec_group_id
-        config['INSTANCE']['KEY_NAME'] = key_name
-        config['INSTANCE']['REGION_NAME'] = region_name
+        config.set('SSH','SSH_USERNAME', parameter['ssh_user'])
+        config.set('SSH','SSH_PEMFILE', parameter['ssh_pem'])
 
-        config['SSH']['SSH_USERNAME'] = ssh_user
-        config['SSH']['SSH_PEMFILE'] = ssh_pem
+        config.set('SERVER','DEBUG', parameter['debug'])
+        config.set('SERVER','SECRET_KEY', parameter['secret_key'])
+        config.set('SERVER','USERNAME', parameter['username'])
+        config.set('SERVER','PASSWORD', parameter['password'])
 
-        config['SERVER']['DEBUG'] = debug
-        config['SERVER']['SECRET_KEY'] = username
-        config['SERVER']['USERNAME'] = password
-        config['SERVER']['PASSWORD'] = database
-
-        config['DATABASE']['DATABASE'] = database
+        config.set('DATABASE','DATABASE', parameter['database'])
 
         with open('config.ini', 'w+') as configfile:
             config.write(configfile)
 
+    global DEBUG, SECRET_KEY, USERNAME, PASSWORD, PEMFILE, SSH_USERNAME
+    DEBUG = parameter['debug']
+    SECRET_KEY = parameter['secret_key']
+    USERNAME = parameter['username']
+    PASSWORD = parameter['password']
+    PEMFILE = parameter['ssh_pem']
+    SSH_USERNAME = parameter['ssh_user']
+
+    config_set(parameter)
+    config.read('config.ini')
     flash([time.ctime()[11:19] + " config.ini set!"])
 
     return redirect(url_for('config_router'))

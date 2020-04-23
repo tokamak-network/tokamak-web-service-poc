@@ -34,8 +34,29 @@ usernode_ip_address = ""
 ### blockchain variables
 genesis_data = ""
 
+### config setting
+def config_set(parameter):
+    global aws_access_key_id, aws_secret_access_key, basic_image_id, instance_type, security_group_id, key_name, region_name, ssh_username, ssh_pemfile
+    aws_access_key_id = parameter['ac_key']
+    aws_secret_access_key = parameter['sec_key']
+
+    ### env:instance
+    basic_image_id = parameter['img_id']
+
+    instance_type = parameter['ins_type']
+    security_group_id = parameter['sec_group_id']
+    key_name = parameter['key_name']
+    region_name = parameter['region_name']
+
+    ### env:paramiko
+    ssh_username = parameter['ssh_user']
+    ssh_pemfile = parameter['ssh_pem']
+    
+
 ## utility functions
 def ssh_execute(host="", command=""):
+    print(ssh_pemfile)
+    print(config['SSH']['SSH_PEMFILE'])
     pk = paramiko.RSAKey.from_private_key_file(ssh_pemfile)
     p_client = paramiko.SSHClient()
     p_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
