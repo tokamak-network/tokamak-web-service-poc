@@ -100,7 +100,7 @@ workflows:
   build-and-test:
     jobs:
       - build-test
-      - deploy:
+      - deploy-dev:
           requires:
             - build-test
           filters:
