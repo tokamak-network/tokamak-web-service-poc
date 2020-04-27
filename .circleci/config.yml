@@ -20,7 +20,8 @@ jobs:
           name: Create key and config file
           command: |
             cd tokamak-web-service-poc
-            echo ${AWS_TWS_DEV} > tws_dev.pem
+            mkdir .pem
+            echo ${AWS_TWS_DEV} > ./.pem/tws_dev.pem
             echo "[AWS]" >> config.ini
             echo "AWS_ACCESS_KEY = ${AWS_ACCESS_KEY_ID}" >> config.ini
             echo "AWS_SECRET_KEY = ${AWS_SECRET_ACCESS_KEY}" >> config.ini
