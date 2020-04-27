@@ -4,15 +4,15 @@
 
 <form action="{{ url_for('operator_create') }}" method="POST">
   <div class="form-group row">
-    <label for="Name" class="col-sm-2 col-form-label">Name</label>
+    <label for="operator-instance-name" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-10">
-      <input type="text" id="Name" name="Name" class="form-control" placeholder="Instance Name">
+      <input type="text" id="operator-instance-name" name="Name" class="form-control" placeholder="Instance Name">
     </div>
   </div>
   <div class="form-group row">
-    <label for="Rootchain" class="col-sm-2 col-form-label">Rootchain</label>
+    <label for="rootchain" class="col-sm-2 col-form-label">Rootchain</label>
     <div class="col-sm-10">
-      <select class="custom-select" id="Rootchain" name="RootchainID">
+      <select class="custom-select" id="rootchain" name="RootchainID">
         {% for data in data %}
         <option value="{{ data.InstanceId | safe}}">{{ data.Name }}</option>
         {% endfor %}
@@ -20,15 +20,15 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="ChainID" class="col-sm-2 col-form-label">Chain ID</label>
+    <label for="chain-id" class="col-sm-2 col-form-label">Chain ID</label>
     <div class="col-sm-10">
-      <input type="text" id="ChainID" name="ChainID" class="form-control" value="16">
+      <input type="text" id="chain-id" name="ChainID" class="form-control" value="16">
     </div>
   </div>
   <div class="form-group row">
-    <label for="Epoch" class="col-sm-2 col-form-label">Epoch</label>
+    <label for="epoch" class="col-sm-2 col-form-label">Epoch</label>
     <div class="col-sm-10">
-      <input type="text" id="Epoch" name="Epoch" class="form-control" value="4096">
+      <input type="text" id="epoch" name="Epoch" class="form-control" value="4096">
     </div>
   </div>
   <div class="form-group row">
@@ -43,27 +43,51 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="Nodekey" class="col-sm-2 col-form-label">Nodekey Hex</label>
+    <label for="node-key" class="col-sm-2 col-form-label">Nodekey Hex</label>
     <div class="col-sm-10">
-      <input type="text" id="Nodekey" name="Nodekey" class="form-control" value="e854e2f029be6364f0f961bd7571fd4431f99355b51ab79d23c56506f5f1a7c3">
+      <input type="text" id="node-key" name="Nodekey" class="form-control" value="e854e2f029be6364f0f961bd7571fd4431f99355b51ab79d23c56506f5f1a7c3">
     </div>
   </div>
   <div class="form-group row">
-    <label for="OperatorAccount" class="col-sm-2 col-form-label">Operator Account Address</label>
+    <label for="operator-account" class="col-sm-2 col-form-label">Operator Account Address</label>
     <div class="col-sm-10">
-      <input type="text" id="OperatorAccount" name="OperatorAccount" class="form-control" value="0x71562b71999873DB5b286dF957af199Ec94617F7">
+      <input type="text" id="operator-account" name="OperatorAccount" class="form-control" value="0x71562b71999873DB5b286dF957af199Ec94617F7">
     </div>
   </div>
   <div class="form-group row">
-    <label for="OperatorAccountKey" class="col-sm-2 col-form-label">Operator Account Key</label>
+    <label for="operator-account-key" class="col-sm-2 col-form-label">Operator Account Key</label>
     <div class="col-sm-10">
-      <input type="text" id="OperatorAccountKey" name="OperatorAccountKey" class="form-control" value="b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291">
+      <input type="text" id="operator-account-key" name="OperatorAccountKey" class="form-control" value="b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291">
     </div>
   </div>
   <div class="form-group row">
-    <label for="OperatorPassword" class="col-sm-2 col-form-label">Operator Password</label>
+    <label for="operator-password" class="col-sm-2 col-form-label">Operator Password</label>
     <div class="col-sm-10">
-      <input type="password" id="OperatorPassword" name="OperatorPassword" class="form-control" value="">
+      <input type="password" id="operator-password" name="OperatorPassword" class="form-control" value="">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="stamina-operator-amount" class="col-sm-2 col-form-label">Stamina Operator Amount</label>
+    <div class="col-sm-10">
+      <input type="text" id="stamina-operator-amount" name="StaminaOperatorAmount" class="form-control" value="1">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="stamina-min-deposit" class="col-sm-2 col-form-label">Stamina Min Deposit</label>
+    <div class="col-sm-10">
+      <input type="text" id="stamina-min-deposit" name="StaminaMinDeposit" class="form-control" value="0.5">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="stamina-recover-epoch-length" class="col-sm-2 col-form-label">Stamina Recover Epoch Length</label>
+    <div class="col-sm-10">
+      <input type="text" id="stamina-recover-epoch-length" name="StaminaRecoverEpochLength" class="form-control" value="120960">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="stamina-withdrawal-delay" class="col-sm-2 col-form-label">Stamina Withdrawal Delay</label>
+    <div class="col-sm-10">
+      <input type="text" id="stamina-withdrawal-delay" name="StaminaWithdrawalDelay" class="form-control" value="362880">
     </div>
   </div>
 

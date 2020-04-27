@@ -12,6 +12,10 @@ nohup /home/ubuntu/plasma-evm/build/bin/geth \
     --maxpeers 50 \
     --unlock $OPERATOR \
     --password /home/ubuntu/pwd.pass \
+    --stamina.operatoramount $OPERATOR_AMOUNT \
+    --stamina.mindeposit $MIN_DEPOSIT \
+    --stamina.recoverepochlength $RECOVER_EPOCH_LENGTH \
+    --stamina.withdrawaldelay $WITHDRAWAL_DELAY \
     --nodekeyhex $NODE_KEY_HEX \
     --nat extip:$(curl ifconfig.me) \
     --mine \

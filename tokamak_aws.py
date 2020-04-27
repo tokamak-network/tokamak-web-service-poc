@@ -34,6 +34,25 @@ usernode_ip_address = ""
 ### blockchain variables
 genesis_data = ""
 
+### config setting
+def config_set(parameter):
+    global aws_access_key_id, aws_secret_access_key, basic_image_id, instance_type, security_group_id, key_name, region_name, ssh_username, ssh_pemfile
+    aws_access_key_id = parameter['ac_key']
+    aws_secret_access_key = parameter['sec_key']
+
+    ### env:instance
+    basic_image_id = parameter['img_id']
+
+    instance_type = parameter['ins_type']
+    security_group_id = parameter['sec_group_id']
+    key_name = parameter['key_name']
+    region_name = parameter['region_name']
+
+    ### env:paramiko
+    ssh_username = parameter['ssh_user']
+    ssh_pemfile = parameter['ssh_pem']
+    
+
 ## utility functions
 def ssh_execute(host="", command=""):
     pk = paramiko.RSAKey.from_private_key_file(ssh_pemfile)
@@ -60,9 +79,9 @@ ec2 = boto3.resource(
     region_name=region_name
 )
 
-######################
-##### CREATE PEM #####
-######################
+#######################
+##### CONTROL PEM #####
+#######################
 
 def create_pem(pem_name):
     response = ec2.create_key_pair(KeyName=pem_name)
@@ -72,8 +91,10 @@ def create_pem(pem_name):
 
     return key_pair, key_finger_print
 
-# def delete_pem(pem_name):
-#     response = ec2.delete_key_pair(KeyName=pem_name)
+def delete_pem(pem_name):
+    response = client.delete_key_pair(KeyName=pem_name)
+
+    return response
     
 
 ##############################
@@ -105,30 +126,38 @@ def create_instance(instance_name):
 ##############################
 
 ## And make signer.pass
-def change_account_operator(op_ip, op_key, op_addrs, op_pass, chain_id, is_pre, epoch, nodekey, rootchain_ip):
+def change_account_operator(parameter):
     key1 = "<operator key>"
     key2 = "<operator address>"
     key3 = "<password>"
-    key4 = "<chain id>"
-    key5 = "<pre asset true or false>"
-    key6 = "<epoch lenth of plasma>"
-    key7 = "<node key hex>"
-    key8 = "<rootchain ip address>"
+    key4 = "<stamina amount>"
+    key5 = "<stamina minimum deposit>"
+    key6 = "<stamina epoch length>"
+    key7 = "<stamina withdrawal delay>"
+    key8 = "<chain id>"
+    key9 = "<pre asset true or false>"
+    key10 = "<epoch lenth of plasma>"
+    key11 = "<node key hex>"
+    key12 = "<rootchain ip address>"
 
     cmdg = "sed -i "
-    cmd1 = "-e 's/" + key1 + "/" + op_key + "/g' "
-    cmd2 = "-e 's/" + key2 + "/" + op_addrs + "/g' "
-    cmd3 = "-e 's/" + key3 + "/" + op_pass + "/g' "
-    cmd4 = "-e 's/" + key4 + "/" + chain_id + "/g' "
-    cmd5 = "-e 's/" + key5 + "/" + is_pre + "/g' "
-    cmd6 = "-e 's/" + key6 + "/" + epoch + "/g' "
-    cmd7 = "-e 's/" + key7 + "/" + nodekey + "/g' "
-    cmd8 = "-e 's/" + key8 + "/" + rootchain_ip + "/g' "
-    cmd9 = "/home/ubuntu/variables.list"
+    cmd1 = "-e 's/" + key1 + "/" + parameter["op_key"] + "/g' "
+    cmd2 = "-e 's/" + key2 + "/" + parameter["op_addrs"] + "/g' "
+    cmd3 = "-e 's/" + key3 + "/" + parameter["op_pass"] + "/g' "
+    cmd4 = "-e 's/" + key4 + "/" + parameter["stamina_op_amt"] + "/g' "
+    cmd5 = "-e 's/" + key5 + "/" + parameter["stamina_m_deposit"] + "/g' "
+    cmd6 = "-e 's/" + key6 + "/" + parameter["stamina_re_len"] + "/g' "
+    cmd7 = "-e 's/" + key7 + "/" + parameter["stamina_w_delay"] + "/g' "
+    cmd8 = "-e 's/" + key8 + "/" + parameter["chain_id"] + "/g' "
+    cmd9 = "-e 's/" + key9 + "/" + parameter["is_pre"] + "/g' "
+    cmd10 = "-e 's/" + key10 + "/" + parameter["epoch"] + "/g' "
+    cmd11 = "-e 's/" + key11 + "/" + parameter["nodekey"] + "/g' "
+    cmd12 = "-e 's/" + key12 + "/" + parameter["rootchain_ip"] + "/g' "
+    cmd13 = "/home/ubuntu/variables.list"
 
-    cmd = cmdg + cmd1 + cmd2 + cmd3 + cmd4 + cmd5 + cmd6 + cmd7 + cmd8 + cmd9
+    cmd = cmdg + cmd1 + cmd2 + cmd3 + cmd4 + cmd5 + cmd6 + cmd7 + cmd8 + cmd9 + cmd10 + cmd11 + cmd12 + cmd13
     # print(cmd)
-    return ssh_execute(op_ip, cmd)
+    return ssh_execute(parameter["op_ip"], cmd)
 
 def deploy_rootchain_contract(ip_address):
     return ssh_execute(host=ip_address, command="/home/ubuntu/1_deploy.rootchain.sh")
