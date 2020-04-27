@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: ./
+    destination: /home/ubuntu/tws-dev
+
+hooks:
+  BeforeInstall:
+    - location: scripts/stop-server.sh
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: scripts/after_deploy.sh
+      timeout: 300
+      runas: root
