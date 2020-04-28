@@ -11,6 +11,7 @@ from io import StringIO
 from tinydb import TinyDB, Query
 from tinydb.operations import delete, set
 from flask import Flask, render_template, request, redirect, url_for, flash
+from register_network import register
 from tokamak_aws import \
     get_instance_ip, \
     run_rootchain, \
@@ -55,6 +56,9 @@ PEMFILE = config["SSH"]["SSH_PEMFILE"]
 SSH_USERNAME = config["SSH"]["SSH_USERNAME"]
 
 t_db = TinyDB(config["DATABASE"]["DATABASE"])
+# if t_db.search(Query.InstanceId == 'i-mainnet')
+# t_db.insert(config["NETWORKS"]["MAINNET"])
+# t_db.insert(config["NETWORKS"]["RINKEBY"])
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -398,6 +402,8 @@ def operator():
 @app.route("/operator/form")
 def operator_form():
     data = t_db.search(Query().Type == "rootchain")
+    data.append(config['NETWORKS']['MAINNET'])
+    print(data)
     return render_template(
             "operator/operator_create.html",
             data = data
