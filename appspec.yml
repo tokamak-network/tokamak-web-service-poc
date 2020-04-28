@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: ./
-    destination: /home/ubuntu/tws-dev
+    destination: /home/ubuntu/tokamak-web-service-poc
 
 hooks:
   BeforeInstall:
