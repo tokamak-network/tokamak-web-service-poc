@@ -32,6 +32,7 @@ from tokamak_aws import \
     managers_import, \
     managers_set, \
     managers_register, \
+    operator_register, \
     get_log_tail, \
     set_usernode_variable, \
     import_genesis_usernode, \
@@ -420,6 +421,9 @@ def operator_create():
         stamina_min_deposit = request.form['StaminaMinDeposit']
         stamina_recover_epoch_length = request.form['StaminaRecoverEpochLength']
         stamina_withdrawal_delay = request.form['StaminaWithdrawalDelay']
+        website = request.form['Website']
+        description = request.form['Description']
+        api_server = request.form['ApiServer']
 
         print("##################", pre_asset)
 
@@ -427,7 +431,7 @@ def operator_create():
             pre_asset = "true"
         else :
             pre_asset = "false"
-
+        print(rootchain_id)
         root_inst = t_db.search(Query().InstanceId == rootchain_id)[0]
 
         operator_ins = create_instance(name)
@@ -455,6 +459,12 @@ def operator_create():
             'StaminaMinDeposit': stamina_min_deposit,
             'StaminaRecoverEpochLength': stamina_recover_epoch_length,
             'StaminaWithdrawalDelay': stamina_withdrawal_delay,
+            'Dashboard' : {
+                'OperatorName' : name,
+                'Website' : website,
+                'Description' : description,
+                'ApiServer' : api_server,
+            },
             'IsSet' : '',
             'IsDeployed' : '',
             'Genesis' : '',
@@ -462,7 +472,8 @@ def operator_create():
             'IsInitialized' : '',
             'IsManagersImported' : '',
             'IsManagersSet' : '',
-            'IsMansgersRegistered' : ''
+            'IsMansgersRegistered' : '',
+            'IsOperatorRegistered' : ''
         }
         t_db.insert(inst_obj)
         q_res = t_db.search(Query().Name == name)
@@ -480,22 +491,26 @@ def operator_set_variable():
         inst_id = request.form["instance_id"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
 
-        parameter = {
-            "op_ip": inst["IpAddress"],
-            "op_key": inst['OperatorAccountKey'],
-            "op_addrs": inst['OperatorAccount'],
-            "op_pass": inst['OperatorPassword'],
-            "stamina_op_amt": inst['StaminaOperatorAmount'],
-            "stamina_m_deposit": inst['StaminaMinDeposit'],
-            "stamina_re_len": inst['StaminaRecoverEpochLength'],
-            "stamina_w_delay": inst['StaminaWithdrawalDelay'],
-            "chain_id": inst['ChainID'],
-            "is_pre": inst['PreAsset'],
-            "epoch": inst['Epoch'],
-            "nodekey": inst['NodeKey'],
-            "rootchain_ip": inst['RootChain']["IpAddress"],
-        }
-
+        parameter = [
+            inst['OperatorAccountKey'],
+            inst['OperatorAccount'],
+            inst['OperatorPassword'],
+            inst['StaminaOperatorAmount'],
+            inst['StaminaMinDeposit'],
+            inst['StaminaRecoverEpochLength'],
+            inst['StaminaWithdrawalDelay'],
+            inst['ChainID'],
+            inst['PreAsset'],
+            inst['Epoch'],
+            inst['NodeKey'],
+            inst['RootChain']["IpAddress"],
+            inst['Dashboard']['OperatorName'],
+            inst['Dashboard']['Website'],
+            inst['Dashboard']['Description'],
+            inst['Dashboard']['ApiServer'],
+            inst["IpAddress"],
+        ]
+        
         res = change_account_operator(parameter)
         t_db.update(set('IsSet', "true"), Query().InstanceId == inst_id)
         flash([time.ctime()[11:19] + " Operator Variable Set!"])
@@ -587,6 +602,17 @@ def operator_register_managers(instanceid):
     inst_ip = inst[0]["IpAddress"]
 
     out = managers_register(inst_ip)
+    t_db.update(set('IsManagersRegistered', "true"), Query().InstanceId == instanceid)
+
+    flash(out)
+    return redirect(url_for('operator'))
+
+@app.route("/operator/register/rootchain/<instanceid>")
+def dashboard_register_managers(instanceid):
+    inst = t_db.search(Query().InstanceId == instanceid)
+    inst_ip = inst[0]["IpAddress"]
+
+    out = operator_register(inst_ip)
     t_db.update(set('IsManagersRegistered', "true"), Query().InstanceId == instanceid)
 
     flash(out)
