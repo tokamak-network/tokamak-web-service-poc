@@ -56,9 +56,6 @@ PEMFILE = config["SSH"]["SSH_PEMFILE"]
 SSH_USERNAME = config["SSH"]["SSH_USERNAME"]
 
 t_db = TinyDB(config["DATABASE"]["DATABASE"])
-# if t_db.search(Query.InstanceId == 'i-mainnet')
-# t_db.insert(config["NETWORKS"]["MAINNET"])
-# t_db.insert(config["NETWORKS"]["RINKEBY"])
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -393,7 +390,7 @@ def export_manager(instanceid):
 @app.route("/operator")
 def operator():
     data = t_db.search(Query().Type == "operator")
-    # print(data)
+    
     return render_template(
             "operator/operator_list.html",
             data = data
@@ -437,7 +434,7 @@ def operator_create():
             pre_asset = "true"
         else :
             pre_asset = "false"
-        print(rootchain_id)
+        
         root_inst = t_db.search(Query().InstanceId == rootchain_id)[0]
 
         operator_ins = create_instance(name)
@@ -547,7 +544,7 @@ def operator_export_genesis():
     if request.method == 'POST':
         inst_id = request.form["instance_id"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
-        # print(inst)
+        
         genesis = export_genesis(inst["IpAddress"])
         t_db.update(set('Genesis', genesis), Query().InstanceId == inst_id)
         t_db.update(set('IsExported', "true"), Query().InstanceId == inst_id)
@@ -645,7 +642,7 @@ def operator_runnode():
 @app.route("/usernode")
 def usernode():
     data = t_db.search(Query().Type == "usernode")
-    # print(data)
+    
     return render_template(
             "usernode/usernode_list.html",
             data = data
