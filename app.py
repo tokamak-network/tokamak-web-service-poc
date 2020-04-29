@@ -399,8 +399,7 @@ def operator():
 @app.route("/operator/form")
 def operator_form():
     data = t_db.search(Query().Type == "rootchain")
-    data.append(config['NETWORKS']['MAINNET'])
-    print(data)
+
     return render_template(
             "operator/operator_create.html",
             data = data
