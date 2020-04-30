@@ -139,25 +139,23 @@ def change_account_operator(parameter):
     key10 = "<epoch lenth of plasma>"
     key11 = "<node key hex>"
     key12 = "<rootchain ip address>"
-
+    key13 = "<operator name>"
+    key14 = "<website address>"
+    key15 = "<description>"
+    key16 = "<api server address>"
+    key = [key1, key2, key3, key4, key5, key6, key7, key8, key9, key10, key11, key12, key13, key14, key15, key16]
+    
     cmdg = "sed -i "
-    cmd1 = "-e 's/" + key1 + "/" + parameter["op_key"] + "/g' "
-    cmd2 = "-e 's/" + key2 + "/" + parameter["op_addrs"] + "/g' "
-    cmd3 = "-e 's/" + key3 + "/" + parameter["op_pass"] + "/g' "
-    cmd4 = "-e 's/" + key4 + "/" + parameter["stamina_op_amt"] + "/g' "
-    cmd5 = "-e 's/" + key5 + "/" + parameter["stamina_m_deposit"] + "/g' "
-    cmd6 = "-e 's/" + key6 + "/" + parameter["stamina_re_len"] + "/g' "
-    cmd7 = "-e 's/" + key7 + "/" + parameter["stamina_w_delay"] + "/g' "
-    cmd8 = "-e 's/" + key8 + "/" + parameter["chain_id"] + "/g' "
-    cmd9 = "-e 's/" + key9 + "/" + parameter["is_pre"] + "/g' "
-    cmd10 = "-e 's/" + key10 + "/" + parameter["epoch"] + "/g' "
-    cmd11 = "-e 's/" + key11 + "/" + parameter["nodekey"] + "/g' "
-    cmd12 = "-e 's/" + key12 + "/" + parameter["rootchain_ip"] + "/g' "
-    cmd13 = "/home/ubuntu/variables.list"
+    
+    for i in range(len(parameter) - 1):
+        cmdg = cmdg + control_sed(key[i], parameter[i])
+    cmd = cmdg + "/home/ubuntu/variables.list"
 
-    cmd = cmdg + cmd1 + cmd2 + cmd3 + cmd4 + cmd5 + cmd6 + cmd7 + cmd8 + cmd9 + cmd10 + cmd11 + cmd12 + cmd13
     # print(cmd)
-    return ssh_execute(parameter["op_ip"], cmd)
+    return ssh_execute(parameter[len(parameter) - 1], cmd)
+
+def control_sed(key, parameter):
+    return "-e 's/" + key + "/" + parameter + "/g' "
 
 def deploy_rootchain_contract(ip_address):
     return ssh_execute(host=ip_address, command="/home/ubuntu/1_deploy.rootchain.sh")
@@ -182,6 +180,10 @@ def managers_set(ip_address):
 
 def managers_register(ip_address):
     out = ssh_execute(host=ip_address, command="bash /home/ubuntu/stake/2_register.manager.sh")
+    return out
+
+def operator_register(ip_address):
+    out = ssh_execute(host=ip_address, command="bash /home/ubuntu/stake/3_register.rootchain.sh")
     return out
 
 def run_operator(ip_address):

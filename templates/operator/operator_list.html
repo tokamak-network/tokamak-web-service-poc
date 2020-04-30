@@ -30,6 +30,8 @@
           <th>Is Set?</th>
           <th>Register Managers</th>
           <th>Is Registered?</th>
+          <th>Register Operator</th>
+          <th>Is Registered?</th>
           <th>Run Operator</th>
           <th>Shutdown</th>
           <th>Drop</th>
@@ -124,9 +126,15 @@
             </td>
             <td>{{data.IsManagersRegistered}}</td>
             <td>
+              <a href="{{ url_for('dashboard_register_managers', instanceid=data.InstanceId) }}">
+                <button type="button" class="btn btn-secondary btn-sm" name="button">11.Register</button>
+              </a>
+            </td>
+            <td>{{data.IsOperatorRegistered}}</td>
+            <td>
               <form id="start_rootchain" action="{{ url_for('operator_runnode') }}" method="post">
                 <input type="hidden" name="instance_id" value="{{ data.InstanceId | safe }}">
-                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="11.Run Node">
+                <input type="submit" class="btn btn-secondary btn-sm" name="check" value="12.Run Node">
               </form>
             </td>
             <td>
