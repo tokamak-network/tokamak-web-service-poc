@@ -2,7 +2,7 @@
 source /home/ubuntu/variables.list
 
 # Import Operator account
-/home/ubuntu/plasma-evm/build/bin/geth --nousb account importKey $OPERATOR_KEY \
+/home/ubuntu/plasma-evm/build/bin/geth --nousb account import-key $OPERATOR_KEY \
     --datadir $DATADIR \
     --password <(echo $OPERATOR_PASSPHRASE)
 echo "operator account imported"
