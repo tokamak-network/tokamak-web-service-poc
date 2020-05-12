@@ -11,7 +11,7 @@ from io import StringIO
 from tinydb import TinyDB, Query
 from tinydb.operations import delete, set
 from flask import Flask, render_template, request, redirect, url_for, flash
-from register_network import register
+
 from tokamak_aws import \
     get_instance_ip, \
     run_rootchain, \
@@ -121,7 +121,6 @@ def pem_create():
         t_db.insert(inst_obj)
         q_res = t_db.search(Query().Name == name)
         flash([str(q_res), "Pem Created!"])
-
         return redirect(url_for('pem_router'))
     else:
         return url_for('pem_router')
@@ -390,7 +389,6 @@ def export_manager(instanceid):
 @app.route("/operator")
 def operator():
     data = t_db.search(Query().Type == "operator")
-    
     return render_template(
             "operator/operator_list.html",
             data = data
@@ -399,7 +397,6 @@ def operator():
 @app.route("/operator/form")
 def operator_form():
     data = t_db.search(Query().Type == "rootchain")
-
     return render_template(
             "operator/operator_create.html",
             data = data
@@ -641,7 +638,6 @@ def operator_runnode():
 @app.route("/usernode")
 def usernode():
     data = t_db.search(Query().Type == "usernode")
-    
     return render_template(
             "usernode/usernode_list.html",
             data = data
