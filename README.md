@@ -199,33 +199,33 @@ This endpoint retrive rootchain.
 [
   {
     'Type': 'rootchain', 
-    'Name': 'Mainnet', 
-    'InstanceId': 'i-mainnet', 
-    'Status': 'mining', 
+    'Name': '<rootchain name>', 
+    'InstanceId': '<rootchain instance id>', 
+    'Status': '<status of rootchain>', 
     'Date': '', 
     'Faucet': [], 
     'Operator': '', 
     'OperatorPassword': '', 
     'Staking': {
-      'WithdrawalDelay': '10', 
-      'SeigPerBlock': '1.5', 
-      'PwertTONRoundTime': '60'
+      'WithdrawalDelay': '<withdrawal delay>', 
+      'SeigPerBlock': '<seigniorage per block>', 
+      'PwertTONRoundTime': '<round time>'
       }, 
-      'IsScriptSet': 'true', 
-      'IsMansgerDeployed': 'true', 
-      'IsPowerTONDeployed': 'true', 
-      'IsPowerTONStarted': 'true', 
-      'IsManagerExported': 'true', 
+      'IsScriptSet': '', 
+      'IsMansgerDeployed': '', 
+      'IsPowerTONDeployed': '', 
+      'IsPowerTONStarted': '', 
+      'IsManagerExported': '', 
       'Managers': {
-        'TON': '0xe3a87a9343D262F5f11280058ae807B45aa34669', 
-        'WTON': '0xcDB18cd1f6763a93287d20598427A50d3Ba9977f', 
-        'DepositManager': '0xa8f67b988f3227158146da1C1c4854d2DCcdE67D', 
-        'RootChainRegistry': '0xeE0aF430528311d2b48880E9055FB9f26fd64022', 
-        'SeigManager': '0x2104cEC955b6FaBF603d8B2Ee0c28EA88886fa8C', 
-        'PowerTON': '0x8a5A36F16dd9eD0032cfce1a0496e543B6c72098'
+        'TON': '<TON contract address>', 
+        'WTON': '<WTON contract address>', 
+        'DepositManager': '<deposit manager contract address>', 
+        'RootChainRegistry': '<rootchain registry contract addresss>', 
+        'SeigManager': '<seigniorage manager contract address>', 
+        'PowerTON': '<power ton contract address>'
       }, 
       'Managers2': '', 
-      'IpAddress': '13.231.50.44'
+      'IpAddress': '<ip address>'
     },
     ...
 ]
@@ -393,31 +393,32 @@ This endpoint get operator list and render it.
 [
   {
     'Type': 'operator', 
-    'Name': 'rinkeby-test', 
-    'ChainID': '2009', 
-    'Epoch': '4096', 
+    'Name': '<operator instance name>', 
+    'ChainID': '<plasma chain's chain id>', 
+    'Epoch': '<epoch length>', 
     'PreAsset': 'true', 
     'RootChain': {
-      'Name': 'Rinkeby', 
-      'IpAddress': '13.231.233.189', 
-      'InstanceId': 'i-rinkeby'
+      'Name': '<rootchain name>', 
+      'IpAddress': '<rootchain instance ip address>', 
+      'InstanceId': '<rootchain instance id>'
     }, 
-    'InstanceId': 'i-04029f270b1e465e6', 
-    'Status': 'pending', 
-    'Date': 'Tue, 28 Apr 2020 10:59:09 GMT', 
-    'RootchainId': 'i-rinkeby', 
-    'NodeKey': 'e854e2f029be6364f0f961bd7571fd4431f99355b51ab79d23c56506f5f1a7c3',
-    'OperatorAccount': '0x71562b71999873DB5b286dF957af199Ec94617F7', 
-    'OperatorAccountKey': 'b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291','OperatorPassword': '', 
-    'StaminaOperatorAmount': '1', 
-    'StaminaMinDeposit': '0.5', 
-    'StaminaRecoverEpochLength': '120960', 
-    'StaminaWithdrawalDelay': '362880', 
+    'InstanceId': '<operator instance id>', 
+    'Status': '', 
+    'Date': '', 
+    'RootchainId': '<rootchain instance id>', 
+    'NodeKey': '<nodekey>',
+    'OperatorAccount': '<operator address>', 
+    'OperatorAccountKey': '<operator's private key>',
+    'OperatorPassword': '', 
+    'StaminaOperatorAmount': '<amount of depositted stamina>', 
+    'StaminaMinDeposit': '<minimum amount of stamina>', 
+    'StaminaRecoverEpochLength': '<recovery epoch length>', 
+    'StaminaWithdrawalDelay': '<withdrawal delay>', 
     'Dashboard': {
-      'OperatorName': 'rinkeby-test', 
-      'Website': 'tokamak.network', 
-      'Description': 'Tokamak Network is a platform that assures decentralized and secure property same as Ethereum Main chain while supporting high level of scalability and extendability.', 
-      'ApiServer': '13.124.77.81:9001'
+      'OperatorName': '<operator name>', 
+      'Website': '<operator website>', 
+      'Description': '<introduce about operator>', 
+      'ApiServer': '<staking dashboard api server address>'
     }, 
     'IsSet': '', 
     'IsDeployed': '', 
@@ -453,33 +454,33 @@ This endpoint show create operator form
 [
   {
     'Type': 'rootchain', 
-    'Name': 'Mainnet', 
-    'InstanceId': 'i-mainnet', 
-    'Status': 'mining', 
+    'Name': '<rootchain name>', 
+    'InstanceId': '<rootchain instance id>', 
+    'Status': '<status of rootchain>', 
     'Date': '', 
     'Faucet': [], 
     'Operator': '', 
     'OperatorPassword': '', 
     'Staking': {
-      'WithdrawalDelay': '10', 
-      'SeigPerBlock': '1.5', 
-      'PwertTONRoundTime': '60'
+      'WithdrawalDelay': '<withdrawal delay>', 
+      'SeigPerBlock': '<seigniorage per block>', 
+      'PwertTONRoundTime': '<round time>'
       }, 
-      'IsScriptSet': 'true', 
-      'IsMansgerDeployed': 'true', 
-      'IsPowerTONDeployed': 'true', 
-      'IsPowerTONStarted': 'true', 
-      'IsManagerExported': 'true', 
+      'IsScriptSet': '', 
+      'IsMansgerDeployed': '', 
+      'IsPowerTONDeployed': '', 
+      'IsPowerTONStarted': '', 
+      'IsManagerExported': '', 
       'Managers': {
-        'TON': '0xe3a87a9343D262F5f11280058ae807B45aa34669', 
-        'WTON': '0xcDB18cd1f6763a93287d20598427A50d3Ba9977f', 
-        'DepositManager': '0xa8f67b988f3227158146da1C1c4854d2DCcdE67D', 
-        'RootChainRegistry': '0xeE0aF430528311d2b48880E9055FB9f26fd64022', 
-        'SeigManager': '0x2104cEC955b6FaBF603d8B2Ee0c28EA88886fa8C', 
-        'PowerTON': '0x8a5A36F16dd9eD0032cfce1a0496e543B6c72098'
+        'TON': '<TON contract address>', 
+        'WTON': '<WTON contract address>', 
+        'DepositManager': '<deposit manager contract address>', 
+        'RootChainRegistry': '<rootchain registry contract addresss>', 
+        'SeigManager': '<seigniorage manager contract address>', 
+        'PowerTON': '<power ton contract address>'
       }, 
       'Managers2': '', 
-      'IpAddress': '13.231.50.44'
+      'IpAddress': '<ip address>'
     },
     ...
 ]
@@ -669,23 +670,23 @@ This endpoint show usernodes.
     'Type': 'usernode', 
     'Name': '', 
     'RootChain': {
-      'Name': 'Mainnet', 
-      'IpAddress': '13.231.50.44', 
-      'InstanceId': 'i-mainnet'
+      'Name': '<rootchain name>', 
+      'IpAddress': '<rootchain ip address>', 
+      'InstanceId': '<instance id of rootchain>'
     }, 
     'Operator': {
-      'Name': 'rinkeby-test', 
-      'IpAddress': '13.231.10.253', 
-      'InstanceId': 'i-04029f270b1e465e6', 
+      'Name': '<operator instance name>', 
+      'IpAddress': '<operator ip address>', 
+      'InstanceId': '<operator instance id>', 
       'Genesis': '', 
-      'ChainID': '2009'
+      'ChainID': '<operator's chain id>'
     }, 
-    'InstanceId': 'i-0e4472d7c5a5670a9', 
-    'Status': 'pending', 
-    'Date': 'Tue, 12 May 2020 07:54:53 GMT', 
-    'Enode': '4966a7e4621c2c0b1b1b3295b4a35ccc4224ba1d529bf5aa2323e4650f6075bd5eb6618372b2579965819347307f1f97315ce91b09ca342d60c2e98ad88db9f3', 
+    'InstanceId': '<usernode instance id>', 
+    'Status': '', 
+    'Date': '', 
+    'Enode': '<enode value>', 
     'IsInitialized': '', 
-    'IpAddress': '52.197.85.100'
+    'IpAddress': '<usernode ip address>'
   }
 ]
 
@@ -711,64 +712,65 @@ This endpoint show usernode create form.
 [
   {
     'Type': 'rootchain', 
-    'Name': 'Mainnet', 
-    'InstanceId': 'i-mainnet', 
-    'Status': 'mining', 
+    'Name': '<rootchain name>', 
+    'InstanceId': '<rootchain instance id>', 
+    'Status': '<status of rootchain>', 
     'Date': '', 
     'Faucet': [], 
     'Operator': '', 
     'OperatorPassword': '', 
     'Staking': {
-      'WithdrawalDelay': '10', 
-      'SeigPerBlock': '1.5', 
-      'PwertTONRoundTime': '60'
+      'WithdrawalDelay': '<withdrawal delay>', 
+      'SeigPerBlock': '<seigniorage per block>', 
+      'PwertTONRoundTime': '<round time>'
       }, 
-      'IsScriptSet': 'true', 
-      'IsMansgerDeployed': 'true', 
-      'IsPowerTONDeployed': 'true', 
-      'IsPowerTONStarted': 'true', 
-      'IsManagerExported': 'true', 
+      'IsScriptSet': '', 
+      'IsMansgerDeployed': '', 
+      'IsPowerTONDeployed': '', 
+      'IsPowerTONStarted': '', 
+      'IsManagerExported': '', 
       'Managers': {
-        'TON': '0xe3a87a9343D262F5f11280058ae807B45aa34669', 
-        'WTON': '0xcDB18cd1f6763a93287d20598427A50d3Ba9977f', 
-        'DepositManager': '0xa8f67b988f3227158146da1C1c4854d2DCcdE67D', 
-        'RootChainRegistry': '0xeE0aF430528311d2b48880E9055FB9f26fd64022', 
-        'SeigManager': '0x2104cEC955b6FaBF603d8B2Ee0c28EA88886fa8C', 
-        'PowerTON': '0x8a5A36F16dd9eD0032cfce1a0496e543B6c72098'
+        'TON': '<TON contract address>', 
+        'WTON': '<WTON contract address>', 
+        'DepositManager': '<deposit manager contract address>', 
+        'RootChainRegistry': '<rootchain registry contract addresss>', 
+        'SeigManager': '<seigniorage manager contract address>', 
+        'PowerTON': '<power ton contract address>'
       }, 
       'Managers2': '', 
-      'IpAddress': '13.231.50.44'
+      'IpAddress': '<ip address>'
     },
     ...
 ]
 [
   {
     'Type': 'operator', 
-    'Name': 'rinkeby-test', 
-    'ChainID': '2009', 
-    'Epoch': '4096', 
+    'Name': '<operator instance name>', 
+    'ChainID': '<plasma chain's chain id>', 
+    'Epoch': '<epoch length>', 
     'PreAsset': 'true', 
     'RootChain': {
-      'Name': 'Rinkeby', 
-      'IpAddress': '13.231.233.189', 
-      'InstanceId': 'i-rinkeby'
+      'Name': '<rootchain name>', 
+      'IpAddress': '<rootchain instance ip address>', 
+      'InstanceId': '<rootchain instance id>'
     }, 
-    'InstanceId': 'i-04029f270b1e465e6', 
-    'Status': 'pending', 
-    'Date': 'Tue, 28 Apr 2020 10:59:09 GMT', 
-    'RootchainId': 'i-rinkeby', 
-    'NodeKey': 'e854e2f029be6364f0f961bd7571fd4431f99355b51ab79d23c56506f5f1a7c3',
-    'OperatorAccount': '0x71562b71999873DB5b286dF957af199Ec94617F7', 
-    'OperatorAccountKey': 'b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291','OperatorPassword': '', 
-    'StaminaOperatorAmount': '1', 
-    'StaminaMinDeposit': '0.5', 
-    'StaminaRecoverEpochLength': '120960', 
-    'StaminaWithdrawalDelay': '362880', 
+    'InstanceId': '<operator instance id>', 
+    'Status': '', 
+    'Date': '', 
+    'RootchainId': '<rootchain instance id>', 
+    'NodeKey': '<nodekey>',
+    'OperatorAccount': '<operator address>', 
+    'OperatorAccountKey': '<operator's private key>',
+    'OperatorPassword': '', 
+    'StaminaOperatorAmount': '<amount of depositted stamina>', 
+    'StaminaMinDeposit': '<minimum amount of stamina>', 
+    'StaminaRecoverEpochLength': '<recovery epoch length>', 
+    'StaminaWithdrawalDelay': '<withdrawal delay>', 
     'Dashboard': {
-      'OperatorName': 'rinkeby-test', 
-      'Website': 'tokamak.network', 
-      'Description': 'Tokamak Network is a platform that assures decentralized and secure property same as Ethereum Main chain while supporting high level of scalability and extendability.', 
-      'ApiServer': '13.124.77.81:9001'
+      'OperatorName': '<operator name>', 
+      'Website': '<operator website>', 
+      'Description': '<introduce about operator>', 
+      'ApiServer': '<staking dashboard api server address>'
     }, 
     'IsSet': '', 
     'IsDeployed': '', 
@@ -859,31 +861,32 @@ This endpoint retrieve instance by given instanceid
 [
   {
     'Type': 'operator', 
-    'Name': 'rinkeby-test', 
-    'ChainID': '2009', 
-    'Epoch': '4096', 
+    'Name': '<operator instance name>', 
+    'ChainID': '<plasma chain's chain id>', 
+    'Epoch': '<epoch length>', 
     'PreAsset': 'true', 
     'RootChain': {
-      'Name': 'Rinkeby', 
-      'IpAddress': '13.231.233.189', 
-      'InstanceId': 'i-rinkeby'
+      'Name': '<rootchain name>', 
+      'IpAddress': '<rootchain instance ip address>', 
+      'InstanceId': '<rootchain instance id>'
     }, 
-    'InstanceId': 'i-04029f270b1e465e6', 
-    'Status': 'pending', 
-    'Date': 'Tue, 28 Apr 2020 10:59:09 GMT', 
-    'RootchainId': 'i-rinkeby', 
-    'NodeKey': 'e854e2f029be6364f0f961bd7571fd4431f99355b51ab79d23c56506f5f1a7c3',
-    'OperatorAccount': '0x71562b71999873DB5b286dF957af199Ec94617F7', 
-    'OperatorAccountKey': 'b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291','OperatorPassword': '', 
-    'StaminaOperatorAmount': '1', 
-    'StaminaMinDeposit': '0.5', 
-    'StaminaRecoverEpochLength': '120960', 
-    'StaminaWithdrawalDelay': '362880', 
+    'InstanceId': '<operator instance id>', 
+    'Status': '', 
+    'Date': '', 
+    'RootchainId': '<rootchain instance id>', 
+    'NodeKey': '<nodekey>',
+    'OperatorAccount': '<operator address>', 
+    'OperatorAccountKey': '<operator's private key>',
+    'OperatorPassword': '', 
+    'StaminaOperatorAmount': '<amount of depositted stamina>', 
+    'StaminaMinDeposit': '<minimum amount of stamina>', 
+    'StaminaRecoverEpochLength': '<recovery epoch length>', 
+    'StaminaWithdrawalDelay': '<withdrawal delay>', 
     'Dashboard': {
-      'OperatorName': 'rinkeby-test', 
-      'Website': 'tokamak.network', 
-      'Description': 'Tokamak Network is a platform that assures decentralized and secure property same as Ethereum Main chain while supporting high level of scalability and extendability.', 
-      'ApiServer': '13.124.77.81:9001'
+      'OperatorName': '<operator name>', 
+      'Website': '<operator website>', 
+      'Description': '<introduce about operator>', 
+      'ApiServer': '<staking dashboard api server address>'
     }, 
     'IsSet': '', 
     'IsDeployed': '', 
@@ -913,31 +916,32 @@ This endpoint show main page of staking
 [
   {
     'Type': 'operator', 
-    'Name': 'rinkeby-test', 
-    'ChainID': '2009', 
-    'Epoch': '4096', 
+    'Name': '<operator instance name>', 
+    'ChainID': '<plasma chain's chain id>', 
+    'Epoch': '<epoch length>', 
     'PreAsset': 'true', 
     'RootChain': {
-      'Name': 'Rinkeby', 
-      'IpAddress': '13.231.233.189', 
-      'InstanceId': 'i-rinkeby'
+      'Name': '<rootchain name>', 
+      'IpAddress': '<rootchain instance ip address>', 
+      'InstanceId': '<rootchain instance id>'
     }, 
-    'InstanceId': 'i-04029f270b1e465e6', 
-    'Status': 'pending', 
-    'Date': 'Tue, 28 Apr 2020 10:59:09 GMT', 
-    'RootchainId': 'i-rinkeby', 
-    'NodeKey': 'e854e2f029be6364f0f961bd7571fd4431f99355b51ab79d23c56506f5f1a7c3',
-    'OperatorAccount': '0x71562b71999873DB5b286dF957af199Ec94617F7', 
-    'OperatorAccountKey': 'b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291','OperatorPassword': '', 
-    'StaminaOperatorAmount': '1', 
-    'StaminaMinDeposit': '0.5', 
-    'StaminaRecoverEpochLength': '120960', 
-    'StaminaWithdrawalDelay': '362880', 
+    'InstanceId': '<operator instance id>', 
+    'Status': '', 
+    'Date': '', 
+    'RootchainId': '<rootchain instance id>', 
+    'NodeKey': '<nodekey>',
+    'OperatorAccount': '<operator address>', 
+    'OperatorAccountKey': '<operator's private key>',
+    'OperatorPassword': '', 
+    'StaminaOperatorAmount': '<amount of depositted stamina>', 
+    'StaminaMinDeposit': '<minimum amount of stamina>', 
+    'StaminaRecoverEpochLength': '<recovery epoch length>', 
+    'StaminaWithdrawalDelay': '<withdrawal delay>', 
     'Dashboard': {
-      'OperatorName': 'rinkeby-test', 
-      'Website': 'tokamak.network', 
-      'Description': 'Tokamak Network is a platform that assures decentralized and secure property same as Ethereum Main chain while supporting high level of scalability and extendability.', 
-      'ApiServer': '13.124.77.81:9001'
+      'OperatorName': '<operator name>', 
+      'Website': '<operator website>', 
+      'Description': '<introduce about operator>', 
+      'ApiServer': '<staking dashboard api server address>'
     }, 
     'IsSet': '', 
     'IsDeployed': '', 
@@ -961,27 +965,215 @@ This endpoint show Operator's information
 
 #### URL
 ```
-/staking/info/<instanceid>
+/staking/info/<index>
 ```
 #### Success Response
 ```
+[
+  {
+    'Type': 'operator', 
+    'Name': '<operator instance name>', 
+    'ChainID': '<plasma chain's chain id>', 
+    'Epoch': '<epoch length>', 
+    'PreAsset': 'true', 
+    'RootChain': {
+      'Name': '<rootchain name>', 
+      'IpAddress': '<rootchain instance ip address>', 
+      'InstanceId': '<rootchain instance id>'
+    }, 
+    'InstanceId': '<operator instance id>', 
+    'Status': '', 
+    'Date': '', 
+    'RootchainId': '<rootchain instance id>', 
+    'NodeKey': '<nodekey>',
+    'OperatorAccount': '<operator address>', 
+    'OperatorAccountKey': '<operator's private key>',
+    'OperatorPassword': '', 
+    'StaminaOperatorAmount': '<amount of depositted stamina>', 
+    'StaminaMinDeposit': '<minimum amount of stamina>', 
+    'StaminaRecoverEpochLength': '<recovery epoch length>', 
+    'StaminaWithdrawalDelay': '<withdrawal delay>', 
+    'Dashboard': {
+      'OperatorName': '<operator name>', 
+      'Website': '<operator website>', 
+      'Description': '<introduce about operator>', 
+      'ApiServer': '<staking dashboard api server address>'
+    }, 
+    'IsSet': '', 
+    'IsDeployed': '', 
+    'Genesis': '', 
+    'IsExported': '', 
+    'IsInitialized': '', 
+    'IsManagersImported': '', 
+    'IsManagersSet': '', 
+    'IsMansgersRegistered': '', 
+    'IsOperatorRegistered': ''
+  }
+]
 ```
 #### Error Response
 ```
 ```
 
-### Pem List
-This endpoint
+### Set Commission Rate
+This endpoint set commition rate of operator
+<!-- ToDo: tws에서 commissionion rate을 변경했을 때 dashboard에 어떻게 반영할지-->
+
 
 #### URL
 ```
+POST /staking/info/<index>/<commission_rate>
 ```
 #### Success Response
 ```
+{
+  commission_rate: '<changed commission rate>'  
+}
 ```
 #### Error Response
 ```
 ```
+
+
+### Stake TON Form
+This endpoint show stake menu
+
+#### URL
+```
+/staking/info/<index>/stake
+```
+#### Success Response
+```
+{
+  available_amt: "<available amount ton to stake>"
+}
+
+and render staking/stake_menu.html
+```
+#### Error Response
+```
+```
+
+
+
+### Stkae TON
+This endpoint stake more or new mton.
+
+#### URL
+```
+POST /staking/info/<index>/staking/<amount>
+```
+#### Success Response
+```
+{
+  staked_mton: '<amount mton to stake>',
+  available_mton: '<available mton to stake>'
+}
+```
+#### Error Response
+```
+```
+
+
+### Unstake TON Form
+This endpoint show form for unstake.
+
+#### URL
+```
+/staking/<index>/unstake
+```
+#### Success Response
+```
+{
+  available_amt: <available mton to unstake>,
+  not_withdrawable: <amount of mton to can't withdrawal>,
+  withdrawable: <abount of mton to withdrawable>
+}
+```
+#### Error Response
+```
+```
+
+
+### Unstake TON
+This endpoint send a command to unstake
+
+#### URL
+```
+/staking/<index>/unstake/<amount>
+```
+#### Success Response
+```
+{
+  staked_mton: <staked mton>,
+  available_mton: <available mton to stake>
+}
+```
+#### Error Response
+```
+```
+
+
+### Withdrawal
+This endpoint withdraw ton that can withdraw.
+
+#### URL
+```
+/staking/<index>/unstake/<withdraw_amount>
+```
+#### Success Response
+```
+{
+  available_mton: <available mton to stake>,
+  withdrawable: <withdrawable mton>
+}
+```
+#### Error Response
+```
+```
+
+
+### Commit
+This endpoint send transaction to commit to rootchain
+
+#### URL
+```
+/staking/<index>/commit
+```
+#### Success Response
+```
+{
+  commit_count: <number of operator's commit count>,
+  reward: <amount of reward>,
+  total_staked: <amount of ton staked by this operator>
+}
+```
+#### Error Response
+```
+```
+
+
+
+
+
+### Get Balance
+This endpoint get PETH and MTON from logined account on Metamask. and it need `connection to metamask`
+
+#### URL
+```
+/staking/<index>/<asset>/<amount>
+```
+#### Success Response
+```
+{
+  mton_value: <the amount of mton held by operator>,
+  eth_value: <the amount of eth held by operator>
+}
+```
+#### Error Response
+```
+```
+
 
 ### Pem List
 This endpoint
