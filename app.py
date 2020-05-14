@@ -416,6 +416,8 @@ def operator_create():
         operator_account = request.form['OperatorAccount']
         operator_account_key = request.form['OperatorAccountKey']
         operator_password = request.form['OperatorPassword']
+        deploy_gasprice = request.form['DeployGasprice']
+        commit_gasprice = request.form['CommitGasprice']
         stamina_operator_amount = request.form['StaminaOperatorAmount']
         stamina_min_deposit = request.form['StaminaMinDeposit']
         stamina_recover_epoch_length = request.form['StaminaRecoverEpochLength']
@@ -454,11 +456,15 @@ def operator_create():
             'OperatorAccount' : operator_account,
             'OperatorAccountKey' : operator_account_key,
             'OperatorPassword' : operator_password,
-            'StaminaOperatorAmount': stamina_operator_amount,
-            'StaminaMinDeposit': stamina_min_deposit,
-            'StaminaRecoverEpochLength': stamina_recover_epoch_length,
-            'StaminaWithdrawalDelay': stamina_withdrawal_delay,
-            'Dashboard' : {
+            'DeployGasprice': deploy_gasprice,
+            'CommitGasprice': commit_gasprice,
+            'Stamina': {
+                'OperatorAmount': stamina_operator_amount,
+                'MinDeposit': stamina_min_deposit,
+                'RecoverEpochLength': stamina_recover_epoch_length,
+                'WithdrawalDelay': stamina_withdrawal_delay,
+            },
+            'Dashboard': {
                 'OperatorName' : name,
                 'Website' : website,
                 'Description' : description,
@@ -494,10 +500,12 @@ def operator_set_variable():
             inst['OperatorAccountKey'],
             inst['OperatorAccount'],
             inst['OperatorPassword'],
-            inst['StaminaOperatorAmount'],
-            inst['StaminaMinDeposit'],
-            inst['StaminaRecoverEpochLength'],
-            inst['StaminaWithdrawalDelay'],
+            inst['DeployGasprice'],
+            inst['CommitGasprice'],
+            inst['Stamina']['OperatorAmount'],
+            inst['Stamina']['MinDeposit'],
+            inst['Stamina']['RecoverEpochLength'],
+            inst['Stamina']['WithdrawalDelay'],
             inst['ChainID'],
             inst['PreAsset'],
             inst['Epoch'],

@@ -20,6 +20,12 @@ echo "Deploy rootchain contract and others"
     --unlock $OPERATOR \
     --password "pwd.pass" \
     --rootchain.sender $OPERATOR \
+    --rootchain.deploygasprice $DEPLOY_GASPRICE \
+    --rootchain.gasprice $COMMIT_GASPRICE \
+    --stamina.operatoramount $OPERATOR_AMOUNT \
+    --stamina.mindeposit $MIN_DEPOSIT \
+    --stamina.recoverepochlength $RECOVER_EPOCH_LENGTH \
+    --stamina.withdrawaldelay $WITHDRAWAL_DELAY \
     deploy "/home/ubuntu/genesis.json" $CHAIN_ID $PRE_ASSET $EPOCH
 # deploy params : chainID, isInitialAsset, Epochlength
 # you can checkout "$geth deploy --help" for more information

@@ -1,6 +1,8 @@
 OPERATOR_KEY="<operator key>"
 OPERATOR="<operator address>"
 OPERATOR_PASSPHRASE="<password>"
+DEPLOY_GASPRICE="<deploy gasprice>"
+COMMIT_GASPRICE="<commit gasprice>"
 
 OPERATOR_AMOUNT="<stamina amount>"
 MIN_DEPOSIT="<stamina minimum deposit>"
