@@ -47,6 +47,7 @@ from tokamak_aws import \
 
 from utilities.update_instance import update_operator, update_rootchain, update_usernode
 from utilities.network_generator import get_network_json
+from utilities.get_web3 import get_balance
 
 DEBUG = config["SERVER"]["DEBUG"]
 SECRET_KEY = config["SERVER"]["SECRET_KEY"]
@@ -470,6 +471,10 @@ def operator_create():
                 'Description' : description,
                 'ApiServer' : api_server,
             },
+            'Balance': {
+                'OperatorStaked': '',
+                'TOtalStaked': '',
+            },
             'IsSet' : '',
             'IsDeployed' : '',
             'Genesis' : '',
@@ -750,6 +755,46 @@ def usernode_runnode():
         return redirect(url_for('usernode'))
     else:
         return redirect(url_for('usernode'))
+
+
+#######################
+### STAKING SETTING ###
+#######################
+
+@app.route("/staking")
+def staking():
+    data = t_db.search(Query().Type == "operator")
+    for i in range(len(data)):
+        operator_staked, total_staked = get_balance(data[i]['OperatorAccount']) # ToDo: connect to web3
+        data[i]['Balance']['OperatorStaked'] = operator_staked
+        data[i]['Balance']['TotalStaked'] = total_staked
+
+    return render_template(
+            "staking/staking_operator_list.html",
+            data = data
+        );
+
+@app.route("/staking/info")
+def staking_info():
+    data = t_db.search(Query().Type == "operator")
+
+    return render_template(
+        "staking/staking_operator_info.html",
+        data = data
+    )
+
+
+# @app.route("/staking/form")
+# def usernode_form():
+#     data = t_db.search(Query().Type == "rootchain")
+#     data2 = t_db.search(Query().Type == "operator")
+#     return render_template(
+#             "usernode/usernode_create.html",
+#             data = data,
+#             data2 = data2
+#         );
+
+
 
 #####################
 ## INSTANCE ROUTE ###
