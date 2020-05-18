@@ -5,15 +5,15 @@
 <div class="row" >  
   <div class="col-md-8">
     <div id="operator-section" class="col-md-12">
-      {{ data.OpearatorAccount }}
+      <p class="lead">Operator {{ data.OperatorAccount }}</p>
     </div>
     <div class="row" id="chain-section">
       <div class="col-md-6">
-        <p>Network</p>
+        <p class="lead">Network</p>
         {{ data.RootChain.Name }}
       </div>
       <div class="col-md-6">
-        <p>ChainID</p>
+        <p class="lead">ChainID</p>
         {{ data.ChainID }}
       </div>
     </div>
@@ -46,14 +46,31 @@
 {% endfor %}
 
 <div class="row">
-  <div class="col-md-8" id="operator-info">
+  <div class="col-md-8 jumbotron" id="operator-info">
     info
   </div>
   <div class="col-md-4">
     <div id="stake-menu">
       stake/unstake
+      <form class="form-inline">
+        <hr>            
+        <div class="col-md-12 row">
+          <label for="ton-to-stake" class="col-md-2 col-form-label">Amount</label>
+          <div class="col-md-8">
+              <input type="text" id="ton-to-stake" name="TonToStake" class="form-control"/>
+          </div>
+          <div class="col-md-2">
+            <p>MTON</p>
+          </div>
+        </div>              
+        <hr>
+        <div>
+            <button type="submit" class="btn btn-primary">Stake</button>
+        </div>
+      </form>      
     </div>
-    <div id="commission-menu">
+    <hr>
+    <div id="commission-menu" class="jumbotron">
       commission
     </div>
   </div>
