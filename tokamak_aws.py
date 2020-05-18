@@ -131,7 +131,7 @@ def change_account_operator(parameter):
     key2 = "<operator address>"
     key3 = "<password>"
     key4 = "<deploy gasprice>"
-    key5 = "<commit gasprice>"
+    key5 = "<gasprice>"
     key6 = "<stamina amount>"
     key7 = "<stamina minimum deposit>"
     key8 = "<stamina epoch length>"

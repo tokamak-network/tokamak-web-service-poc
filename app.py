@@ -417,7 +417,7 @@ def operator_create():
         operator_account_key = request.form['OperatorAccountKey']
         operator_password = request.form['OperatorPassword']
         deploy_gasprice = request.form['DeployGasprice']
-        commit_gasprice = request.form['CommitGasprice']
+        gasprice = request.form['Gasprice']
         stamina_operator_amount = request.form['StaminaOperatorAmount']
         stamina_min_deposit = request.form['StaminaMinDeposit']
         stamina_recover_epoch_length = request.form['StaminaRecoverEpochLength']
@@ -457,7 +457,7 @@ def operator_create():
             'OperatorAccountKey' : operator_account_key,
             'OperatorPassword' : operator_password,
             'DeployGasprice': deploy_gasprice,
-            'CommitGasprice': commit_gasprice,
+            'Gasprice': gasprice,
             'Stamina': {
                 'OperatorAmount': stamina_operator_amount,
                 'MinDeposit': stamina_min_deposit,
@@ -501,7 +501,7 @@ def operator_set_variable():
             inst['OperatorAccount'],
             inst['OperatorPassword'],
             inst['DeployGasprice'],
-            inst['CommitGasprice'],
+            inst['Gasprice'],
             inst['Stamina']['OperatorAmount'],
             inst['Stamina']['MinDeposit'],
             inst['Stamina']['RecoverEpochLength'],

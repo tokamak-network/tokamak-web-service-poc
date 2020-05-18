@@ -21,7 +21,6 @@ echo "Deploy rootchain contract and others"
     --password "pwd.pass" \
     --rootchain.sender $OPERATOR \
     --rootchain.deploygasprice $DEPLOY_GASPRICE \
-    --rootchain.gasprice $COMMIT_GASPRICE \
     --stamina.operatoramount $OPERATOR_AMOUNT \
     --stamina.mindeposit $MIN_DEPOSIT \
     --stamina.recoverepochlength $RECOVER_EPOCH_LENGTH \
