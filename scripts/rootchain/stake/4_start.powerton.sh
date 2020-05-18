@@ -1,6 +1,6 @@
 source /home/ubuntu/account.variable
 
-/home/ubuntu/plasma-evm/build/bin/geth --nousb manage-staking startPowerTON \
+/home/ubuntu/plasma-evm/build/bin/geth --nousb manage-staking start-powerton \
             --datadir $DATADIR2 \
             --rootchain.url ws://127.0.0.1:8546 \
             --unlock $OPERATOR \

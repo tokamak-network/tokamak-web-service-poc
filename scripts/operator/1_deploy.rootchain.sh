@@ -2,7 +2,7 @@
 source /home/ubuntu/variables.list
 
 # Import Operator account
-/home/ubuntu/plasma-evm/build/bin/geth --nousb account importKey $OPERATOR_KEY \
+/home/ubuntu/plasma-evm/build/bin/geth --nousb account import-key $OPERATOR_KEY \
     --datadir $DATADIR \
     --password <(echo $OPERATOR_PASSPHRASE)
 echo "operator account imported"
@@ -20,6 +20,11 @@ echo "Deploy rootchain contract and others"
     --unlock $OPERATOR \
     --password "pwd.pass" \
     --rootchain.sender $OPERATOR \
+    --rootchain.deploygasprice $DEPLOY_GASPRICE \
+    --stamina.operatoramount $OPERATOR_AMOUNT \
+    --stamina.mindeposit $MIN_DEPOSIT \
+    --stamina.recoverepochlength $RECOVER_EPOCH_LENGTH \
+    --stamina.withdrawaldelay $WITHDRAWAL_DELAY \
     deploy "/home/ubuntu/genesis.json" $CHAIN_ID $PRE_ASSET $EPOCH
 # deploy params : chainID, isInitialAsset, Epochlength
 # you can checkout "$geth deploy --help" for more information

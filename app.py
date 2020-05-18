@@ -11,7 +11,7 @@ from io import StringIO
 from tinydb import TinyDB, Query
 from tinydb.operations import delete, set
 from flask import Flask, render_template, request, redirect, url_for, flash
-from register_network import register
+
 from tokamak_aws import \
     get_instance_ip, \
     run_rootchain, \
@@ -121,7 +121,6 @@ def pem_create():
         t_db.insert(inst_obj)
         q_res = t_db.search(Query().Name == name)
         flash([str(q_res), "Pem Created!"])
-
         return redirect(url_for('pem_router'))
     else:
         return url_for('pem_router')
@@ -390,7 +389,6 @@ def export_manager(instanceid):
 @app.route("/operator")
 def operator():
     data = t_db.search(Query().Type == "operator")
-    
     return render_template(
             "operator/operator_list.html",
             data = data
@@ -399,7 +397,6 @@ def operator():
 @app.route("/operator/form")
 def operator_form():
     data = t_db.search(Query().Type == "rootchain")
-
     return render_template(
             "operator/operator_create.html",
             data = data
@@ -419,6 +416,8 @@ def operator_create():
         operator_account = request.form['OperatorAccount']
         operator_account_key = request.form['OperatorAccountKey']
         operator_password = request.form['OperatorPassword']
+        deploy_gasprice = request.form['DeployGasprice']
+        gasprice = request.form['Gasprice']
         stamina_operator_amount = request.form['StaminaOperatorAmount']
         stamina_min_deposit = request.form['StaminaMinDeposit']
         stamina_recover_epoch_length = request.form['StaminaRecoverEpochLength']
@@ -457,11 +456,15 @@ def operator_create():
             'OperatorAccount' : operator_account,
             'OperatorAccountKey' : operator_account_key,
             'OperatorPassword' : operator_password,
-            'StaminaOperatorAmount': stamina_operator_amount,
-            'StaminaMinDeposit': stamina_min_deposit,
-            'StaminaRecoverEpochLength': stamina_recover_epoch_length,
-            'StaminaWithdrawalDelay': stamina_withdrawal_delay,
-            'Dashboard' : {
+            'DeployGasprice': deploy_gasprice,
+            'Gasprice': gasprice,
+            'Stamina': {
+                'OperatorAmount': stamina_operator_amount,
+                'MinDeposit': stamina_min_deposit,
+                'RecoverEpochLength': stamina_recover_epoch_length,
+                'WithdrawalDelay': stamina_withdrawal_delay,
+            },
+            'Dashboard': {
                 'OperatorName' : name,
                 'Website' : website,
                 'Description' : description,
@@ -497,10 +500,12 @@ def operator_set_variable():
             inst['OperatorAccountKey'],
             inst['OperatorAccount'],
             inst['OperatorPassword'],
-            inst['StaminaOperatorAmount'],
-            inst['StaminaMinDeposit'],
-            inst['StaminaRecoverEpochLength'],
-            inst['StaminaWithdrawalDelay'],
+            inst['DeployGasprice'],
+            inst['Gasprice'],
+            inst['Stamina']['OperatorAmount'],
+            inst['Stamina']['MinDeposit'],
+            inst['Stamina']['RecoverEpochLength'],
+            inst['Stamina']['WithdrawalDelay'],
             inst['ChainID'],
             inst['PreAsset'],
             inst['Epoch'],
@@ -641,7 +646,6 @@ def operator_runnode():
 @app.route("/usernode")
 def usernode():
     data = t_db.search(Query().Type == "usernode")
-    
     return render_template(
             "usernode/usernode_list.html",
             data = data
