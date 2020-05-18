@@ -1,0 +1,62 @@
+{% extends 'staking/staking_info_layout.html' %}
+
+{% block article %}
+{% for data in data %}
+<div class="row" >  
+  <div class="col-md-8">
+    <div id="operator-section" class="col-md-12">
+      {{ data.OpearatorAccount }}
+    </div>
+    <div class="row" id="chain-section">
+      <div class="col-md-6">
+        <p>Network</p>
+        {{ data.RootChain.Name }}
+      </div>
+      <div class="col-md-6">
+        <p>ChainID</p>
+        {{ data.ChainID }}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4" id="asset-container">
+    <div>
+        Asset
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-4">Asset</div>
+      <div class="col-md-4">Amount</div>
+      <div class="col-md-4">Charge</div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-4">PETH</div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">MTON</div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+  
+</div>
+<hr>
+{% endfor %}
+
+<div class="row">
+  <div class="col-md-8" id="operator-info">
+    info
+  </div>
+  <div class="col-md-4">
+    <div id="stake-menu">
+      stake/unstake
+    </div>
+    <div id="commission-menu">
+      commission
+    </div>
+  </div>
+</div>
+
+{% endblock %}

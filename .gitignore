@@ -8,3 +8,5 @@ venv/*
 *.tar
 *.ini
 .pem/*
+.DS_Store
+/templates/.DS_Store

@@ -1,0 +1,50 @@
+{% extends 'staking/staking_layout.html' %}
+
+{% block article %}
+
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover table-sm" id="rootchain-table">
+      <thead>
+        <tr>
+          <th>Operator Name</th>
+          <th>RootChain</th>          
+          <th>Operator Staked</th>
+          <th>Total Staked</th>          
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in data %}
+        <tr>
+            <td class="name">
+              <a href="{{ url_for('staking_info') }}">{{ data.Name }}</a>              
+            </td>
+            <td>
+              <a href="{{ url_for('instance', instanceid=data.InstanceId) }}">{{ data.RootChain.Name }}</a>
+            </td>
+            <td>
+              {{ data.Balance.OperatorStaked}} MTON
+            </td>
+            <td>
+              {{ data.Balance.TotalStaked}} MTON
+            </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+
+
+  {% with messages = get_flashed_messages()[0] %}
+    {% if messages %}
+    <div class="card">
+      <div class="card-body">
+        {% for message in messages %}
+          {{ message }} <br>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  {% endwith %}
+
+{% endblock %}
