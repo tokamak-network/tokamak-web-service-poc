@@ -1,224 +1,182 @@
 <template>
   <div class="config-input">
     <fieldset class="form-group">
-      <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">AWS Access</legend>
-        <div class="col-sm-10">
-          <div class="form-group row">
-            <label for="accessKey" class="col-sm-2 col-form-label"
-              >ACCESS KEY</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="accessKey"
-                name="AccessKey"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="awsSecretKey" class="col-sm-2 col-form-label"
-              >SECRET KEY</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="awsSecretKey"
-                name="AwsSecretKey"
-              />
-            </div>
+      <legend class="col-form-label col-sm-2 pt-0">AWS Access</legend>
+      <div>
+        <div class="form-group row">
+          <div class="label-container">ACCESS KEY</div>
+          <div class="input-container">
+            <input
+              :value="newConfig.accessKey"
+              @keypress="isNumber"
+              @input="updateConfig"
+            />
           </div>
         </div>
-      </div>
-    </fieldset>
-    <fieldset class="form-group">
-      <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">AWS Instance</legend>
-        <div class="col-sm-10">
-          <div class="form-group row">
-            <label for="imageID" class="col-sm-2 col-form-label"
-              >IMAGE ID</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="imageID"
-                name="ImageID"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="instanceType" class="col-sm-2 col-form-label"
-              >INSTANCE TYPE</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="instanceType"
-                name="InstanceType"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="securityGroupID" class="col-sm-2 col-form-label"
-              >SECURITY GROUP ID</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="securityGroupID"
-                name="SecurityGroupID"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="keyName" class="col-sm-2 col-form-label"
-              >KEY NAME</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="keyName"
-                name="KeyName"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="regionName" class="col-sm-2 col-form-label"
-              >REGION NAME</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="regionName"
-                name="RegionName"
-              />
-            </div>
+        <div class="form-group row">
+          <div class="label-container">SECRET KEY</div>
+          <div class="input-container">
+            <input :value="newConfig.secretKey" @input="updateConfig" />
           </div>
         </div>
       </div>
     </fieldset>
 
     <fieldset class="form-group">
-      <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">SSH</legend>
-        <div class="col-sm-10">
-          <div class="form-group row">
-            <label for="sshUsername" class="col-sm-2 col-form-label"
-              >SSH USERNAME</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="sshUsername"
-                name="SshUsername"
-              />
-            </div>
+      <legend class="col-form-label col-sm-2 pt-0">AWS Instance</legend>
+      <div>
+        <div class="form-group row">
+          <div class="label-container">IMAGE ID</div>
+          <div class="input-container">
+            <input :value="newConfig.imageId" />
           </div>
-          <div class="form-group row">
-            <label for="sshPemfile" class="col-sm-2 col-form-label"
-              >SSH PEMFILE</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="sshPemfile"
-                name="SshPemfile"
-              />
-            </div>
+        </div>
+        <div class="form-group row">
+          <div class="label-container">INSTANCE TYPE</div>
+          <div class="input-container">
+            <input :value="newConfig.instanceType" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="label-container">
+            SECURITY GROUP ID
+          </div>
+          <div class="input-container">
+            <input :value="newConfig.securityGroupID" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="label-container">KEY NAME</div>
+          <div class="input-container">
+            <input :value="newConfig.keyName" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="label-container">REGION NAME</div>
+          <div class="input-container">
+            <input :value="newConfig.region" />
           </div>
         </div>
       </div>
     </fieldset>
 
     <fieldset class="form-group">
-      <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">Server</legend>
-        <div class="col-sm-10">
-          <div class="form-group row">
-            <label for="debug" class="col-sm-2 col-form-label">DEBUG</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="debug" name="Debug" />
-            </div>
+      <legend class="col-form-label col-sm-2 pt-0">SSH</legend>
+      <div>
+        <div class="form-group row">
+          <div class="label-container">SSH USERNAME</div>
+          <div class="input-container">
+            <input :value="newConfig.sshUserName" />
           </div>
-          <div class="form-group row">
-            <label for="secretKey" class="col-sm-2 col-form-label"
-              >SECRET KEY</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="secretKey"
-                name="SecretKey"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="username" class="col-sm-2 col-form-label"
-              >USERNAME</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="username"
-                name="Username"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="password" class="col-sm-2 col-form-label"
-              >PASSWORD</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="password"
-                name="Password"
-              />
-            </div>
+        </div>
+        <div class="form-group row">
+          <div class="label-container">SSH PEMFILE</div>
+          <div class="input-container">
+            <input :value="newConfig.sshPemFile" />
           </div>
         </div>
       </div>
     </fieldset>
 
     <fieldset class="form-group">
-      <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">DATABASE</legend>
-        <div class="col-sm-10">
-          <div class="form-group row">
-            <label for="database" class="col-sm-2 col-form-label"
-              >DATABASE NAME</label
-            >
-            <div class="col-sm-10">
-              <input
-                type="text"
-                class="form-control"
-                id="database"
-                name="Database"
-              />
-            </div>
+      <legend class="col-form-label col-sm-2 pt-0">Server</legend>
+      <div>
+        <div class="form-group row">
+          <div class="label-container">DEBUG</div>
+          <div class="input-container">
+            <input :value="newConfig.debug" />
           </div>
         </div>
+        <div class="form-group row">
+          <div class="label-container">SECRET KEY</div>
+          <div class="input-container">
+            <input :value="newConfig.dbSecretKey" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="label-container">USERNAME</div>
+          <div class="input-container">
+            <input :value="newConfig.dbUserName" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="label-container">PASSWORD</div>
+          <div class="input-container">
+            <input :value="newConfig.dbPassword" />
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <legend class="col-form-label col-sm-2 pt-0">DATABASE</legend>
+      <div class="form-group row">
+        <div class="label-container">DATABASE NAME</div>
+        <div class="input-container">
+          <input :value="newConfig.dbName" />
+        </div>        
       </div>
     </fieldset>
   </div>
 </template>
 
+<script>
+export default {
+  props: {
+    accessKey: {
+      type: String,
+      default: '',
+    },
+  },
+  data() {
+    return {
+      errors: [],
+      newConfig: {
+        accessKey: '',
+        secretKey: '',
+        imageId: '',
+        instanceType: '',
+        securityGroupID: '',
+        keyName: '',
+        region: '',
+        sshUserName: '',
+        sshPemFile: '',
+        debug: '',
+        dbSecretKey: '',
+        dbPassword: '',
+        dbName: ''
+      }
+    }
+  },
+  
+  methods: {
+    isNumber (evt) {
+      evt = (evt) ? evt : window.event;
+      const charCode = (evt.which) ? evt.which : evt.keyCode;
+      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
+    updateConfig () {
+      this.$emit(this.newConfig);
+    },
+    checkForm: function (e) {
+      this.errors = [];
+
+      if (!this.newConfig.accessKey) {
+        this.errors.push("Access key required.")      
+      }
+
+      e.preventDefault();
+    }
+  },
+}
+</script>
 
 <style scoped>
-.config-input {
+.config {
   width: 100%;
 
   display: flex;
@@ -228,11 +186,20 @@
   padding-top: 0.6px;
   padding-bottom: 0.6px;
 }
-
+.form-group {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+.row {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
 .label-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  float: left;
+  width: 30%;
 }
 
 span {
@@ -246,17 +213,18 @@ span {
   flex: 1;
   display: table;
   height: 100%;
+  float: right;
+  width: 70%;
 }
 
 input {
   display: table-cell;
-  width: 100%;
+  width: 95%;
   height: 100%;
   font-size: 14px;
   text-align: right;
   border: none;
-  border-left: solid 1px #ced6d9;
-  border-right: solid 1px #ced6d9;
+  border: solid 1px #ced6d9;
   padding-right: 6px;
 }
 

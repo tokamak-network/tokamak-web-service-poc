@@ -30,8 +30,8 @@
     </div>
     <div
       class="menu-title-container"
-      :class="{ 'menu-selected': $route.path === '/usernnode'}"
-      @click="clickMenu('operator')"
+      :class="{ 'menu-selected': $route.path === '/usernode'}"
+      @click="clickMenu('usernode')"
     >
     Usernode Setup  
     </div>

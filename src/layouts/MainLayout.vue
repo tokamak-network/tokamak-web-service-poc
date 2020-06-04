@@ -3,7 +3,7 @@
     <menu-container />
     <div class="main-container">
       <router-view />
-      <home-container />
+      <!-- <home-container /> -->
     </div>
   </div>
 </template>
