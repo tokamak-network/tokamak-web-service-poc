@@ -41,15 +41,15 @@ export default {
       message: '',
     };
   },
-  // computed: {
-  //   ...mapState([
-  //     'loading',
-  //     'signIn',
-  //   ]),
-  //   ...mapGetters([
-  //     'initialState',
-  //   ]),
-  // },
+  computed: {
+    ...mapState([
+      'loading',
+      'signIn',
+    ]),
+    ...mapGetters([
+      'initialState',
+    ]),
+  },
   created () {
     if (this.initialState && this.$route.path !== '/') {
       this.$router.replace({

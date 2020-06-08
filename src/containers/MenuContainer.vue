@@ -66,7 +66,7 @@
   min-width: 210px;
   max-width: 210px;
   min-height: 340px;
-  max-height: 340px;
+  max-height: 360px;
   border-radius: 7px;
   border: solid 1px #ced6d9;
 }

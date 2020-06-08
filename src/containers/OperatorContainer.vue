@@ -13,7 +13,7 @@
     </div>
     <div v-else>
       <div class="column">
-        <fieldset>
+        <fieldset class="fieldset">
           <legend>Chain Info</legend>
           <string-input v-model="operatorName" label="Operator Name"/>
           <string-input v-model="rootchainName" label="Rootchain Name"/>
@@ -122,3 +122,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.column {
+  border: solid 1px #ced6d9;
+  background-color: #ffffff;
+  border-radius: 6px;
+  
+}
+</style>

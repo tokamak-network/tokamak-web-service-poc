@@ -51,11 +51,11 @@
         <pem-input v-model="pemInput" />
       </div>
     </form>
-    <p>{{ newConfig }}</p>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import BaseTab from '@/components/BaseTab.vue';
 import StringInput from '@/components/StringInput.vue'
 import PemInput from '@/components/PemInput.vue'
@@ -87,10 +87,51 @@ export default {
       dbName: ''
     };
   },
+  created() {
+    this.currentConfig()
+  },
   methods: {
     changeTab (tab) {
       this.tab = tab;
-    }    
+    },
+    currentConfig: function () {
+      const self = this;
+      axios.get('http://127.0.0.1:8000/config').then(function (response) {
+        self.accessKey = response.data.aws_access_key;
+        self.secretKey = response.data.aws_secret_key;
+        self.imageID = response.data.basic_image_id;
+        self.instanceType = response.data.instance_type;
+        self.securityGroupID = response.data.security_group_id;
+        self.keyName = response.data.key_name;
+        self.region = response.data.region_name;
+        self.sshUserName = response.data.ssh_username;
+        self.sshPemFile = response.data.ssh_pemfile;
+        self.debug = response.data.debug;
+        self.dbSecretKey = response.data.secret_key;
+        self.dbUserName = response.data.username;
+        self.dbPassword = response.data.password;
+        self.dbName = response.data.database;
+      })
+    },
+    setConnfig: function () {
+      const self = this;
+      axios.post('http://127.0.0.1:8000/config').then(function (response) {
+        AccessKey = this.accessKey,
+        AwsSecretKey = this.secretKey,
+        ImageID = this.imageID,
+        InstanceType = this.instanceType,
+        SecurityGroupID = this.securityGroupID,
+        KeyName = this.keyName,
+        RegionName = this.region,
+        SshUsername = this.sshUserName,
+        SshPemfile = this.sshPemFile,
+        Debug = this.debug,
+        SecretKey = this.dbSecretKey,
+        Username = this.dbUserName,
+        Password = this.dbPassword,
+        Database = this.dbName
+      })
+    }
   },
   computed: {
     newConfig: function() {
