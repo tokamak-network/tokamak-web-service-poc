@@ -17,7 +17,7 @@ selenium-debug.log
 *.sln
 db.json
 .pem/*
-/venv/
+venv/
 .babelrc
 config.ini
 

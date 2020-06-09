@@ -42,7 +42,7 @@
       </div>
       <div class="form-group row">
         <div class="col-sm-10">
-          <button type="button" @click="newConfig()">CREATE</button>
+          <button type="button" :func="newConfig" @click="newConfig()">CREATE</button>
         </div>
       </div>
     </form>
@@ -113,23 +113,26 @@ export default {
         self.dbName = response.data.database;
       })
     },
-    setConnfig: function () {
+    setConfig: function () {
       const self = this;
-      axios.post('http://127.0.0.1:8000/config').then(function (response) {
-        AccessKey = this.accessKey,
-        AwsSecretKey = this.secretKey,
-        ImageID = this.imageID,
-        InstanceType = this.instanceType,
-        SecurityGroupID = this.securityGroupID,
-        KeyName = this.keyName,
-        RegionName = this.region,
-        SshUsername = this.sshUserName,
-        SshPemfile = this.sshPemFile,
-        Debug = this.debug,
-        SecretKey = this.dbSecretKey,
-        Username = this.dbUserName,
-        Password = this.dbPassword,
-        Database = this.dbName
+      axios.post('http://127.0.0.1:8000/config',
+        {
+          AccessKey : this.accessKey,
+          AwsSecretKey : this.secretKey,
+          ImageID : this.imageID,
+          InstanceType : this.instanceType,
+          SecurityGroupID : this.securityGroupID,
+          KeyName : this.keyName,
+          RegionName : this.region,
+          SshUsername : this.sshUserName,
+          SshPemfile : this.sshPemFile,
+          Debug : this.debug,
+          SecretKey : this.dbSecretKey,
+          Username : this.dbUserName,
+          Password : this.dbPassword,
+          Database : this.dbName
+      }).then(function (response) {
+
       })
     }
   },

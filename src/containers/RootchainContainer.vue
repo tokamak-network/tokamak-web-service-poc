@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import BaseTab from '@/components/BaseTab.vue';
 import RootchainTable from "@/components/table/RootchainTable.vue";
 import StringInput from '@/components/StringInput.vue';
@@ -80,6 +82,11 @@ export default {
   methods: {
     changeTab (tab) {
       this.tab = tab;
+    },
+    getList: function () {
+      axios.get('http://localhost:8000/rootchain').then(function (respose) {
+        
+      })
     }
   },
   computed: {
