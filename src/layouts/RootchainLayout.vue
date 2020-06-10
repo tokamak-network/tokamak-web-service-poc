@@ -12,9 +12,9 @@ import RootchainContainer from '@/containers/RootchainContainer.vue';
 export default {
   components: {
     'container-header': ContainerHeader,
-    'rootchain-container': RootchainContainer
-  }
-}
+    'rootchain-container': RootchainContainer,
+  },
+};
 
 </script>
 

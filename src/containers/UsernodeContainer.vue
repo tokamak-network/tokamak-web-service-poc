@@ -25,41 +25,41 @@
 
 <script>
 import BaseTab from '@/components/BaseTab.vue';
-import UsernodeTable from "@/components/table/UsernodeTable.vue";
+import UsernodeTable from '@/components/table/UsernodeTable.vue';
 import StringInput from '@/components/StringInput.vue';
-import IntInput from '@/components/IntInput.vue'
+import IntInput from '@/components/IntInput.vue';
 
 export default {
   components: {
     'base-tab': BaseTab,
     'usernode-table': UsernodeTable,
     'string-input': StringInput,
-    'int-input': IntInput,    
+    'int-input': IntInput,
   },
-  data() {
+  data () {
     return {
       tab: 'left',
       usernodeInput: '',
       usernodeName: '',
       rootchainName: '',
       operatorName: '',
-      enodeHex: ''
+      enodeHex: '',
     };
   },
-  methods: {
-    changeTab (tab) {
-      this.tab = tab;
-    }
-  },
   computed: {
-    newUsernodeConfig: function() {
+    newUsernodeConfig: function () {
       return {
         usernodeName: this.usernodeName,
         rootchainName: this.rootchainName,
         operatorName: this.operatorName,
-        enodeHex: this.enodeHex
-      }
-    }
-  }
+        enodeHex: this.enodeHex,
+      };
+    },
+  },
+  methods: {
+    changeTab (tab) {
+      this.tab = tab;
+    },
+  },
 };
 </script>

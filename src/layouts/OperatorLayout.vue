@@ -12,9 +12,9 @@ import OperatorContainer from '@/containers/OperatorContainer.vue';
 export default {
   components: {
     'container-header': ContainerHeader,
-    'operator-container': OperatorContainer
-  }
-}
+    'operator-container': OperatorContainer,
+  },
+};
 
 </script>
 

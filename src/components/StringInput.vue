@@ -1,7 +1,11 @@
 <template>
   <div>
-    <div class='label-container'><label v-if="label">{{ label }}</label></div>
-    <div class="input-container"><input v-bind:value="value" v-on:input="updateValue($event.target.value)" /></div> 
+    <div class="label-container">
+      <label v-if="label">{{ label }}</label>
+    </div>
+    <div class="input-container">
+      <input :value="value" @input="updateValue($event.target.value)" >
+    </div>
   </div>
 </template>
 
@@ -10,19 +14,19 @@ export default {
   props: {
     value: {
       type: String,
-      default: ''
+      default: '',
     },
     label: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   methods: {
     updateValue (value) {
       this.$emit('input', value);
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

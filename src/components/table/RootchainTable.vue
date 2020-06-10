@@ -28,27 +28,27 @@ export default {
       name: '',
       ip: '',
       status: '',
-      instance_id: '',
-      rootchain: {}
-    }
-  },
-  created() {
-    this.getRootchain()
+      instanceId: '',
+      rootchain: {},
+    };
   },
   computed: {
     orderedRootchain () {
       return [];
-    }
+    },
+  },
+  created () {
+    this.getRootchain();
   },
   methods: {
     getRootchain: function () {
       const self = this;
       axios.get('http://localhost:8000/rootchain').then(function (response) {
         // console.log(response.data)
-        self.rootchain = response.data
+        self.rootchain = response.data;
         // console.log(self.rootchain[0])
-      })
-    }
-  }
-}
+      });
+    },
+  },
+};
 </script>

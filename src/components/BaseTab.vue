@@ -1,9 +1,9 @@
 <template>
   <div class="base-tab">
-    <button class="left-tab" :class="{ 'left-tab-clicked': tab === 'left' }" @click="onTabChanged('left')">
+    <button :class="{ 'left-tab-clicked': tab === 'left' }" @click="onTabChanged('left')">
       {{ leftLabel }}
     </button>
-    <button class="right-tab" :class="{ 'right-tab-clicked': tab === 'right' }" @click="onTabChanged('right')">
+    <button :class="{ 'right-tab-clicked': tab === 'right' }" @click="onTabChanged('right')">
       {{ rightLabel }}
     </button>
   </div>

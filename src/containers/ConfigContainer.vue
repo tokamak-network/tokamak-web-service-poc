@@ -42,7 +42,7 @@
       </div>
       <div class="form-group row">
         <div class="col-sm-10">
-          <button type="button" :func="newConfig" @click="newConfig()">CREATE</button>
+          <button :func="newConfig" type="button" @click="newConfig()">CREATE</button>
         </div>
       </div>
     </form>
@@ -57,16 +57,16 @@
 <script>
 import axios from 'axios';
 import BaseTab from '@/components/BaseTab.vue';
-import StringInput from '@/components/StringInput.vue'
-import PemInput from '@/components/PemInput.vue'
+import StringInput from '@/components/StringInput.vue';
+import PemInput from '@/components/PemInput.vue';
 
 export default {
   components: {
     'base-tab': BaseTab,
     'string-input': StringInput,
-    'pem-input': PemInput
+    'pem-input': PemInput,
   },
-  data() {
+  data () {
     return {
       tab: 'left',
       configInput: '',
@@ -84,11 +84,31 @@ export default {
       dbSecretKey: '',
       dbUserName: '',
       dbPassword: '',
-      dbName: ''
+      dbName: '',
     };
   },
-  created() {
-    this.currentConfig()
+  computed: {
+    newConfig: function () {
+      return {
+        accessKey: this.accessKey,
+        secretKey: this.secretKey,
+        imageID: this.imageID,
+        instanceType: this.instanceType,
+        securityGroupID: this.securityGroupID,
+        keyName: this.keyName,
+        region: this.region,
+        sshUserName: this.sshUserName,
+        sshPemFile: this.sshPemFile,
+        debug: this.debug,
+        dbSecretKey: this.dbSecretKey,
+        dbUserName: this.dbUserName,
+        dbPassword: this.dbPassword,
+        dbName: this.dbName,
+      };
+    },
+  },
+  created () {
+    this.currentConfig();
   },
   methods: {
     changeTab (tab) {
@@ -111,7 +131,7 @@ export default {
         self.dbUserName = response.data.username;
         self.dbPassword = response.data.password;
         self.dbName = response.data.database;
-      })
+      });
     },
     setConfig: function () {
       const self = this;
@@ -130,31 +150,11 @@ export default {
           SecretKey : this.dbSecretKey,
           Username : this.dbUserName,
           Password : this.dbPassword,
-          Database : this.dbName
-      }).then(function (response) {
+          Database : this.dbName,
+        }).then(function (response) {
 
-      })
-    }
+      });
+    },
   },
-  computed: {
-    newConfig: function() {
-      return {
-        accessKey: this.accessKey,
-        secretKey: this.secretKey,
-        imageID: this.imageID,
-        instanceType: this.instanceType,
-        securityGroupID: this.securityGroupID,
-        keyName: this.keyName,
-        region: this.region,
-        sshUserName: this.sshUserName,
-        sshPemFile: this.sshPemFile,
-        debug: this.debug,
-        dbSecretKey: this.dbSecretKey,
-        dbUserName: this.dbUserName,
-        dbPassword: this.dbPassword,
-        dbName: this.dbName
-      }
-    }
-  }
 };
 </script>

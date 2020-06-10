@@ -15,7 +15,7 @@
       <div class="column">
         <fieldset>
           <legend>Instance</legend>
-          <string-input v-model="instanceName" label="Instance Name" />          
+          <string-input v-model="instanceName" label="Instance Name" />
         </fieldset>
         <fieldset>
           <legend>Key Setting</legend>
@@ -26,20 +26,20 @@
           <string-input v-model="faucet3Key" label="Faucet3 key" />
           <string-input v-model="faucet4Key" label="Faucet4 key" />
           <string-input v-model="faucet5Key" label="Faucet5 key" />
-          <string-input v-model="faucet6Key" label="Faucet6 key" />          
+          <string-input v-model="faucet6Key" label="Faucet6 key" />
         </fieldset>
         <fieldset>
           <legend>Stake Setting</legend>
           <int-input v-model="withdrawalDelay" label="Withdrawal Delay" />
           <int-input v-model="seigPerBlock" label="Seigniorage Per Block" />
-          <int-input v-model="roundTime" label="Power TON Round Time" />        
+          <int-input v-model="roundTime" label="Power TON Round Time" />
         </fieldset>
-      </div> 
+      </div>
       <div class="form-group row">
         <div class="col-sm-10">
           <button type="button" @click="newConfig()">CREATE</button>
         </div>
-      </div>     
+      </div>
     </div>
   </div>
 </template>
@@ -48,7 +48,7 @@
 import axios from 'axios';
 
 import BaseTab from '@/components/BaseTab.vue';
-import RootchainTable from "@/components/table/RootchainTable.vue";
+import RootchainTable from '@/components/table/RootchainTable.vue';
 import StringInput from '@/components/StringInput.vue';
 import IntInput from '@/components/IntInput.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
@@ -57,12 +57,12 @@ import PasswordInput from '@/components/PasswordInput.vue';
 export default {
   components: {
     'base-tab': BaseTab,
-    "rootchain-table": RootchainTable,
+    'rootchain-table': RootchainTable,
     'string-input': StringInput,
     'int-input': IntInput,
-    'password-input': PasswordInput
+    'password-input': PasswordInput,
   },
-  data() {
+  data () {
     return {
       tab: 'left',
       instanceName: '',
@@ -76,21 +76,11 @@ export default {
       faucet6Key: '',
       withdrawalDelay: 10,
       seigPerBlock: 1.5,
-      roundTime: 60
+      roundTime: 60,
     };
   },
-  methods: {
-    changeTab (tab) {
-      this.tab = tab;
-    },
-    getList: function () {
-      axios.get('http://localhost:8000/rootchain').then(function (respose) {
-        
-      })
-    }
-  },
   computed: {
-    newRootchainConfig: function() {
+    newRootchainConfig: function () {
       return {
         operatorAddress: this.operatorAddress,
         operatorKey: this.operatorKey,
@@ -102,9 +92,19 @@ export default {
         faucet6Key: this.faucet6Key,
         withdrawalDelay: this.withdrawalDelay,
         seigPerBlock: this.seigPerBlock,
-        roundTime: this.roundTime
-      }
-    }
-  }
+        roundTime: this.roundTime,
+      };
+    },
+  },
+  methods: {
+    changeTab (tab) {
+      this.tab = tab;
+    },
+    getList: function () {
+      axios.get('http://localhost:8000/rootchain').then(function (respose) {
+
+      });
+    },
+  },
 };
 </script>

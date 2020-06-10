@@ -15,17 +15,20 @@
       <div class="column">
         <fieldset class="fieldset">
           <legend>Chain Info</legend>
-          <string-input v-model="operatorName" label="Operator Name"/>
-          <string-input v-model="rootchainName" label="Rootchain Name"/>
+          <string-input v-model="operatorName" label="Operator Name" />
+          <string-input v-model="rootchainName" label="Rootchain Name" />
           <int-input v-model="chainID" label="Chain ID" />
           <int-input v-model="epoch" label="Epoch" />
         </fieldset>
         <fieldset>
           <legend>Operator Info</legend>
-          <string-input v-model="nodeKeyHex" label="Nodekey Hex"/>
-          <string-input v-model="operatorAddress" label="Operator Address"/>
-          <string-input v-model="operatorKey" label="Operator Key"/>
-          <password-input v-model="operatorPassword" label="Operator Password"/>
+          <string-input v-model="nodeKeyHex" label="Nodekey Hex" />
+          <string-input v-model="operatorAddress" label="Operator Address" />
+          <string-input v-model="operatorKey" label="Operator Key" />
+          <password-input
+            v-model="operatorPassword"
+            label="Operator Password"
+          />
         </fieldset>
         <fieldset>
           <legend>Gasprice Info</legend>
@@ -41,15 +44,15 @@
         </fieldset>
         <fieldset>
           <legend>Staking Info</legend>
-          <string-input v-model="website" label="Website"/>
-          <string-input v-model="description" label="Description"/>
-          <string-input v-model="apiServer" label="Api Server"/>
+          <string-input v-model="website" label="Website" />
+          <string-input v-model="description" label="Description" />
+          <string-input v-model="apiServer" label="Api Server" />
         </fieldset>
         <div class="form-group row">
-        <div class="col-sm-10">
-          <button type="button" @click="newConfig()">CREATE</button>
+          <div class="col-sm-10">
+            <button type="button" @click="newConfig()">CREATE</button>
+          </div>
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -57,7 +60,7 @@
 
 <script>
 import BaseTab from '@/components/BaseTab.vue';
-import OperatorTable from "@/components/table/OperatorTable.vue";
+import OperatorTable from '@/components/table/OperatorTable.vue';
 import StringInput from '@/components/StringInput.vue';
 import IntInput from '@/components/IntInput.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
@@ -65,14 +68,14 @@ import PasswordInput from '@/components/PasswordInput.vue';
 export default {
   components: {
     'base-tab': BaseTab,
-    "operator-table": OperatorTable,    
+    'operator-table': OperatorTable,
     'string-input': StringInput,
     'int-input': IntInput,
-    'password-input': PasswordInput
+    'password-input': PasswordInput,
   },
-  data() {
+  data () {
     return {
-      tab: 'left',      
+      tab: 'left',
       operatorName: '',
       rootchainName: '',
       chainID: 16,
@@ -89,37 +92,37 @@ export default {
       withdrawalDelay: 362880,
       website: '',
       description: '',
-      apiServer: ''
+      apiServer: '',
     };
+  },
+  computed: {
+    // newOperatorConfig: function() {
+    //   return {
+    //     operatorName: this.operatorName,
+    //     rootchainName: this.rootchainName,
+    //     chainID: this.chainID,
+    //     epoch: this.epoch,
+    //     nodeKeyHex: this.nodeKeyHex,
+    //     operatorAddress: this.operatorAddress,
+    //     operatorKey: this.operatorKey,
+    //     operatorPassword: this.operatorPassword,
+    //     deployGasprice: this.deployGasprice,
+    //     commitGasprice: this.commitGasprice,
+    //     operatorAmount: this.operatorAmount,
+    //     midDeposit: this.midDeposit,
+    //     recoverLength: this.recoverLength,
+    //     withdrawalDelay: this.withdrawalDelay,
+    //     website: this.website,
+    //     description: this.description,
+    //     apiServer: this.apiServer,
+    //   },
+    // }
   },
   methods: {
     changeTab (tab) {
       this.tab = tab;
-    }
+    },
   },
-  computed: {
-    newOperatorConfig: function() {
-      return {
-        operatorName: this.operatorName,
-        rootchainName: this.rootchainName,
-        chainID: this.chainID,
-        epoch: this.epoch,
-        nodeKeyHex: this.nodeKeyHex,
-        operatorAddress: this.operatorAddress,
-        operatorKey: this.operatorKey,
-        operatorPassword: this.operatorPassword,
-        deployGasprice: this.deployGasprice,
-        commitGasprice: this.commitGasprice,
-        operatorAmount: this.operatorAmount,
-        midDeposit: this.midDeposit,
-        recoverLength: this.recoverLength,
-        withdrawalDelay: this.withdrawalDelay,
-        website: this.website,
-        description: this.description,
-        apiServer: this.apiServer
-      }
-    }
-  }
 };
 </script>
 
@@ -128,6 +131,5 @@ export default {
   border: solid 1px #ced6d9;
   background-color: #ffffff;
   border-radius: 6px;
-  
 }
 </style>

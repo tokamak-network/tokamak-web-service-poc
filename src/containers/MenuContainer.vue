@@ -1,61 +1,61 @@
 <template>
   <div class="menu-container">
     <div
+      :class="{ 'menu-selected': $route.path === '/home' }"
       class="menu-title-container"
-      :class="{ 'menu-selected': $route.path === '/home'}"
       @click="clickMenu('home')"
     >
-    Home
+      Home
     </div>
     <div
+      :class="{ 'menu-selected': $route.path === '/config' }"
       class="menu-title-container"
-      :class="{ 'menu-selected': $route.path === '/config'}"
       @click="clickMenu('config')"
     >
-    Config
+      Config
     </div>
     <div
+      :class="{ 'menu-selected': $route.path === '/rootchain' }"
       class="menu-title-container"
-      :class="{ 'menu-selected': $route.path === '/rootchain'}"
       @click="clickMenu('rootchain')"
     >
-    RootChain Setup
+      RootChain Setup
     </div>
     <div
+      :class="{ 'menu-selected': $route.path === '/operator' }"
       class="menu-title-container"
-      :class="{ 'menu-selected': $route.path === '/operator'}"
       @click="clickMenu('operator')"
     >
-    Operator Setup
+      Operator Setup
     </div>
     <div
+      :class="{ 'menu-selected': $route.path === '/usernode' }"
       class="menu-title-container"
-      :class="{ 'menu-selected': $route.path === '/usernode'}"
       @click="clickMenu('usernode')"
     >
-    Usernode Setup  
+      Usernode Setup
     </div>
     <div
+      :class="{ 'menu-selected': $route.path === '/stake' }"
       class="menu-title-container"
-      :class="{ 'menu-selected': $route.path === '/stake'}"
       @click="clickMenu('stake')"
     >
-    Stake/Unstake Tester
+      Stake/Unstake Tester
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    methods: {
-      clickMenu (path) {
-        if (`/${path}` === this.$route.path) {
-          return ;
-        }
-        this.$router.push(`/${path}`).catch(err => {});
-      },
+export default {
+  methods: {
+    clickMenu (path) {
+      if (`/${path}` === this.$route.path) {
+        return;
+      }
+      this.$router.push(`/${path}`).catch(err => {});
     },
-  };
+  },
+};
 </script>
 
 <style scoped>

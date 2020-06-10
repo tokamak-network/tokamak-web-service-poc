@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class='label-container'><label v-if="label">{{ label }}</label></div>
-    <div class="input-container"><input v-bind:value="value" @keypress="isNumber" v-on:input="updateValue($event.target.value)" /></div> 
+    <div class="label-container"><label v-if="label">{{ label }}</label></div>
+    <div class="input-container"><input :value="value" @keypress="isNumber" @input="updateValue($event.target.value)" ></div>
   </div>
 </template>
 
@@ -10,12 +10,12 @@ export default {
   props: {
     value: {
       type: Number,
-      default: 0
+      default: 0,
     },
     label: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   methods: {
     isNumber (evt) {
@@ -30,8 +30,8 @@ export default {
     updateValue (value) {
       this.$emit('input', value);
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

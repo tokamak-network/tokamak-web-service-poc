@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody>
-      
+      <div/>
     </tbody>
   </table>
 </template>

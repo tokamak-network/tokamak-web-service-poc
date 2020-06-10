@@ -1,14 +1,14 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-Vue.use(Router)
+import Vue from 'vue';
+import Router from 'vue-router';
+Vue.use(Router);
 
-import HomeLayout from '@/layouts/HomeLayout'
-import ConfigLayout from '@/layouts/ConfigLayout'
-import RootchainLayout from '@/layouts/RootchainLayout'
-import OperatorLayout from '@/layouts/OperatorLayout'
-import UsernodeLayout from '@/layouts/UsernodeLayout'
-import StakeLayout from '@/layouts/StakeLayout'
-import VueRouter from 'vue-router'
+import HomeLayout from '@/layouts/HomeLayout';
+import ConfigLayout from '@/layouts/ConfigLayout';
+import RootchainLayout from '@/layouts/RootchainLayout';
+import OperatorLayout from '@/layouts/OperatorLayout';
+import UsernodeLayout from '@/layouts/UsernodeLayout';
+import StakeLayout from '@/layouts/StakeLayout';
+import VueRouter from 'vue-router';
 
 const routes = [
   {

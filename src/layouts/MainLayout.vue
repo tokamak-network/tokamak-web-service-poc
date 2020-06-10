@@ -9,17 +9,16 @@
 </template>
 
 <script>
-  // import { mapState } from 'vuex';
-  import MenuContainer from '@/containers/MenuContainer.vue';
-  import HomeContainer from '@/containers/HomeContainer.vue'
+// import { mapState } from 'vuex';
+import MenuContainer from '@/containers/MenuContainer.vue';
+import HomeContainer from '@/containers/HomeContainer.vue';
 
-  export default {
-    components: {
-      'menu-container': MenuContainer,
-      'home-container': HomeContainer,
-    }
-  };
-
+export default {
+  components: {
+    'menu-container': MenuContainer,
+    'home-container': HomeContainer,
+  },
+};
 </script>
 
 <style scoped>

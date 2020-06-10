@@ -3,9 +3,9 @@
     <div class="header">
       <div class="header-title">
         <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Tokamak Web Service(Beta)</a>
-      </nav>
-      </div>      
+          <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Tokamak Web Service(Beta)</a>
+        </nav>
+      </div>
     </div>
   </div>
 </template>

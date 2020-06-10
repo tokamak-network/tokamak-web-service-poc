@@ -12,9 +12,9 @@ import UsernodeContainer from '@/containers/UsernodeContainer.vue';
 export default {
   components: {
     'container-header': ContainerHeader,
-    'usernode-container': UsernodeContainer
-  }
-}
+    'usernode-container': UsernodeContainer,
+  },
+};
 
 </script>
 
