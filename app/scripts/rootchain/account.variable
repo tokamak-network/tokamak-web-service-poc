@@ -1,0 +1,23 @@
+# Account setting
+OPERATOR_PRIV_KEY="key1";
+CHALLENGER_KEY="key2";
+KEY0="key3";
+KEY1="key4";
+KEY2="key5";
+KEY3="key6";
+
+OPERATOR="<operator address>"
+
+# Rootchain Node
+GAS_TARGET="100000000"
+GAS_PRICE="10"
+
+# plasma-evm
+DATADIR="/home/ubuntu/datadir"
+DATADIR2="/home/ubuntu/datadir2"
+
+# Staking
+WITHDRAWAL_DELAY="<withdrawal delay>"
+SEIG_PER_BLOCK="<seigniorage per block>"
+ROUND_TIME="<round time second>s"
+PASSWORD="<password>"

@@ -1,0 +1,26 @@
+OPERATOR_KEY="<operator key>"
+OPERATOR="<operator address>"
+OPERATOR_PASSPHRASE="<password>"
+DEPLOY_GASPRICE="<deploy gasprice>"
+COMMIT_GASPRICE="<commit gasprice>"
+
+OPERATOR_AMOUNT="<stamina amount>"
+MIN_DEPOSIT="<stamina minimum deposit>"
+RECOVER_EPOCH_LENGTH="<stamina epoch length>"
+WITHDRAWAL_DELAY="<stamina withdrawal delay>"
+
+CHAIN_ID="<chain id>"
+PRE_ASSET="<pre asset true or false>"
+EPOCH="<epoch lenth of plasma>"
+
+NODE_KEY_HEX="<node key hex>"
+DATADIR=/home/ubuntu/chaindata-oper
+ROOTCHAIN_IP="<rootchain ip address>" # Rootchain Node IP.
+
+NAME="<operator name>"
+WEBSITE="<website address>"
+DESCRIPTION="<description>"
+
+API_SERVER="<api server address>"
+
+AMOUNT="<staking amount>"
