@@ -42,9 +42,12 @@
       </div>
       <div class="form-group row">
         <div class="col-sm-10">
-          <button :func="newConfig" type="button" @click="newConfig()">CREATE</button>
+          <button :func="resetConfig" type="button" @click="resetConfig()">CREATE</button>
         </div>
       </div>
+      <!-- <div>
+        <p> {{ getConfig }}</p>
+      </div> -->
     </form>
     <form v-else>
       <div class="column">
@@ -59,6 +62,7 @@ import axios from 'axios';
 import BaseTab from '@/components/BaseTab.vue';
 import StringInput from '@/components/StringInput.vue';
 import PemInput from '@/components/PemInput.vue';
+import { getConfig, setConfig } from '@/api/index.js';
 
 export default {
   components: {
@@ -85,6 +89,7 @@ export default {
       dbUserName: '',
       dbPassword: '',
       dbName: '',
+      params: {},
     };
   },
   computed: {
@@ -114,46 +119,45 @@ export default {
     changeTab (tab) {
       this.tab = tab;
     },
-    currentConfig: function () {
+    async currentConfig () {
+      const config = await getConfig();
       const self = this;
-      axios.get('http://127.0.0.1:8000/config').then(function (response) {
-        self.accessKey = response.data.aws_access_key;
-        self.secretKey = response.data.aws_secret_key;
-        self.imageID = response.data.basic_image_id;
-        self.instanceType = response.data.instance_type;
-        self.securityGroupID = response.data.security_group_id;
-        self.keyName = response.data.key_name;
-        self.region = response.data.region_name;
-        self.sshUserName = response.data.ssh_username;
-        self.sshPemFile = response.data.ssh_pemfile;
-        self.debug = response.data.debug;
-        self.dbSecretKey = response.data.secret_key;
-        self.dbUserName = response.data.username;
-        self.dbPassword = response.data.password;
-        self.dbName = response.data.database;
-      });
-    },
-    setConfig: function () {
-      const self = this;
-      axios.post('http://127.0.0.1:8000/config',
-        {
-          AccessKey : this.accessKey,
-          AwsSecretKey : this.secretKey,
-          ImageID : this.imageID,
-          InstanceType : this.instanceType,
-          SecurityGroupID : this.securityGroupID,
-          KeyName : this.keyName,
-          RegionName : this.region,
-          SshUsername : this.sshUserName,
-          SshPemfile : this.sshPemFile,
-          Debug : this.debug,
-          SecretKey : this.dbSecretKey,
-          Username : this.dbUserName,
-          Password : this.dbPassword,
-          Database : this.dbName,
-        }).then(function (response) {
 
-      });
+      self.accessKey = config.aws_access_key;
+      self.secretKey = config.aws_secret_key;
+      self.imageID = config.basic_image_id;
+      self.instanceType = config.instance_type;
+      self.securityGroupID = config.security_group_id;
+      self.keyName = config.key_name;
+      self.region = config.region_name;
+      self.sshUserName = config.ssh_username;
+      self.sshPemFile = config.ssh_pemfile;
+      self.debug = config.debug;
+      self.dbSecretKey = config.secret_key;
+      self.dbUserName = config.username;
+      self.dbPassword = config.password;
+      self.dbName = config.database;
+    },
+    async resetConfig () {
+      const self = this;
+      this.params = {
+        'AccessKey': this.accessKey,
+        'AwsSecretKey' : this.secretKey,
+        'ImageID' : this.imageID,
+        'InstanceType' : this.instanceType,
+        'SecurityGroupID' : this.securityGroupID,
+        'KeyName' : this.keyName,
+        'RegionName' : this.region,
+        'SshUsername' : this.sshUserName,
+        'SshPemfile' : this.sshPemFile,
+        'Debug' : this.debug,
+        'SecretKey' : this.dbSecretKey,
+        'Username' : this.dbUserName,
+        'Password' : this.dbPassword,
+        'Database' : this.dbName,
+      };
+      const config = await setConfig(this.params);
+      console.log(config);
     },
   },
 };

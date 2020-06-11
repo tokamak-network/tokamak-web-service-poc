@@ -157,7 +157,7 @@ def seted():
 @app.route("/config/set", methods=["POST"])
 def config_ini_set():
     # print(parameter)
-    print(request)
+    print(request.form)
     # if request.method == 'POST':
     #     parameter={
     #         'ac_key' : request.form['AccessKey'],
@@ -401,10 +401,11 @@ def export_manager(instanceid):
 @app.route("/operator")
 def operator():
     data = t_db.search(Query().Type == "operator")
-    return render_template(
-            "operator/operator_list.html",
-            data = data
-        );
+    value = {}
+    for i in range(len(data)):
+        value[i] = data[i]
+
+    return value
 
 @app.route("/operator/form")
 def operator_form():
@@ -667,10 +668,11 @@ def operator_runnode():
 @app.route("/usernode")
 def usernode():
     data = t_db.search(Query().Type == "usernode")
-    return render_template(
-            "usernode/usernode_list.html",
-            data = data
-        );
+    value = {}
+    for i in range(len(data)):
+        value[i] = data[i]
+        
+    return value
 
 @app.route("/usernode/form")
 def usernode_form():
