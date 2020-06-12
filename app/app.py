@@ -227,7 +227,7 @@ def rootchain_start():
     error = None
     if request.method == "POST":
         req = request.get_json(force=True)
-        inst_id = req['instance_id']
+        inst_id = req['InstanceId']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         inst_faucet = inst['Faucet']
         inst_ip = inst['IpAddress']
@@ -279,6 +279,7 @@ def rootchain_create():
     res = []
     if request.method == 'POST':
         req = request.get_json(force=True)
+        print(req)
         name = req['Name']
         key0 = req['Key1']
         key1 = req['Key2']

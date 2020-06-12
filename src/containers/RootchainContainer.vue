@@ -37,7 +37,7 @@
       </div>
       <div class="form-group row">
         <div class="col-sm-10">
-          <button type="button" @click="createRootchin()">CREATE</button>
+          <button :func="createRootchain" type="button" @click="createRootchain()">CREATE</button>
         </div>
       </div>
     </div>
@@ -82,6 +82,7 @@ export default {
   computed: {
     newRootchainConfig: function () {
       return {
+        instanceName: this.instanceName,
         operatorAddress: this.operatorAddress,
         operatorKey: this.operatorKey,
         operatorPassword: this.operatorPassword,
@@ -103,6 +104,7 @@ export default {
     async createRootchain () {
       const self = this;
       this.params = {
+        'instanceName': this.instanceName,
         'operatorAddress': this.operatorAddress,
         'operatorKey': this.operatorKey,
         'operatorPassword': this.operatorPassword,
