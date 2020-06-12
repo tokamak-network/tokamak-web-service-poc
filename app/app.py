@@ -102,7 +102,7 @@ def pem_create():
     output_stream = StringIO
 
     if request.method == 'POST':
-        
+        req = request.get_json(force=True)
         name = req['name']
         try:
             key_pair, key_finger_print = create_pem(name)
