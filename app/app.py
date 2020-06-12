@@ -889,6 +889,7 @@ def instance_terminate():
     error = None
     res = []
     if request.method == 'POST':
+        req = request.get_json(force=True)
         inst_id = req['instance_id']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         inst_ip = inst['IpAddress']
@@ -915,6 +916,7 @@ def instance_terminate():
 def check_status():
     error = None
     if request.method == "POST":
+        req = request.get_json(force=True)
         inst_id = req['instance_id']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         # TODO : CHECK STATUS - Pending | enable | mining | dead
@@ -943,6 +945,7 @@ def check_status():
 def check_ip():
     error = None
     if request.method == "POST":
+        req = request.get_json(force=True)
         inst_id = req['instance_id']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         # TODO : CHECK STATUS - Pending | running | mining | shotdown
@@ -964,6 +967,7 @@ def check_ip():
 def drop_data():
     error = None
     if request.method == "POST":
+        req = request.get_json(force=True)
         inst_id = req['instance_id']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         #TODO : if it is not in a "Shutdown" status, it should not work
