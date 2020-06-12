@@ -42,7 +42,7 @@
       </div>
       <div class="form-group row">
         <div class="col-sm-10">
-          <button :func="resetConfig" type="button" @click="resetConfig()">CREATE</button>
+          <div class="button-container" style="margin-top: 16px;"><base-button :label="'CREATE'" :func="resetConfig" /></div>
         </div>
       </div>
       <!-- <div>
@@ -59,6 +59,7 @@
 
 <script>
 import axios from 'axios';
+import BaseButton from '@/components/BaseButton.vue';
 import BaseTab from '@/components/BaseTab.vue';
 import StringInput from '@/components/StringInput.vue';
 import PemInput from '@/components/PemInput.vue';
@@ -66,6 +67,7 @@ import { getConfig, setConfig } from '@/api/index.js';
 
 export default {
   components: {
+    'base-button': BaseButton,
     'base-tab': BaseTab,
     'string-input': StringInput,
     'pem-input': PemInput,
@@ -210,18 +212,22 @@ export default {
   margin-right: 16px;
 }
 
-.button-commit {
+.button-container {
   color: #ffffff;
-  background-color: #f38776;
-  border: 1px solid #f38776;
+  background-color: #6fc4b3;
+  border: 1px solid #6fc4b3;
   text-align: center;
-  font-size: 14px;
-  border-radius: 4px;
-  height: 24px;
+  font-size: 10px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-left: 16px;
   margin-right: 16px;
+  border-radius: 6px;
 }
 
-.button-commit:hover {
-  cursor: pointer;
+.button-container:hover {
+  -webkit-filter: opacity(.8);
+  filter: opacity(.8);
 }
+
 </style>

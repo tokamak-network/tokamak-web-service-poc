@@ -8,14 +8,16 @@ function createInstance () {
 
 const instance = createInstance();
 
-////////////////
-//ABOUT CONFIG//
-////////////////
+//////////////////
+// ABOUT CONFIG //
+//////////////////
 export async function getConfig () {
   const res = await instance.get('/config');
   if (res.data === '') return [];
   else return res.data;
 }
+
+// should call rootchain list for select rootchain to connect with operator.
 
 export async function setConfig (params) {
   const res = await instance.post('/config/set', {
@@ -43,16 +45,16 @@ export async function getNodes () {
   else return res.data;
 }
 
-///////////////////
-//ABOUT ROOTCHAIN//
-///////////////////
+/////////////////////
+// ABOUT ROOTCHAIN //
+/////////////////////
 export async function getRootchains () {
   const res = await instance.get('/rootchain');
   if (res.data === '') return [];
   else return res.data;
 }
 
-export async function createRootchainInstance (params) {
+export async function createRootchainNode (params) {
   const res = await instance.post('/rootchain/create', {
     Name: params.instanceName,
     Key1Address: params.operatorAddress,
@@ -111,13 +113,36 @@ export async function getManagerContract (instanceId) {
   return res.data;
 }
 
-//////////////////
-//ABOUT OPERATOR//
-//////////////////
+////////////////////
+// ABOUT OPERATOR //
+////////////////////
 export async function getOperators () {
   const res = await instance.get('/operator');
   if (res.data === '') return [];
   else return res.data;
+}
+
+
+export async function createOperatorNode (params) {
+  const res = await instance.post('/operator', {
+    'Name': params.operatorName,
+    'RootchainID': params.rootchainName,
+    'ChainID': params.chainID,
+    'Epoch': params.epoch,
+    'Nodekey': params.nodeKeyHex,
+    'OperatorAccount': params.operatorAddress,
+    'OperatorAccountKey': params.operatorKey,
+    'OperatorPassword': params.operatorPassword,
+    'DeployGasprice': params.deployGasprice,
+    'CommitGasprice': params.commitGasprice,
+    'StaminaOperatorAmount': params.operatorAmount,
+    'StaminaMinDeposit': params.minDeposit,
+    'StaminaRecoverEpochLength': params.recoverLength,
+    'StaminaWithdrawalDelay': params.withdrawalDelay,
+    'Website': params.website,
+    'Description': params.description,
+    'ApiServer': params.apiServer,
+  });
 }
 
 export async function setOperatorVariable (instanceId) {
@@ -140,13 +165,18 @@ export async function initOperator (instanceId) {
   return res.data;
 }
 
+export async function setManagerContract (instanceId) {
+  const res = await instance.patch('/operator/${instanceId}/managers');
+  return res.data;
+}
+
 export async function importManagerContract (instanceId) {
   const res = await instance.get('/operator/${instanceId}/managers');
   return res.data;
 }
 
 export async function registerManagerContract (instanceId) {
-  const res = await instance.post('/operator/${instanceId}/managers');
+  const res = await instance.post('/operator/${instanceId}/manager');
   return res.data;
 }
 
@@ -160,9 +190,9 @@ export async function startOperator (instanceId) {
   return res.data;
 }
 
-//////////////////
-//ABOUT USERNODE//
-//////////////////
+////////////////////
+// ABOUT USERNODE //
+////////////////////
 export async function createUsernode (params) {
   const res = await instance.post('/usernonde', {
     Name: params.instanceName,
@@ -198,6 +228,45 @@ export async function getUsernodes () {
   else return res.data;
 }
 
-/////////////////
-//ABOUT STAKING//
-/////////////////
+///////////////////
+// ABOUT STAKING //
+///////////////////
+
+
+////////////////////
+// ABOUT INSTANCE //
+////////////////////
+export async function getInstanceInfo (instanceId) {
+  const res = await instance.post('/instance/${instanceId}');
+  return res.data;
+}
+
+export async function resetInstance (instanceId) {
+  const res = await instance.post('/instance/reset/${instanceId}');
+  return res.data;
+}
+
+export async function getLog (instanceId, filename) {
+  const res = await instance.post('/instance/${instanceId}/${filename}');
+  return res.data;
+}
+
+export async function terminateInstance (instanceId) {
+  const res = await instance.post('/instance/terminate/${instanceId}');
+  return res.data;
+}
+
+export async function checkStatus (instanceId) {
+  const res = await instance.post('/check/status/${instanceId}');
+  return res.data;
+}
+
+export async function checkIP (instanceId) {
+  const res = await instance.post('/check/ip/${instanceId}');
+  return res.data;
+}
+
+export async function dropData (instanceId) {
+  const res = await instance.post('/dropdata/${instanceId}');
+  return res.data;
+}

@@ -80,7 +80,6 @@ export default {
       for (let i=0;i<Object.keys(root).length;i++) {
         await this.rootchain.push(root[i]);
       }
-
     },
   },
 };

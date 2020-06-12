@@ -13,11 +13,11 @@
     </div>
     <div v-else>
       <div class="column">
-        <fieldset>
+        <fieldset class="fieldset-container">
           <legend>Instance</legend>
           <string-input v-model="instanceName" label="Instance Name" />
-        </fieldset>
-        <fieldset>
+        </fieldset >
+        <fieldset class="fieldset-container">
           <legend>Key Setting</legend>
           <string-input v-model="operatorAddress" label="Operator Address" />
           <string-input v-model="operatorKey" label="Operator Key" />
@@ -28,7 +28,7 @@
           <string-input v-model="faucet5Key" label="Faucet5 key" />
           <string-input v-model="faucet6Key" label="Faucet6 key" />
         </fieldset>
-        <fieldset>
+        <fieldset class="fieldset-container">
           <legend>Stake Setting</legend>
           <int-input v-model="withdrawalDelay" label="Withdrawal Delay" />
           <int-input v-model="seigPerBlock" label="Seigniorage Per Block" />
@@ -36,17 +36,16 @@
         </fieldset>
       </div>
       <div class="form-group row">
-        <div class="col-sm-10">
-          <button :func="createRootchain" type="button" @click="createRootchain()">CREATE</button>
-        </div>
+        <div class="button-container" style="margin-top: 16px;"><base-button :label="'CREATE'" :func="createRootchain" /></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getRootchains, createRootchainInstance } from '@/api/index.js';
+import { getRootchains, createRootchainNode } from '@/api/index.js';
 
+import BaseButton from '@/components/BaseButton.vue';
 import BaseTab from '@/components/BaseTab.vue';
 import RootchainTable from '@/components/table/RootchainTable.vue';
 import StringInput from '@/components/StringInput.vue';
@@ -56,6 +55,7 @@ import PasswordInput from '@/components/PasswordInput.vue';
 
 export default {
   components: {
+    'base-button': BaseButton,
     'base-tab': BaseTab,
     'rootchain-table': RootchainTable,
     'string-input': StringInput,
@@ -118,8 +118,36 @@ export default {
         'roundTime': this.roundTime,
       };
 
-      const root = await createRootchainInstance(this.params);
+      const root = await createRootchainNode(this.params);
     },
   },
 };
 </script>
+
+<style scoped>
+.fieldset-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  border: solid 1px #ced6d9;
+  background-color: #ffffff;
+}
+
+.button-container {
+  color: #ffffff;
+  background-color: #6fc4b3;
+  border: 1px solid #6fc4b3;
+  text-align: center;
+  font-size: 10px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-left: 16px;
+  margin-right: 16px;
+  border-radius: 6px;
+}
+
+.button-container:hover {
+  -webkit-filter: opacity(.8);
+  filter: opacity(.8);
+}
+</style>
