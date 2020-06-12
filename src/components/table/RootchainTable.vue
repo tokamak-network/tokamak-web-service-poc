@@ -3,18 +3,49 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>IP</th>
+        <th>Log</th>
         <th>Status</th>
-        <th>Instance ID</th>
+        <th>*Status</th>
+        <th>IP</th>
+        <th>IP</th>
+        <th>(re)set Scripts</th>
+        <th>Is set?</th>
+        <th>Start Node</th>
+        <th>Deploy Seig Manager</th>
+        <th>Deployed?</th>
+        <th>Deploy PowerTON</th>
+        <th>Deployed?</th>
+        <th>Start PowerTON</th>
+        <th>Started?</th>
+        <th>Export Manager</th>
+        <th>Exported?</th>
+        <th>Shutdown</th>
+        <th>Drop</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="rootchain in rootchain" :key="rootchain.Name">
         <!-- <td class="text-center">{{ index }}</td> -->
         <td class="clickable text-center name" >{{ rootchain.Name }}</td>
-        <td class="clickable text-center name" >{{ rootchain.IpAddress }}</td>
+        <td class="clickable text-center name" >Log</td>
+        <td class="clickable text-center name" >Check Status</td>
         <td class="clickable text-center name" >{{ rootchain.Status }}</td>
-        <td class="clickable text-center name" >{{ rootchain.InstanceId }}</td>
+        <td class="clickable text-center name" >IpAddress</td>
+        <td class="clickable text-center name" >{{ rootchain.IpAddress }}</td>
+        <td class="clickable text-center name" >3.(re)set</td>
+        <td class="clickable text-center name" >{{ rootchain.IsScriptSet }}</td>
+        <td class="clickable text-center name" >4.Run</td>
+        <td class="clickable text-center name" >5.Deploy</td>
+        <td class="clickable text-center name" >{{ rootchain.IsManagerDeployed }}</td>
+        <td class="clickable text-center name" >6.Deploy</td>
+        <td class="clickable text-center name" >{{ rootchain.IsPowerTONDeployed }}</td>
+        <td class="clickable text-center name" >7.Start</td>
+        <td class="clickable text-center name" >{{ rootchain.IsPowerTONStarted }}</td>
+        <td class="clickable text-center name" >8.Export</td>
+        <td class="clickable text-center name" >{{ rootchain.IsMangerExported }}</td>
+        <td class="clickable text-center name" >Terminate</td>
+        <td class="clickable text-center name" >Drop</td>
+
       </tr>
     </tbody>
   </table>

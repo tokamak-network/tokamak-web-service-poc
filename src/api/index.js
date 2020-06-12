@@ -16,22 +16,21 @@ export async function getConfig () {
 
 export async function setConfig (params) {
   const res = await instance.post('/config/set', {
-    AccessKey : params.accessKey,
-    AwsSecretKey : params.secretKey,
-    ImageID : params.imageID,
-    InstanceType : params.instanceType,
-    SecurityGroupID : params.securityGroupID,
-    KeyName : params.keyName,
-    RegionName : params.region,
-    SshUsername : params.sshUserName,
-    SshPemfile : params.sshPemFile,
-    Debug : params.debug,
-    SecretKey : params.dbSecretKey,
-    Username : params.dbUserName,
-    Password : params.dbPassword,
-    Database : params.dbName,
+    AccessKey : params.AccessKey,
+    AwsSecretKey : params.AwsSecretKey,
+    ImageID : params.ImageID,
+    InstanceType : params.InstanceType,
+    SecurityGroupID : params.SecurityGroupID,
+    KeyName : params.KeyName,
+    RegionName : params.RegionName,
+    SshUsername : params.SshUsername,
+    SshPemfile : params.SshPemfile,
+    Debug : params.Debug,
+    SecretKey : params.SecretKey,
+    Username : params.Username,
+    Password : params.Password,
+    Database : params.Database,
   });
-
   return res.data;
 }
 
@@ -52,3 +51,34 @@ export async function getUsernodes () {
   if (res.data === '') return [];
   else return res.data;
 }
+
+export async function getNodes () {
+  const res = await instance.get('/home');
+  if (res.data === '') return [];
+  else return res.data;
+}
+
+export async function createRootchainInstance (params) {
+  const res = await instance.post('/rootchain/', {
+    operatorAddress: params.operatorAddress,
+    operatorKey: params.operatorKey,
+    operatorPassword: params.operatorPassword,
+    faucet2Key: params.faucet2Key,
+    faucet3Key: params.faucet3Key,
+    faucet4Key: params.faucet4Key,
+    faucet5Key: params.faucet5Key,
+    faucet6Key: params.faucet6Key,
+    withdrawalDelay: params.withdrawalDelay,
+    seigPerBlock: params.seigPerBlock,
+    roundTime: params.roundTime,
+  });
+
+  return res.data;
+}
+
+export async function runRootchain () {
+  const res = await instance.post('/rootchain/startnode');
+
+  return res.data;
+}
+

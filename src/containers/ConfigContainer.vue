@@ -10,12 +10,12 @@
     </div>
     <form v-if="tab === 'left'">
       <div class="column">
-        <fieldset>
+        <fieldset class="fieldset-container">
           <legend>AWS Access</legend>
           <string-input v-model="accessKey" label="ACCESS KEY" />
           <string-input v-model="secretKey" label="SECRET KEY"/>
         </fieldset>
-        <fieldset>
+        <fieldset class="fieldset-container">
           <legend>AWS Instance</legend>
           <string-input v-model="imageID" label="IMAGE ID" />
           <string-input v-model="instanceType" label="INSTANCE TYPE"/>
@@ -23,19 +23,19 @@
           <string-input v-model="keyName" label="KEY NAME"/>
           <string-input v-model="region" label="REGION"/>
         </fieldset>
-        <fieldset>
+        <fieldset class="fieldset-container">
           <legend>SSH</legend>
           <string-input v-model="sshUserName" label="SSH USERNAME" />
           <string-input v-model="sshPemFile" label="SSH PEMFILE"/>
         </fieldset>
-        <fieldset>
+        <fieldset class="fieldset-container">
           <legend>Server</legend>
           <string-input v-model="debug" label="DEBUG" />
           <string-input v-model="dbSecretKey" label="SECRET KEY"/>
           <string-input v-model="dbUserName" label="USER NAME"/>
           <string-input v-model="dbPassword" label="PASSWORD"/>
         </fieldset>
-        <fieldset>
+        <fieldset class="fieldset-container">
           <legend>Database</legend>
           <string-input v-model="dbName" label="DATABASE NAME" />
         </fieldset>
@@ -157,8 +157,71 @@ export default {
         'Database' : this.dbName,
       };
       const config = await setConfig(this.params);
-      console.log(config);
     },
   },
 };
 </script>
+
+
+<style scoped>
+.fieldset-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  border: solid 1px #ced6d9;
+  background-color: #ffffff;
+}
+
+.name-container {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-left: 16px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.name {
+  width: 200px;
+  padding-left: 16px;
+  padding-right: 8px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  color: #161819;
+  word-break: break-all;
+}
+
+.button {
+  color: #ffffff;
+  background-color: #35496b;
+  border: 1px solid #35496b;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 4px;
+  height: 22px;
+  width: 40px;
+  margin-right: 16px;
+}
+
+.button-commit {
+  color: #ffffff;
+  background-color: #f38776;
+  border: 1px solid #f38776;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 4px;
+  height: 24px;
+  margin-right: 16px;
+}
+
+.button-commit:hover {
+  cursor: pointer;
+}
+</style>

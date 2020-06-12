@@ -69,13 +69,10 @@ app.config.from_object(__name__)
 CORS(app)
 
 
-@app.route("/")
+@app.route("/home")
 def home():
     network = get_network_json()
-    return render_template(
-            "home/home.html",
-            network_data=network
-        );
+    return network
 
 #####################
 ### CONFIG ROUTE ####
@@ -106,7 +103,7 @@ def pem_create():
 
     if request.method == 'POST':
         
-        name = request.form['name']
+        name = req['name']
         try:
             key_pair, key_finger_print = create_pem(name)
             outfile = open('./.pem/' + name + '.pem','w+')
@@ -147,74 +144,66 @@ def pem_delete():
 
         return redirect(url_for('pem_router'))
 
-@app.route("/set", methods=["GET"])
-def seted():
-    pems = t_db.search(Query().Type == "pem")
-    print(request)
-    hi = "hi"
-    return hi
-
 @app.route("/config/set", methods=["POST"])
-def config_ini_set():
-    # print(parameter)
-    print(request.form)
-    # if request.method == 'POST':
-    #     parameter={
-    #         'ac_key' : request.form['AccessKey'],
-    #         'sec_key' : request.form['AwsSecretKey'],
+def config_ini_set():              
+    if request.method == 'POST':
+        req = request.get_json(force=True)
+        parameter={
+            'ac_key' : req['AccessKey'],
+            'sec_key' : req['AwsSecretKey'],
 
-    #         'img_id' : request.form['ImageID'],
-    #         'ins_type' : request.form['InstanceType'],
-    #         'sec_group_id' : request.form['SecurityGroupID'],
-    #         'key_name' : request.form['KeyName'],
-    #         'region_name' : request.form['RegionName'],
+            'img_id' : req['ImageID'],
+            'ins_type' : req['InstanceType'],
+            'sec_group_id' : req['SecurityGroupID'],
+            'key_name' : req['KeyName'],
+            'region_name' : req['RegionName'],
 
-    #         'ssh_user' : request.form['SshUsername'],
-    #         'ssh_pem' : request.form['SshPemfile'],
+            'ssh_user' : req['SshUsername'],
+            'ssh_pem' : req['SshPemfile'],
 
-    #         'debug' : request.form['Debug'],
-    #         'secret_key' : request.form['SecretKey'],
-    #         'username' : request.form['Username'],
-    #         'password' : request.form['Password'],
-    #         'database' : request.form['Database'],
-    #     }
+            'debug' : req['Debug'],
+            'secret_key' : req['SecretKey'],
+            'username' : req['Username'],
+            'password' : req['Password'],
+            'database' : req['Database'],
+        }
 
-    #     #put into config.ini
-    #     config.set('AWS','AWS_ACCESS_KEY', parameter['ac_key'])
-    #     config.set('AWS','AWS_SECRET_KEY', parameter['sec_key'])
+        #put into config.ini
+        config.set('AWS','AWS_ACCESS_KEY', parameter['ac_key'])
+        config.set('AWS','AWS_SECRET_KEY', parameter['sec_key'])
 
-    #     config.set('INSTANCE', 'BASIC_IMAGE_ID', parameter['img_id'])
-    #     config.set('INSTANCE', 'INSTANCE_TYPE', parameter['ins_type'])
-    #     config.set('INSTANCE', 'SECURITY_GROUP_ID', parameter['sec_group_id'])
-    #     config.set('INSTANCE','KEY_NAME', parameter['key_name'])
-    #     config.set('INSTANCE','REGION_NAME', parameter['region_name'])
+        config.set('INSTANCE', 'BASIC_IMAGE_ID', parameter['img_id'])
+        config.set('INSTANCE', 'INSTANCE_TYPE', parameter['ins_type'])
+        config.set('INSTANCE', 'SECURITY_GROUP_ID', parameter['sec_group_id'])
+        config.set('INSTANCE','KEY_NAME', parameter['key_name'])
+        config.set('INSTANCE','REGION_NAME', parameter['region_name'])
 
-    #     config.set('SSH','SSH_USERNAME', parameter['ssh_user'])
-    #     config.set('SSH','SSH_PEMFILE', parameter['ssh_pem'])
+        config.set('SSH','SSH_USERNAME', parameter['ssh_user'])
+        config.set('SSH','SSH_PEMFILE', parameter['ssh_pem'])
 
-    #     config.set('SERVER','DEBUG', parameter['debug'])
-    #     config.set('SERVER','SECRET_KEY', parameter['secret_key'])
-    #     config.set('SERVER','USERNAME', parameter['username'])
-    #     config.set('SERVER','PASSWORD', parameter['password'])
+        config.set('SERVER','DEBUG', parameter['debug'])
+        config.set('SERVER','SECRET_KEY', parameter['secret_key'])
+        config.set('SERVER','USERNAME', parameter['username'])
+        config.set('SERVER','PASSWORD', parameter['password'])
 
-    #     config.set('DATABASE','DATABASE', parameter['database'])
+        config.set('DATABASE','DATABASE', parameter['database'])
 
-    #     with open('config.ini', 'w+') as configfile:
-    #         config.write(configfile)
+        with open('config.ini', 'w+') as configfile:
+            config.write(configfile)
 
-    # global DEBUG, SECRET_KEY, USERNAME, PASSWORD, PEMFILE, SSH_USERNAME
-    # DEBUG = parameter['debug']
-    # SECRET_KEY = parameter['secret_key']
-    # USERNAME = parameter['username']
-    # PASSWORD = parameter['password']
-    # PEMFILE = parameter['ssh_pem']
-    # SSH_USERNAME = parameter['ssh_user']
+    global DEBUG, SECRET_KEY, USERNAME, PASSWORD, PEMFILE, SSH_USERNAME
+    DEBUG = parameter['debug']
+    SECRET_KEY = parameter['secret_key']
+    USERNAME = parameter['username']
+    PASSWORD = parameter['password']
+    PEMFILE = parameter['ssh_pem']
+    SSH_USERNAME = parameter['ssh_user']
 
-    # config_set(parameter)
-    # config.read('config.ini')
-    # flash([time.ctime()[11:19] + " config.ini set!"])
+    config_set(parameter)
+    config.read('config.ini')
+    flash([time.ctime()[11:19] + " config.ini set!"])
 
-    return "Done"
+    return redirect(url_for('config_router'))
 
 
 #####################
@@ -237,7 +226,8 @@ def rootchain():
 def rootchain_start():
     error = None
     if request.method == "POST":
-        inst_id = request.form['instance_id']
+        req = request.get_json(force=True)
+        inst_id = req['instance_id']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         inst_faucet = inst['Faucet']
         inst_ip = inst['IpAddress']
@@ -272,7 +262,8 @@ def rootchain_start():
 def rootchain_reset():
     error = None
     if request.method == "POST":
-        inst_id = request.form['instance_id']
+        req = request.get_json(force=True)
+        inst_id = req['instance_id']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         inst_ip = inst['IpAddress']
         initialize_rootchain(inst_ip)
@@ -282,31 +273,25 @@ def rootchain_reset():
     else:
         return redirect(url_for('rootchain'))
 
-
-@app.route("/rootchain/form")
-def rootchain_form():
-    return render_template(
-            "rootchain/rootchain_create.html"
-        );
-
-@app.route("/rootchain/form/create", methods=["POST"])
+@app.route("/rootchain/create", methods=["POST"])
 def rootchain_create():
     error = None
     res = []
     if request.method == 'POST':
-        name = request.form['Name']
-        key0 = request.form['Key1']
-        key1 = request.form['Key2']
-        key2 = request.form['Key3']
-        key3 = request.form['Key4']
-        key4 = request.form['Key5']
-        key5 = request.form['Key6']
+        req = request.get_json(force=True)
+        name = req['Name']
+        key0 = req['Key1']
+        key1 = req['Key2']
+        key2 = req['Key3']
+        key3 = req['Key4']
+        key4 = req['Key5']
+        key5 = req['Key6']
 
-        key1address = request.form['Key1Address']
-        key1password = request.form['Password']
-        withdrawal_delay = request.form['WithdrawalDelay']
-        seig_per_block = request.form['Seigniorage']
-        power_ton_round_time = request.form['PowerTONRound']
+        key1address = req['Key1Address']
+        key1password = req['Password']
+        withdrawal_delay = req['WithdrawalDelay']
+        seig_per_block = req['Seigniorage']
+        power_ton_round_time = req['PowerTONRound']
 
         root_ins = create_instance(name)
         root_ins_monitor = root_ins.monitor()
@@ -420,28 +405,29 @@ def operator_create():
     error = None
     res = []
     if request.method == 'POST':
-        name = request.form['Name']
-        chainid = request.form["ChainID"]
-        epoch = request.form["Epoch"]
-        pre_asset = request.form["PreAsset"]
-        rootchain_id = request.form['RootchainID']
-        node_key = request.form['Nodekey']
-        operator_account = request.form['OperatorAccount']
-        operator_account_key = request.form['OperatorAccountKey']
-        operator_password = request.form['OperatorPassword']
-        deploy_gasprice = request.form['DeployGasprice']
-        commit_gasprice = request.form['CommitGasprice']
-        stamina_operator_amount = request.form['StaminaOperatorAmount']
-        stamina_min_deposit = request.form['StaminaMinDeposit']
-        stamina_recover_epoch_length = request.form['StaminaRecoverEpochLength']
-        stamina_withdrawal_delay = request.form['StaminaWithdrawalDelay']
-        website = request.form['Website']
-        description = request.form['Description']
-        api_server = request.form['ApiServer']
+        req = request.get_json(force=True)
+        name = req['Name']
+        chainid = req["ChainID"]
+        epoch = req["Epoch"]
+        pre_asset = req["PreAsset"]
+        rootchain_id = req['RootchainID']
+        node_key = req['Nodekey']
+        operator_account = req['OperatorAccount']
+        operator_account_key = req['OperatorAccountKey']
+        operator_password = req['OperatorPassword']
+        deploy_gasprice = req['DeployGasprice']
+        commit_gasprice = req['CommitGasprice']
+        stamina_operator_amount = req['StaminaOperatorAmount']
+        stamina_min_deposit = req['StaminaMinDeposit']
+        stamina_recover_epoch_length = req['StaminaRecoverEpochLength']
+        stamina_withdrawal_delay = req['StaminaWithdrawalDelay']
+        website = req['Website']
+        description = req['Description']
+        api_server = req['ApiServer']
 
         print("##################", pre_asset)
 
-        if request.form["PreAsset"] == 'on':
+        if req["PreAsset"] == 'on':
             pre_asset = "true"
         else :
             pre_asset = "false"
@@ -515,7 +501,8 @@ def operator_set_variable():
     error = None
     res = []
     if request.method == 'POST':
-        inst_id = request.form["instance_id"]
+        req = request.get_json(force=True)
+        inst_id = req["instance_id"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
 
         parameter = [
@@ -552,7 +539,8 @@ def operator_deploy_rootchain():
     error = None
     res = []
     if request.method == 'POST':
-        inst_id = request.form["instance_id"]
+        req = request.get_json(force=True)
+        inst_id = req["instance_id"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         inst_ip = inst['IpAddress']
         out1 = deploy_rootchain_contract(inst_ip)
@@ -568,7 +556,8 @@ def operator_export_genesis():
     error = None
     res = []
     if request.method == 'POST':
-        inst_id = request.form["instance_id"]
+        req = request.get_json(force=True)
+        inst_id = req["instance_id"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         
         genesis = export_genesis(inst["IpAddress"])
@@ -584,7 +573,8 @@ def operator_initialize():
     error = None
     res = []
     if request.method == 'POST':
-        inst_id = request.form["instance_id"]
+        req = request.get_json(force=True)
+        inst_id = req["instance_id"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         # TODO : initialize operator
         out = initialize_operator_blockchain(inst["IpAddress"])
@@ -652,7 +642,8 @@ def operator_runnode():
     error = None
     res = []
     if request.method == 'POST':
-        inst_id = request.form["instance_id"]
+        req = request.get_json(force=True)
+        inst_id = req["instance_id"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         out = run_operator(inst["IpAddress"])
         t_db.update(set('Status', "mining"), Query().InstanceId == inst_id)
@@ -689,10 +680,11 @@ def usernode_create():
     error = None
     res = []
     if request.method == 'POST':
-        name = request.form['Name']
-        rootchain_id = request.form['RootchainID']
-        operator_id = request.form['OperatorID']
-        enode_hex = request.form['enodehex']
+        req = request.get_json(force=True)
+        name = req['Name']
+        rootchain_id = req['RootchainID']
+        operator_id = req['OperatorID']
+        enode_hex = req['enodehex']
 
         root_inst = t_db.search(Query().InstanceId == rootchain_id)[0]
         operator_inst = t_db.search(Query().InstanceId == operator_id)[0]
@@ -733,7 +725,8 @@ def usernode_initialize():
     error = None
     res = []
     if request.method == 'POST':
-        inst_id = request.form["instance_id"]
+        req = request.get_json(force=True)
+        inst_id = req["instance_id"]
         user_inst = t_db.search(Query().InstanceId == inst_id)[0]
 
         #set variable
@@ -764,7 +757,8 @@ def usernode_runnode():
     error = None
     res = []
     if request.method == 'POST':
-        inst_id = request.form["instance_id"]
+        req = request.get_json(force=True)
+        inst_id = req["instance_id"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         out = run_usernode(inst["IpAddress"])
         print(out)
@@ -895,7 +889,7 @@ def instance_terminate():
     error = None
     res = []
     if request.method == 'POST':
-        inst_id = request.form['instance_id']
+        inst_id = req['instance_id']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         inst_ip = inst['IpAddress']
         #terminate instance
@@ -921,7 +915,7 @@ def instance_terminate():
 def check_status():
     error = None
     if request.method == "POST":
-        inst_id = request.form['instance_id']
+        inst_id = req['instance_id']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         # TODO : CHECK STATUS - Pending | enable | mining | dead
         prior_status = t_db.search(Query().InstanceId == inst_id)[0]['Status']
@@ -949,7 +943,7 @@ def check_status():
 def check_ip():
     error = None
     if request.method == "POST":
-        inst_id = request.form['instance_id']
+        inst_id = req['instance_id']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         # TODO : CHECK STATUS - Pending | running | mining | shotdown
         inst_ip = get_instance_ip(inst_id)
@@ -970,7 +964,7 @@ def check_ip():
 def drop_data():
     error = None
     if request.method == "POST":
-        inst_id = request.form['instance_id']
+        inst_id = req['instance_id']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         #TODO : if it is not in a "Shutdown" status, it should not work
         if not inst["Status"] == "shutdown":

@@ -25,7 +25,7 @@ export default {
 .main-layout {
   display: flex;
   min-width: 960px;
-  max-width: 960px;
+  /* max-width: 960px; */
   padding-top: 16px;
   padding-bottom: 2rem;
 }

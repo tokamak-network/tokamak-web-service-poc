@@ -44,6 +44,8 @@ export default {
   align-items: center;
   float: left;
   width: 30%;
+  color: #3e3e3e;
+  font: roboto;
 }
 
 span {
@@ -51,6 +53,13 @@ span {
   overflow: hidden;
   text-align: center;
   font-size: 14px;
+}
+.config-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  border: solid 1px #ced6d9;
+  background-color: #ffffff;
 }
 
 .input-container {

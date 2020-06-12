@@ -37,7 +37,7 @@
       </div>
       <div class="form-group row">
         <div class="col-sm-10">
-          <button type="button" @click="newConfig()">CREATE</button>
+          <button type="button" @click="createRootchin()">CREATE</button>
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { getRootchains, createRootchainInstance } from '@/api/index.js';
 
 import BaseTab from '@/components/BaseTab.vue';
 import RootchainTable from '@/components/table/RootchainTable.vue';
@@ -100,10 +100,23 @@ export default {
     changeTab (tab) {
       this.tab = tab;
     },
-    getList: function () {
-      axios.get('http://localhost:8000/rootchain').then(function (respose) {
+    async createRootchain () {
+      const self = this;
+      this.params = {
+        'operatorAddress': this.operatorAddress,
+        'operatorKey': this.operatorKey,
+        'operatorPassword': this.operatorPassword,
+        'faucet2Key': this.faucet2Key,
+        'faucet3Key': this.faucet3Key,
+        'faucet4Key': this.faucet4Key,
+        'faucet5Key': this.faucet5Key,
+        'faucet6Key': this.faucet6Key,
+        'withdrawalDelay': this.withdrawalDelay,
+        'seigPerBlock': this.seigPerBlock,
+        'roundTime': this.roundTime,
+      };
 
-      });
+      const root = await createRootchainInstance(this.params);
     },
   },
 };

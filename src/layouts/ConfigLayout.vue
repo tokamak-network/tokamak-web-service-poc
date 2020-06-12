@@ -22,5 +22,6 @@ export default {
   border: solid 1px #ced6d9;
   background-color: #ffffff;
   border-radius: 6px;
+  max-width: 960px;
 }
 </style>
