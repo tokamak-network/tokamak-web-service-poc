@@ -160,7 +160,7 @@ def change_account_operator(parameter):
     return ssh_execute(parameter[len(parameter) - 1], cmd)
 
 def control_sed(key, parameter):
-    return "-e 's/" + key + "/" + parameter + "/g' "
+    return "-e 's/" + key + "/" + str(parameter) + "/g' "
 
 def deploy_rootchain_contract(ip_address):
     return ssh_execute(host=ip_address, command="/home/ubuntu/1_deploy.rootchain.sh")

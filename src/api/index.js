@@ -148,7 +148,7 @@ export async function createOperatorNode (params) {
 }
 
 export async function setOperatorVariable (instanceId) {
-  const res = await instance.post('/operator/${instanceId}/variable');
+  const res = await instance.post('/operator/' + instanceId + '/set');
   return res.data;
 }
 

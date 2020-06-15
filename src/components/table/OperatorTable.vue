@@ -38,38 +38,84 @@
         <td class="clickable text-center name" >{{ operator.Name }}</td>
         <td class="clickable text-center name" >{{ operator.RootChain.Name }}</td>
         <td class="clickable text-center name" >Log</td>
-        <td class="clickable text-center name" >Check Status</td>
+        <td class="clickable text-center name" >
+          <button @click="(checkNodeStatus(operator.InstanceId))">Status</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.Status }}</td>
-        <td class="clickable text-center name" >IpAddress</td>
+        <td class="clickable text-center name" >
+          <button @click="(checkNodeIP(operator.InstanceId))">IP Address</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.IpAddress }}</td>
-        <td class="clickable text-center name" >3.(re)set</td>
+        <td class="clickable text-center name" >
+          <button @click="(set(operator.InstanceId))">3.(re)Set</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.IsScriptSet }}</td>
-        <td class="clickable text-center name" >4.Set Variable</td>
+        <td class="clickable text-center name" >
+          <button @click="(setOperVar(operator.InstanceId))">4.Set Variable</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.IsSet }}</td>
-        <td class="clickable text-center name" >5.Deploy</td>
+        <td class="clickable text-center name" >
+          <button @click="(deployRootchain(operator.InstanceId))">5.Deploy</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.IsDeployed }}</td>
-        <td class="clickable text-center name" >6.Export</td>
+        <td class="clickable text-center name" >
+          <button @click="(exportGen(operator.InstanceId))">6.Export</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.IsExported }}</td>
-        <td class="clickable text-center name" >7.Init</td>
+        <td class="clickable text-center name" >
+          <button @click="(initOper(operator.InstanceId))">7.Init</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.IsInitialized }}</td>
-        <td class="clickable text-center name" >8.Import</td>
+        <td class="clickable text-center name" >
+          <button @click="(importManager(operator.InstanceId))">8.Import</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.IsManagersImported }}</td>
-        <td class="clickable text-center name" >9.Set</td>
+        <td class="clickable text-center name" >
+          <button @click="(setManager(operator.InstanceId))">9.Set</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.IsManagersSet }}</td>
-        <td class="clickable text-center name" >10.Register</td>
+        <td class="clickable text-center name" >
+          <button @click="(registerManager(operator.InstanceId))">10.Register</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.IsManagersRegistered }}</td>
-        <td class="clickable text-center name" >11.Register</td>
+        <td class="clickable text-center name" >
+          <button @click="(registerDashboard(operator.InstanceId))">11.Register</button>
+        </td>
         <td class="clickable text-center name" >{{ operator.IsOperatorRegistered }}</td>
-        <td class="clickable text-center name" >12.Run Node</td>
-        <td class="clickable text-center name" >Terminate</td>
-        <td class="clickable text-center name" >Drop</td>
+        <td class="clickable text-center name" >
+          <button @click="(start(operator.InstanceId))">12.Run Node</button>
+        </td>
+        <td class="clickable text-center name" >
+          <button @click="(terminate(operator.InstanceId))">Shutdown</button>
+        </td>
+        <td class="clickable text-center name" >
+          <button @click="(drop(operator.InstanceId))">Drop</button>
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-import { getOperators, checkStatus, checkIP, getInstanceInfo, resetInstance, getLog, terminateInstance, dropData } from '@/api/index.js';
+import {
+  getOperators,
+  checkStatus,
+  checkIP,
+  getInstanceInfo,
+  resetInstance,
+  getLog,
+  terminateInstance,
+  dropData,
+  setOperatorVariable,
+  deployRootchainContract,
+  exportGenesis,
+  initOperator,
+  setManagerContract,
+  importManagerContract,
+  registerManagerContract,
+  registerToDashboard,
+  startOperator,
+} from '@/api/index.js';
 
 export default {
   data () {
@@ -97,6 +143,58 @@ export default {
       for (let i=0;i<Object.keys(oper).length;i++) {
         await this.operator.push(oper[i]);
       }
+    },
+    async setOperVar (instanceId) {
+      await setOperatorVariable(instanceId);
+    },
+    async deployRootchain (instanceId) {
+      await deployRootchainContract(instanceId);
+    },
+    async exportGen (instanceId) {
+      await exportGenesis(instanceId);
+    },
+    async initOper (instanceId) {
+      await initOperator(instanceId);
+    },
+    async setManager (instanceId) {
+      await setManagerContract(instanceId);
+    },
+    async importManager (instanceId) {
+      await importManagerContract(instanceId);
+    },
+    async registerManager (instanceId) {
+      await registerManagerContract(instanceId);
+    },
+    async checkNodeStatus (instanceId) {
+      await checkStatus(instanceId);
+    },
+    async registerDashboard (instanceId) {
+      await registerToDashboard(instanceId);
+    },
+    async start (instanceId) {
+      await startOperator(instanceId);
+    },
+    async checkNodeIP (instanceId) {
+      await checkIP(instanceId);
+      await getOperators();
+    },
+    async getInfo (instanceId) {
+      await getInstanceInfo(instanceId);
+    },
+    async reset (instanceId) {
+      await resetInstance(instanceId);
+    },
+    async log (instanceId) {
+      await getLog(instanceId);
+    },
+    async terminate (instanceId) {
+      await terminateInstance(instanceId);
+    },
+    async IP (instanceId) {
+      await checkIP(instanceId);
+    },
+    async drop (instanceId) {
+      await dropData(instanceId);
     },
   },
 };

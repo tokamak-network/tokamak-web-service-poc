@@ -6,7 +6,7 @@ def update_operator(hostname, username, pemfile):
     ssh_manager.create_ssh_client(hostname, username, pemfile)
 
     # 1. zip local scripts/rootchain directory
-    subprocess.call(["tar","cvf","oper.scripts.tar","-C","scripts/operator","."])
+    subprocess.call(["tar","cvf","oper.scripts.tar","-C","app/scripts/operator","."])
 
     # 2. transport file
     ssh_manager.send_file("oper.scripts.tar", "/home/ubuntu/")
@@ -57,7 +57,7 @@ def update_usernode(hostname, username, pemfile):
     ssh_manager.create_ssh_client(hostname, username, pemfile)
 
     # 1. zip local scripts/rootchain directory
-    subprocess.call(["tar","cvf","user.scripts.tar","-C","scripts/usernode","."])
+    subprocess.call(["tar","cvf","user.scripts.tar","-C","app/scripts/usernode","."])
 
     # 2. transport file
     ssh_manager.send_file("user.scripts.tar", "/home/ubuntu/")

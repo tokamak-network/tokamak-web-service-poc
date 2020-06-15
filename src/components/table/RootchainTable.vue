@@ -30,9 +30,6 @@
         <td class="clickable text-center name">Log</td>
         <td class="clickable text-center name">
           <button @click="(checkNodeStatus(rootchain.InstanceId))">Status</button>
-          <!-- <div class="button-container">
-            <base-button :label="'Check Status'" :func="checkNodeStatus" :input="rootchain.instanceId" />
-          </div> -->
         </td>
         <td class="clickable text-center name">{{ rootchain.Status }}</td>
         <td class="clickable text-center name">
@@ -44,7 +41,7 @@
         </td>
         <td class="clickable text-center name">{{ rootchain.IsScriptSet }}</td>
         <td class="clickable text-center name">
-          <button @click="(run(rootchain.InstanceId))">4.Run</button>
+          <button @click="(runRootchainNode(rootchain.InstanceId))">4.Run</button>
         </td>
         <td class="clickable text-center name">
           <button @click="(deploySeig(rootchain.InstanceId))">5.Deploy</button>
@@ -71,9 +68,6 @@
           {{ rootchain.IsMangerExported }}
         </td>
         <td class="clickable text-center name">
-          <div class="button-container">
-            <base-button :label="'Shutdown'" :func="terminate" />
-          </div>
           <button @click="(terminate(rootchain.InstanceId))">Shutdown</button>
         </td>
         <td class="clickable text-center name">
@@ -131,6 +125,14 @@ export default {
       for (let i = 0; i < Object.keys(root).length; i++) {
         await this.rootchain.push(root[i]);
       }
+    },
+    async runRootchainNode (instanceId) {
+      // await resetInstance(instanceId);
+      // await runRootchain(instanceId);
+      await deploySeigManger(instanceId);
+      await deployPowerTonContract(instanceId);
+      await startPowerTonContract(instanceId);
+      await getManagerContract(instanceId);
     },
     async run (instanceId) {
       await runRootchain(instanceId);
