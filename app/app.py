@@ -514,12 +514,13 @@ def operator_create():
         return url_for('operator')
 
 
-@app.route("/operator/<instanceid>/set", methods=["POST"])
-def operator_set_variable(instanceid):
+@app.route("/operator/set", methods=["POST"])
+def operator_set_variable():
     error = None
     res = []
     if request.method == 'POST':
-        inst_id = instanceid
+        req = request.get_json(force=True)
+        inst_id = req["InstanceId"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
 
         parameter = [
@@ -551,24 +552,25 @@ def operator_set_variable(instanceid):
     else:
         return redirect(url_for('operator'))
 
-@app.route("/operator/<instanceid>/rootchain", methods=["POST"])
+@app.route("/operator/rootchain", methods=["POST"])
 def operator_deploy_rootchain():
     error = None
     res = []
     if request.method == 'POST':
         req = request.get_json(force=True)
-        inst_id = req["InstanceId"]
-        inst = t_db.search(Query().InstanceId == inst_id)[0]
+        instanceid = req["InstanceId"]
+        inst = t_db.search(Query().InstanceId == instanceid)[0]
+        print(inst)
         inst_ip = inst['IpAddress']
         out1 = deploy_rootchain_contract(inst_ip)
-        t_db.update(set('IsDeployed', "true"), Query().InstanceId == inst_id)
+        t_db.update(set('IsDeployed', "true"), Query().InstanceId == instanceid)
         # flash([time.ctime()[11:19] + " rootchain contract deployed!"])
         flash(out1)
         return redirect(url_for('operator'))
     else:
         return redirect(url_for('operator'))
 
-@app.route("/operator/<instanceid>/genesis", methods=["POST"])
+@app.route("/operator/genesis", methods=["POST"])
 def operator_export_genesis():
     error = None
     res = []
@@ -585,7 +587,7 @@ def operator_export_genesis():
     else:
         return redirect(url_for('operator'))
 
-@app.route("/operator/<instanceid>/init", methods=["POST"])
+@app.route("/operator/init", methods=["POST"])
 def operator_initialize():
     error = None
     res = []
@@ -601,8 +603,11 @@ def operator_initialize():
     else:
         return redirect(url_for('operator'))
 
-@app.route("/operator/<instanceid>/managers", methods=["GET", "POST", "UPDATE"])
-def operator_import_managers(instanceid):
+@app.route("/operator/managers", methods=["GET", "POST", "UPDATE"])
+def operator_import_managers():
+    req = request.get_json(force=True)
+    instanceid = req["InstanceId"]
+    print(instanceid)
     if request.method == "GET":
         inst = t_db.search(Query().InstanceId == instanceid)
         inst_ip = inst[0]["IpAddress"]
@@ -638,8 +643,10 @@ def operator_import_managers(instanceid):
 
     return redirect(url_for('operator'))
 
-@app.route("/operator/<instanceid>/dashboard")
-def dashboard_register_managers(instanceid):
+@app.route("/operator/dashboard", methods=["POST"])
+def dashboard_register_managers():
+    req = request.get_json(force=True)
+    instanceid = req["InstanceId"]
     inst = t_db.search(Query().InstanceId == instanceid)
     inst_ip = inst[0]["IpAddress"]
 
@@ -649,12 +656,13 @@ def dashboard_register_managers(instanceid):
     flash(out)
     return redirect(url_for('operator'))
 
-@app.route("/operator/<instanceid>", methods=["POST"])
-def operator_runnode(instanceid):
+@app.route("/operator/run", methods=["POST"])
+def operator_runnode():
     error = None
     res = []
     if request.method == 'POST':
-        inst_id = instanceid
+        req = request.get_json(force=True)        
+        inst_id = req["InstanceId"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         out = run_operator(inst["IpAddress"])
         t_db.update(set('Status', "mining"), Query().InstanceId == inst_id)
@@ -882,7 +890,7 @@ def reset_instance():
         return redirect(url_for('usernode'))
 
 
-@app.route("/instance/<instanceid>/<filename>")
+@app.route("/instance/log", methods=["GET"])
 def log(instanceid, filename):
     inst = t_db.search(Query().InstanceId == instanceid)
     inst_ip = inst[0]["IpAddress"]

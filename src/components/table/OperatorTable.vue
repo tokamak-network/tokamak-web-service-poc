@@ -47,7 +47,7 @@
         </td>
         <td class="clickable text-center name" >{{ operator.IpAddress }}</td>
         <td class="clickable text-center name" >
-          <button @click="(set(operator.InstanceId))">3.(re)Set</button>
+          <button @click="(reset(operator.InstanceId))">3.(re)Set</button>
         </td>
         <td class="clickable text-center name" >{{ operator.IsScriptSet }}</td>
         <td class="clickable text-center name" >

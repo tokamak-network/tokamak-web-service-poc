@@ -148,47 +148,65 @@ export async function createOperatorNode (params) {
 }
 
 export async function setOperatorVariable (instanceId) {
-  const res = await instance.post('/operator/' + instanceId + '/set');
+  const res = await instance.post('/operator/set', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function deployRootchainContract (instanceId) {
-  const res = await instance.post('/operator/${instanceId}/rootchain');
+  const res = await instance.post('/operator/rootchain', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function exportGenesis (instanceId) {
-  const res = await instance.post('/operator/${instanceId}/genesis');
+  const res = await instance.post('/operator/genesis', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function initOperator (instanceId) {
-  const res = await instance.post('/operator/${instanceId}/init');
+  const res = await instance.post('/operator/init', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function setManagerContract (instanceId) {
-  const res = await instance.patch('/operator/${instanceId}/managers');
+  const res = await instance.patch('/operator/managers', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function importManagerContract (instanceId) {
-  const res = await instance.get('/operator/${instanceId}/managers');
+  const res = await instance.get('/operator/managers', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function registerManagerContract (instanceId) {
-  const res = await instance.post('/operator/${instanceId}/manager');
+  const res = await instance.post('/operator/managers', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function registerToDashboard (instanceId) {
-  const res = await instance.post('/operator/${instanceId}/dashboard');
+  const res = await instance.post('/operator/dashboard', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function startOperator (instanceId) {
-  const res = await instance.post('/operator/${instanceId}');
+  const res = await instance.post('/operator/run', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
@@ -251,7 +269,10 @@ export async function resetInstance (instanceId) {
 }
 
 export async function getLog (instanceId, filename) {
-  const res = await instance.post('/instance/${instanceId}/${filename}');
+  const res = await instance.post('/instance/log', {
+    InstanceId: instanceId,
+    filename: filename,
+  });
   return res.data;
 }
 
