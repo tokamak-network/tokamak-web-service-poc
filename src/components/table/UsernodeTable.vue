@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getUsernodes } from '@/api/index.js';
+import { getUsernodes, checkStatus, checkIP, getInstanceInfo, resetInstance, getLog, terminateInstance, dropData } from '@/api/index.js';
 
 export default {
   data () {

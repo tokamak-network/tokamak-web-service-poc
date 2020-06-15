@@ -31,7 +31,7 @@ def update_rootchain(hostname, username, pemfile):
     ssh_manager.create_ssh_client(hostname, username, pemfile)
 
     # 1. zip local scripts/rootchain directory
-    subprocess.call(["tar","cvf","rootchain.scripts.tar","-C","scripts/rootchain","."])
+    subprocess.call(["tar","cvf","rootchain.scripts.tar","-C","app/scripts/rootchain","."])
 
     # 2. transport file
     ssh_manager.send_file("rootchain.scripts.tar", "/home/ubuntu/")

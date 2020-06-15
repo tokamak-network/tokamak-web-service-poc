@@ -200,6 +200,7 @@ def run_operator(ip_address):
 
 def run_rootchain(ip_address):
     out = ssh_execute(host=ip_address, command="bash /home/ubuntu/run.rootchain.sh")
+    print(out)
     return out[1]
 
 def deploy_manager_contract(ip_address):
@@ -250,9 +251,9 @@ def change_rootchain_account(ip_address, key0, key1, key2, key3, key4, key5, ope
     cmd4 = "-e 's/" + priv4 + "/" + key4 + "/g' "
     cmd5 = "-e 's/" + priv5 + "/" + key5 + "/g' "
     cmd6 = "-e 's/" + op + "/" + operator + "/g' "
-    cmd7 = "-e 's/" + w_delay + "/" + delay + "/g' "
-    cmd8 = "-e 's/" + seig + "/" + seigniorage + "/g' "
-    cmd9 = "-e 's/" + round + "/" + p_round + "/g' "
+    cmd7 = "-e 's/" + w_delay + "/" + str(delay) + "/g' "
+    cmd8 = "-e 's/" + seig + "/" + str(seigniorage) + "/g' "
+    cmd9 = "-e 's/" + round + "/" + str(p_round) + "/g' "
     cmd10 = "-e 's/" + op_password + "/" + password + "/g' "
     cmd11 = "/home/ubuntu/account.variable"
 

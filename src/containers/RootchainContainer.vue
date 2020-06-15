@@ -30,9 +30,9 @@
         </fieldset>
         <fieldset class="fieldset-container">
           <legend>Stake Setting</legend>
-          <int-input v-model="withdrawalDelay" label="Withdrawal Delay" />
-          <int-input v-model="seigPerBlock" label="Seigniorage Per Block" />
-          <int-input v-model="roundTime" label="Power TON Round Time" />
+          <string-input v-model="withdrawalDelay" label="Withdrawal Delay" />
+          <string-input v-model="seigPerBlock" label="Seigniorage Per Block" />
+          <string-input v-model="roundTime" label="Power TON Round Time" />
         </fieldset>
       </div>
       <div class="form-group row">
@@ -69,11 +69,11 @@ export default {
       operatorAddress: '0x71562b71999873DB5b286dF957af199Ec94617F7',
       operatorKey: 'b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291',
       operatorPassword: '',
-      faucet2Key: '',
-      faucet3Key: '',
-      faucet4Key: '',
-      faucet5Key: '',
-      faucet6Key: '',
+      faucet2Key: '78ae75d1cd5960d87e76a69760cb451a58928eee7890780c352186d23094a115',
+      faucet3Key: '067394195895a82e685b000e592f771f7899d77e87cc8c79110e53a2f0b0b8fc',
+      faucet4Key: 'ae03e057a5b117295db86079ba4c8505df6074cdc54eec62f2050e677e5d4e66',
+      faucet5Key: 'eda4515e1bc6c08e8606b51ffb6ffe70b3fe76781ed49872285e484064e3b634',
+      faucet6Key: 'bfaa65473b85b3c33b2f5ddb511f0f4ef8459213ada2920765aaac25b4fe38c5',
       withdrawalDelay: 10,
       seigPerBlock: 1.5,
       roundTime: 60,

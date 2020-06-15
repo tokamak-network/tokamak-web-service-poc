@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { getOperators } from '@/api/index.js';
+import { getOperators, checkStatus, checkIP, getInstanceInfo, resetInstance, getLog, terminateInstance, dropData } from '@/api/index.js';
 
 export default {
   data () {

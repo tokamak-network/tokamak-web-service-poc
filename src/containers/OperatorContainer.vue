@@ -63,7 +63,6 @@ import OperatorTable from '@/components/table/OperatorTable.vue';
 import StringInput from '@/components/StringInput.vue';
 import IntInput from '@/components/IntInput.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
-import SelectInput from '@/components/SelectInput.vue';
 
 export default {
   components: {
@@ -72,7 +71,6 @@ export default {
     'string-input': StringInput,
     'int-input': IntInput,
     'password-input': PasswordInput,
-    'select-input': SelectInput,
   },
   data () {
     return {

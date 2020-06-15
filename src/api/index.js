@@ -81,35 +81,37 @@ export async function runRootchain (instanceId) {
 }
 
 export async function resetRootchain (instanceId) {
-  const res = await instance.post('/rootchain/reset', {
+  const res = await instance.post('/instance/reset', {
     InstanceId: instanceId,
   });
   return res.data;
 }
 
 export async function deploySeigManger (instanceId) {
-  const res = await instance.post('/rootchain/${instanceId}/manager', {
+  const res = await instance.post('/rootchain/manager', {
     InstanceId: instanceId,
   });
   return res.data;
 }
 
 export async function deployPowerTonContract (instanceId) {
-  const res = await instance.post('/rootchain/${instanceId}/powerton/deploy', {
+  const res = await instance.post('/rootchain/powerton/deploy', {
     InstanceId: instanceId,
   });
   return res.data;
 }
 
 export async function startPowerTonContract (instanceId) {
-  const res = await instance.post('/rootchain/${instanceId}/powerton/start', {
+  const res = await instance.post('/rootchain/powerton/start', {
     InstanceId: instanceId,
   });
   return res.data;
 }
 
 export async function getManagerContract (instanceId) {
-  const res = await instance.get('/rootchain/${instanceId}/manager');
+  const res = await instance.get('/rootchain/manager', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
@@ -242,7 +244,9 @@ export async function getInstanceInfo (instanceId) {
 }
 
 export async function resetInstance (instanceId) {
-  const res = await instance.post('/instance/reset/${instanceId}');
+  const res = await instance.post('/instance/reset', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
@@ -252,21 +256,29 @@ export async function getLog (instanceId, filename) {
 }
 
 export async function terminateInstance (instanceId) {
-  const res = await instance.post('/instance/terminate/${instanceId}');
+  const res = await instance.post('/instance/terminate', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function checkStatus (instanceId) {
-  const res = await instance.post('/check/status/${instanceId}');
+  const res = await instance.post('/check/status', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function checkIP (instanceId) {
-  const res = await instance.post('/check/ip/${instanceId}');
+  const res = await instance.post('/check/ip', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }
 
 export async function dropData (instanceId) {
-  const res = await instance.post('/dropdata/${instanceId}');
+  const res = await instance.post('/dropdata', {
+    InstanceId: instanceId,
+  });
   return res.data;
 }

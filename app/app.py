@@ -263,7 +263,8 @@ def rootchain_reset():
     error = None
     if request.method == "POST":
         req = request.get_json(force=True)
-        inst_id = req['instance_id']
+        inst_id = req['InstanceId']
+
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         inst_ip = inst['IpAddress']
         initialize_rootchain(inst_ip)
@@ -279,7 +280,7 @@ def rootchain_create():
     res = []
     if request.method == 'POST':
         req = request.get_json(force=True)
-        print(req)
+
         name = req['Name']
         key0 = req['Key1']
         key1 = req['Key2']
@@ -325,10 +326,12 @@ def rootchain_create():
     else:
         return url_for('rootchain')
 
-@app.route("/rootchain/<instanceid>/manager", methods=["POST", "GET"])
-def deploy_manager(instanceid):
+@app.route("/rootchain/manager", methods=["POST", "GET"])
+def deploy_manager():
+    req = request.get_json(force=True)
+    inst_id = req['InstanceId']
     if request.method == 'POST':
-        inst = t_db.search(Query().InstanceId == instanceid)
+        inst = t_db.search(Query().InstanceId == inst_id)
 
         inst_ip = inst[0]["IpAddress"]
         inst_id = inst[0]["InstanceId"]
@@ -338,22 +341,26 @@ def deploy_manager(instanceid):
         t_db.update(set('IsMansgerDeployed', "true"), Query().InstanceId == inst_id)
         flash(out)
     elif request.method == 'GET':
-        inst = t_db.search(Query().InstanceId == instanceid)
+        inst = t_db.search(Query().InstanceId == inst_id)
+        print(inst)
         inst_ip = inst[0]["IpAddress"]
         inst_id = inst[0]["InstanceId"]
         inst_type = inst[0]["Type"]
 
         export_manager_command(inst_ip)
         out = export_manager_contract(inst_ip)
+        print(out[0])
         t_db.update(set('Managers', out[0]), Query().InstanceId == inst_id)
         t_db.update(set('IsManagerExported', 'true'), Query().InstanceId == inst_id)
         flash(out)
 
     return redirect(url_for('rootchain'))
 
-@app.route("/rootchain//<instanceid>/powerton/deploy", methods=["POST"])
-def deploy_powerton(instanceid):
-    inst = t_db.search(Query().InstanceId == instanceid)
+@app.route("/rootchain/powerton/deploy", methods=["POST"])
+def deploy_powerton():
+    req = request.get_json(force=True)
+    inst_id = req['InstanceId']
+    inst = t_db.search(Query().InstanceId == inst_id)
     inst_ip = inst[0]["IpAddress"]
     inst_id = inst[0]["InstanceId"]
     inst_type = inst[0]["Type"]
@@ -364,9 +371,11 @@ def deploy_powerton(instanceid):
 
     return redirect(url_for('rootchain'))
 
-@app.route("/rootchain/<instanceid>/powerton/start", methods=["POST"])
-def start_powerton(instanceid):
-    inst = t_db.search(Query().InstanceId == instanceid)
+@app.route("/rootchain/powerton/start", methods=["POST"])
+def start_powerton():
+    req = request.get_json(force=True)
+    inst_id = req['InstanceId']
+    inst = t_db.search(Query().InstanceId == inst_id)
     inst_ip = inst[0]["IpAddress"]
     inst_id = inst[0]["InstanceId"]
     inst_type = inst[0]["Type"]
@@ -377,9 +386,11 @@ def start_powerton(instanceid):
 
     return redirect(url_for('rootchain'))
 
-@app.route("/rootchain/export/manager/<instanceid>")
-def export_manager(instanceid):
-    inst = t_db.search(Query().InstanceId == instanceid)
+@app.route("/rootchain/export/manager")
+def export_manager():
+    req = request.get_json(force=True)
+    inst_id = req['InstanceId']
+    inst = t_db.search(Query().InstanceId == inst_id)
     inst_ip = inst[0]["IpAddress"]
     inst_id = inst[0]["InstanceId"]
     inst_type = inst[0]["Type"]
@@ -546,7 +557,7 @@ def operator_deploy_rootchain():
     res = []
     if request.method == 'POST':
         req = request.get_json(force=True)
-        inst_id = req["instance_id"]
+        inst_id = req["InstanceId"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         inst_ip = inst['IpAddress']
         out1 = deploy_rootchain_contract(inst_ip)
@@ -563,7 +574,7 @@ def operator_export_genesis():
     res = []
     if request.method == 'POST':
         req = request.get_json(force=True)
-        inst_id = req["instance_id"]
+        inst_id = req["InstanceId"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         
         genesis = export_genesis(inst["IpAddress"])
@@ -580,7 +591,7 @@ def operator_initialize():
     res = []
     if request.method == 'POST':
         req = request.get_json(force=True)
-        inst_id = req["instance_id"]
+        inst_id = req["InstanceId"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         # TODO : initialize operator
         out = initialize_operator_blockchain(inst["IpAddress"])
@@ -726,7 +737,7 @@ def usernode_initialize():
     res = []
     if request.method == 'POST':
         req = request.get_json(force=True)
-        inst_id = req["instance_id"]
+        inst_id = req["InstanceId"]
         user_inst = t_db.search(Query().InstanceId == inst_id)[0]
 
         #set variable
@@ -758,7 +769,7 @@ def usernode_runnode():
     res = []
     if request.method == 'POST':
         req = request.get_json(force=True)
-        inst_id = req["instance_id"]
+        inst_id = req["InstanceId"]
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         out = run_usernode(inst["IpAddress"])
         print(out)
@@ -828,8 +839,10 @@ def instance(instanceid):
             data = res[0]
         );
 
-@app.route("/instance/reset/<instanceid>")
-def reset_instance(instanceid):
+@app.route("/instance/reset", methods=["POST"]) 
+def reset_instance():
+    req = request.get_json(force=True)
+    instanceid = req['InstanceId']
     inst = t_db.search(Query().InstanceId == instanceid)
     inst_ip = inst[0]["IpAddress"]
     inst_name = inst[0]["Name"]
@@ -890,7 +903,7 @@ def instance_terminate():
     res = []
     if request.method == 'POST':
         req = request.get_json(force=True)
-        inst_id = req['instance_id']
+        inst_id = req['InstanceId']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         inst_ip = inst['IpAddress']
         #terminate instance
@@ -917,7 +930,9 @@ def check_status():
     error = None
     if request.method == "POST":
         req = request.get_json(force=True)
-        inst_id = req['instance_id']
+        inst_id = req['InstanceId']
+        # inst_id = instanceid
+        print(inst_id)
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         # TODO : CHECK STATUS - Pending | enable | mining | dead
         prior_status = t_db.search(Query().InstanceId == inst_id)[0]['Status']
@@ -946,7 +961,7 @@ def check_ip():
     error = None
     if request.method == "POST":
         req = request.get_json(force=True)
-        inst_id = req['instance_id']
+        inst_id = req['InstanceId']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         # TODO : CHECK STATUS - Pending | running | mining | shotdown
         inst_ip = get_instance_ip(inst_id)
@@ -968,7 +983,7 @@ def drop_data():
     error = None
     if request.method == "POST":
         req = request.get_json(force=True)
-        inst_id = req['instance_id']
+        inst_id = req['InstanceId']
         inst = t_db.search(Query().InstanceId == inst_id)[0]
         #TODO : if it is not in a "Shutdown" status, it should not work
         if not inst["Status"] == "shutdown":
